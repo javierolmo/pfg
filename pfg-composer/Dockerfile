@@ -14,6 +14,8 @@ RUN cd /app/pfg-composer && mvn package -DskipTests
 
 #Run pfg-composer
 FROM openjdk:8-jre AS pfg-composer
+RUN apt-get update && apt-get install -y musescore
+ENV QT_QPA_PLATFORM=offscreen
 WORKDIR /app
 COPY --from=1 /app/pfg-composer/target/pfg-composer.jar /app/app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
