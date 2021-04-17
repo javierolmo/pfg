@@ -1,0 +1,17 @@
+<nb-card>
+  <nb-card-header>Descargar partitura</nb-card-header>
+  <nb-card-body>
+    <p>Elige un formato:</p>
+    <button nbButton (click)='downloadMusicXML()'>
+      <nb-icon icon='download-outline'></nb-icon>
+      MusicXML
+    </button><br>
+    <button nbButton (click)='downloadPDF()'>
+      <nb-icon icon='download-outline'></nb-icon>
+      PDF
+    </button><br>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton>Cancelar</button>
+  </nb-card-footer>
+</nb-card>

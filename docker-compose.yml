@@ -33,7 +33,7 @@ services:
     depends_on:
       - database
     volumes:
-      - ./sheets-persistence:/opt/pfg/sheets
+      - ./sheets-persistence:/app/sheets
 
   # Composer
   composer:
