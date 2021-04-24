@@ -1,14 +1,11 @@
 package com.javi.uned.pfgweb.repositories;
 
 import com.javi.uned.pfgweb.beans.Sheet;
-import com.javi.uned.pfgweb.beans.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface SheetRepository extends JpaRepository<Sheet, Integer> {

@@ -1,6 +1,7 @@
 package com.javi.uned.pfgweb.rest;
 
 import com.javi.uned.pfgweb.beans.Sheet;
+import com.javi.uned.pfgweb.beans.SheetDTO;
 import com.javi.uned.pfgweb.repositories.SheetRepository;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,11 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +22,14 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api/sheets")
 public class SheetREST {
+
+    private static final String SHEET_FOLDER = "sheets";
 
     @Autowired
     private SheetRepository sheetRepository;
@@ -51,19 +57,45 @@ public class SheetREST {
         sheet.setOwnerId(ownerId);
         sheet.setId(id);
         ExampleMatcher matcher = ExampleMatcher.matching()
-                .withMatcher("name", matcher1 -> matcher1.contains());
+                .withMatcher("name", GenericPropertyMatcher::contains);
         Example<Sheet> sheetExample = Example.of(sheet, matcher);
         return sheetRepository.findAll(sheetExample);
     }
 
     @PostMapping
-    public Sheet createSheet(@RequestBody Sheet sheet){
+    public Sheet createSheet(@RequestBody SheetDTO sheetDTO){
+        Sheet sheet = new Sheet();
+        sheet.setDate(sheetDTO.getDate());
+        sheet.setId(sheetDTO.getId());
+        sheet.setStyle(sheetDTO.getStyle());
+        sheet.setName(sheetDTO.getName());
+        sheet.setOwnerId(sheetDTO.getOwnerId());
+        sheet.setFinished(sheetDTO.getFinished());
         return sheetRepository.save(sheet);
     }
 
     @GetMapping("/{id}")
     public Sheet sheet(@PathVariable Integer id) {
-        return sheetRepository.findById(id).get();
+        Optional<Sheet> optionalSheet = sheetRepository.findById(id);
+        return optionalSheet.isPresent()? optionalSheet.get() : null;
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Sheet> setFinished(@PathVariable Integer id, @RequestBody SheetDTO sheetDTO) {
+        Optional<Sheet> optionalSheet = sheetRepository.findById(id);
+        if (optionalSheet.isPresent()) {
+            Sheet result = optionalSheet.get();
+            if(sheetDTO.getFinished() != null) result.setFinished(sheetDTO.getFinished());
+            if(sheetDTO.getName() != null) result.setName(sheetDTO.getName());
+            if(sheetDTO.getId() != null) result.setId(sheetDTO.getId());
+            if(sheetDTO.getDate() != null) result.setDate(sheetDTO.getDate());
+            if(sheetDTO.getStyle() != null) result.setStyle(sheetDTO.getStyle());
+            if(sheetDTO.getOwnerId() != null) result.setOwnerId(sheetDTO.getOwnerId());
+            sheetRepository.save(result);
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
@@ -71,11 +103,11 @@ public class SheetREST {
      * @param id identificador de la partitura a eliminar
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteSheet(@PathVariable int id) throws IOException {
+    public String deleteSheet(@PathVariable int id) throws IOException {
         sheetRepository.deleteById(id);
-        File file = new File(String.format("sheets/%d", id));
+        File file = new File(String.format("%s/%d", SHEET_FOLDER, id));
         FileUtils.forceDelete(file);
-        return ResponseEntity.ok("Partitura eliminada con éxito");
+        return "Partitura eliminada con éxito";
     }
 
     /**
@@ -88,12 +120,12 @@ public class SheetREST {
      */
     @PostMapping("/{id}/file/musicxml")
     public Sheet uploadFileXML(@RequestBody MultipartFile file, @PathVariable Integer id) throws IOException {
-        File dir = new File(String.format("sheets/%d", id));
+        File dir = new File(String.format("%s/%d", SHEET_FOLDER, id));
         if(!dir.exists()) dir.mkdirs();
         File localFile = new File(String.format("sheets/%d/%d.musicxml", id, id));
         Files.copy(file.getInputStream(), localFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        Sheet sheet = sheetRepository.findById(id).get();
-        return sheet;
+        Optional<Sheet> optionalSheet = sheetRepository.findById(id);
+        return optionalSheet.isPresent()? optionalSheet.get() : null;
     }
 
     /**
@@ -105,46 +137,53 @@ public class SheetREST {
      * @throws IOException
      */
     @PostMapping("/{id}/file/pdf")
-    public Sheet uploadFilePDF(@RequestBody MultipartFile file, @PathVariable Integer id) throws IOException {
-        File dir = new File(String.format("sheets/%d", id));
-        if(!dir.exists()) dir.mkdirs();
-        File localFile = new File(String.format("sheets/%d/%d.pdf", id, id));
-        Files.copy(file.getInputStream(), localFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        Sheet sheet = sheetRepository.findById(id).get();
-        sheet.setFinished(true);
-        sheetRepository.save(sheet);
-        return sheet;
+    public ResponseEntity<Sheet> uploadFilePDF(@RequestBody MultipartFile file, @PathVariable Integer id) throws IOException {
+        Optional<Sheet> optionalSheet = sheetRepository.findById(id);
+        if (optionalSheet.isPresent()) {
+            File dir = new File(String.format("%s/%d", SHEET_FOLDER, id));
+            if(!dir.exists()) dir.mkdirs();
+            File localFile = new File(String.format("sheets/%d/%d.pdf", id, id));
+            Files.copy(file.getInputStream(), localFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Sheet sheet = optionalSheet.get();
+            sheet.setFinished(true);
+            sheetRepository.save(sheet);
+            return ResponseEntity.ok(sheet);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @GetMapping("/{id}/file/musicxml")
     public ResponseEntity<Resource> downloadFileXML(@PathVariable int id) throws FileNotFoundException {
-        Sheet sheet = sheetRepository.findById(id).get();
-        File file = new File(String.format("sheets/%d/%d.musicxml", id, id));
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + sheet.getName() + ".musicxml\"")
-                .contentLength(file.length())
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(resource);
+        Optional<Sheet> optionalSheet = sheetRepository.findById(id);
+        if(optionalSheet.isPresent()){
+            Sheet sheet = optionalSheet.get();
+            File file = new File(String.format("sheets/%d/%d.musicxml", id, id));
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + sheet.getName() + ".musicxml\"")
+                    .contentLength(file.length())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(resource);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/{id}/file/pdf")
     public ResponseEntity<Resource> downloadFilePDF(@PathVariable int id) throws FileNotFoundException {
-        Sheet sheet = sheetRepository.findById(id).get();
-        File file = new File(String.format("sheets/%d/%d.pdf", id, id));
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + sheet.getName() + ".pdf\"")
-                .contentLength(file.length())
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(resource);
-    }
-
-    @PostMapping("/{id}/finished")
-    public Sheet setFinished(@PathVariable Integer id, @RequestBody Sheet sheet) {
-        Sheet tmp = sheetRepository.findById(id).get();
-        tmp.setFinished(sheet.getFinished());
-        sheetRepository.save(tmp);
-        return tmp;
+        Optional<Sheet> optionalSheet = sheetRepository.findById(id);
+        if (optionalSheet.isPresent()) {
+            Sheet sheet = optionalSheet.get();
+            File file = new File(String.format("sheets/%d/%d.pdf", id, id));
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + sheet.getName() + ".pdf\"")
+                    .contentLength(file.length())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(resource);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

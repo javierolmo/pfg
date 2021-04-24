@@ -7,7 +7,6 @@ import com.javi.uned.pfgweb.beans.User;
 import com.javi.uned.pfgweb.repositories.SheetRepository;
 import com.javi.uned.pfgweb.repositories.UserRepository;
 import com.javi.uned.pfgweb.services.CustomUserDetailsService;
-import com.javi.uned.pfgweb.services.UserService;
 import com.javi.uned.pfgweb.services.UtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -17,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -36,7 +36,8 @@ public class UserREST {
 
     @GetMapping("/{id}/details")
     public User getDetails(@PathVariable long id){
-        return userRepository.findById(id).get();
+        Optional<User> optionalUser = userRepository.findById(id);
+        return optionalUser.isPresent()? optionalUser.get() : null;
     }
 
     @PostMapping("/{userId}/request")

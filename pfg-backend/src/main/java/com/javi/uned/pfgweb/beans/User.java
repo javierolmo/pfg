@@ -1,10 +1,7 @@
 package com.javi.uned.pfgweb.beans;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import java.util.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "users")
@@ -84,4 +81,5 @@ public class User {
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }
+
 }
