@@ -2,8 +2,8 @@ package com.javi.uned.pfgweb.rest;
 
 import com.javi.uned.pfgweb.beans.Sheet;
 import com.javi.uned.pfgweb.beans.SheetDTO;
+import com.javi.uned.pfgweb.config.FileSystemConfig;
 import com.javi.uned.pfgweb.repositories.SheetRepository;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -18,7 +18,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.*;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
@@ -29,10 +33,10 @@ import java.util.Optional;
 @RequestMapping("/api/sheets")
 public class SheetREST {
 
-    private static final String SHEET_FOLDER = "sheets";
-
     @Autowired
     private SheetRepository sheetRepository;
+    @Autowired
+    private FileSystemConfig fileSystemConfig;
 
     @GetMapping("/pages")
     public Page<Sheet> getSheets(
@@ -103,10 +107,9 @@ public class SheetREST {
      * @param id identificador de la partitura a eliminar
      */
     @DeleteMapping("/{id}")
-    public String deleteSheet(@PathVariable int id) throws IOException {
+    public String deleteSheet(@PathVariable int id) {
         sheetRepository.deleteById(id);
-        File file = new File(String.format("%s/%d", SHEET_FOLDER, id));
-        FileUtils.forceDelete(file);
+        fileSystemConfig.deleteSheetFolder(id);
         return "Partitura eliminada con éxito";
     }
 
@@ -120,10 +123,9 @@ public class SheetREST {
      */
     @PostMapping("/{id}/file/musicxml")
     public Sheet uploadFileXML(@RequestBody MultipartFile file, @PathVariable Integer id) throws IOException {
-        File dir = new File(String.format("%s/%d", SHEET_FOLDER, id));
-        if(!dir.exists()) dir.mkdirs();
-        File localFile = new File(String.format("sheets/%d/%d.musicxml", id, id));
-        Files.copy(file.getInputStream(), localFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        File dir = fileSystemConfig.getSheetFolder(id);
+        File musicxmlFile = new File(String.format("%s/%d.musicxml", dir.getAbsolutePath(), id));
+        Files.copy(file.getInputStream(), musicxmlFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         Optional<Sheet> optionalSheet = sheetRepository.findById(id);
         return optionalSheet.isPresent()? optionalSheet.get() : null;
     }
@@ -140,9 +142,8 @@ public class SheetREST {
     public ResponseEntity<Sheet> uploadFilePDF(@RequestBody MultipartFile file, @PathVariable Integer id) throws IOException {
         Optional<Sheet> optionalSheet = sheetRepository.findById(id);
         if (optionalSheet.isPresent()) {
-            File dir = new File(String.format("%s/%d", SHEET_FOLDER, id));
-            if(!dir.exists()) dir.mkdirs();
-            File localFile = new File(String.format("sheets/%d/%d.pdf", id, id));
+            File dir = fileSystemConfig.getSheetFolder(id);
+            File localFile = new File(String.format("%s/%d.pdf", dir.getAbsolutePath(), id));
             Files.copy(file.getInputStream(), localFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             Sheet sheet = optionalSheet.get();
             sheet.setFinished(true);

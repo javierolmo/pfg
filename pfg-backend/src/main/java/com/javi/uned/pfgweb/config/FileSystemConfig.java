@@ -22,4 +22,21 @@ public class FileSystemConfig {
             logger.warn("No se ha encontrado una estructura de ficheros previa. Se ha inicializado una nueva: {}", dataFolder.getAbsolutePath());
         }
     }
+
+    public File getSheetFolder(long sheetId) {
+        File result = new File(dataFolder, ""+sheetId);
+        if(!result.isDirectory()){
+            result.mkdir();
+        }
+        return result;
+    }
+
+    public boolean deleteSheetFolder(long sheetId) {
+        File folder = new File(dataFolder, "" + sheetId);
+        if (folder.exists()) {
+            return folder.delete();
+        } else {
+            return true;
+        }
+    }
 }

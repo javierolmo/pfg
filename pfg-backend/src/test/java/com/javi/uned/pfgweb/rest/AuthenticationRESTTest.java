@@ -37,10 +37,8 @@ class AuthenticationRESTTest {
         loginDTO.setPassword("wrong-password");
         try {
             LoginResponse loginResponse = authenticationREST.login(loginDTO);
-            System.out.println(loginResponse);
             assert false;
         } catch (Exception e) {
-            e.printStackTrace();
             assert true;
         }
     }
