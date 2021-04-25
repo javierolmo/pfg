@@ -1,6 +1,7 @@
 package com.javi.uned.pfgcomposer.consumers;
 
 import com.javi.uned.pfg.ScoreBuilder;
+import com.javi.uned.pfg.exceptions.ExportException;
 import com.javi.uned.pfg.io.Export;
 import com.javi.uned.pfg.model.ScoreComposite;
 import com.javi.uned.pfg.model.Specs;
@@ -67,10 +68,10 @@ public class SpecsConsumer {
         try{
             kafkaTemplate.send(TOPIC_COMPOSER_EXECUTION, key, "Generando fichero .musicxml");
             File xmlFile = new File(key+".musicxml");
-            Export.toXML(scoreComposite.toScorePartwise(), xmlFile);
+            Export.toXML(scoreComposite, xmlFile);
             backendService.persistXMLSheet(xmlFile, key);
             return xmlFile;
-        } catch (BackendException e) {
+        } catch (BackendException | ExportException e) {
             throw new SpecsConsumerException("SpecsConsumer.generarXML: Error al generar XML", e);
         }
     }
