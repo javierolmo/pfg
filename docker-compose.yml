@@ -53,7 +53,7 @@ services:
     build: ./pfg-frontend
     restart: always
     environment:
-      API_URL: "http://localhost:64001/api"
+      API_URL: "http://192.168.0.145:64001/api"
     ports:
       - 80:80
     depends_on:
