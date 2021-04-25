@@ -1,6 +1,5 @@
 package com.javi.uned.pfgcomposer.config.kafka;
 
-import com.javi.uned.pfg.model.Specs;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;

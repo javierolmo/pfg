@@ -1,5 +1,6 @@
 package com.javi.uned.pfgcomposer.services;
 
+import com.javi.uned.pfgcomposer.exceptions.BackendException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
@@ -18,12 +19,12 @@ public class BackendService {
     @Value("${API_PORT:64001}")
     private String apiPort;
 
-    public Object storeSheetXML(File sheet, String id) throws Exception {
+    public Object persistXMLSheet(File sheet, String id) throws BackendException {
 
         RestTemplate restTemplate = new RestTemplate();
 
         // Add file
-        LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap();
+        LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("file", new FileSystemResource(sheet));
 
         // Url
@@ -47,16 +48,16 @@ public class BackendService {
         if (statusCode == HttpStatus.OK) {
             return responseEntity.getBody();
         }else{
-            throw new Exception("Error al publicar partitura");
+            throw new BackendException("Error al guardar partitura en xml: ");
         }
     }
 
-    public Object storeSheetPDF(File sheet, String id) throws Exception {
+    public Object persistPDFSheet(File sheet, String id) throws BackendException {
 
         RestTemplate restTemplate = new RestTemplate();
 
         // Add file
-        LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap();
+        LinkedMultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("file", new FileSystemResource(sheet));
 
         // Url
@@ -80,7 +81,7 @@ public class BackendService {
         if (statusCode == HttpStatus.OK) {
             return responseEntity.getBody();
         }else{
-            throw new Exception("Error al publicar partitura");
+            throw new BackendException("Error al guardar partitura en pdf: ");
         }
     }
 

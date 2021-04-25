@@ -38,7 +38,7 @@ class MusescoreServiceTest {
 
     @Test
     void FileExport_XMLToPDF_Success() throws MusescoreException {
-        musescoreService.convertXMLToPDF(fileXML, filePDF);
+        musescoreService.convertXMLToPDF(fileXML, filePDF.getAbsolutePath());
         assert filePDF.exists();
     }
 
@@ -47,7 +47,7 @@ class MusescoreServiceTest {
         try{
             File notExistingFile = new File("notexistingfile.musicxml");
             assert !notExistingFile.exists();
-            musescoreService.convertXMLToPDF(notExistingFile, filePDF);
+            musescoreService.convertXMLToPDF(notExistingFile, filePDF.getAbsolutePath());
         } catch (MusescoreException me) {
             assert true;
         }
