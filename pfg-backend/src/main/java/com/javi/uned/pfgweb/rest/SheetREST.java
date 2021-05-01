@@ -159,7 +159,7 @@ public class SheetREST {
         Optional<Sheet> optionalSheet = sheetRepository.findById(id);
         if(optionalSheet.isPresent()){
             Sheet sheet = optionalSheet.get();
-            File file = new File(String.format("sheets/%d/%d.musicxml", id, id));
+            File file = new File(fileSystemConfig.getSheetFolder(id), id + ".musicxml");
             InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + sheet.getName() + ".musicxml\"")
@@ -176,7 +176,7 @@ public class SheetREST {
         Optional<Sheet> optionalSheet = sheetRepository.findById(id);
         if (optionalSheet.isPresent()) {
             Sheet sheet = optionalSheet.get();
-            File file = new File(String.format("sheets/%d/%d.pdf", id, id));
+            File file = new File(fileSystemConfig.getSheetFolder(id), id + ".pdf");
             InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + sheet.getName() + ".pdf\"")

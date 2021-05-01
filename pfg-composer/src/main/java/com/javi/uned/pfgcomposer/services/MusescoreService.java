@@ -1,13 +1,12 @@
 package com.javi.uned.pfgcomposer.services;
 
 import com.javi.uned.pfgcomposer.exceptions.MusescoreException;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 
 @Service
 public class MusescoreService {
@@ -45,17 +44,20 @@ public class MusescoreService {
     public File convertXMLToPDF(File xmlFile, String pdfPath) throws MusescoreException {
         try {
             ProcessBuilder builder = new ProcessBuilder();
-            builder.command("sh", "-c", String.format("musescore3 %s -o %s", xmlFile.getAbsolutePath(), pdfPath));
+            builder.command("sh", "-c", String.format("%s %s -o %s", this.musescoreName, xmlFile.getAbsolutePath(), pdfPath));
             Process process = builder.start();
             int exitCode = process.waitFor();
             File pdfFile = new File(pdfPath);
-            if (exitCode != 0 || !pdfFile.exists()) throw new MusescoreException("Error al convertir el archivo "+xmlFile.getName());
-            return pdfFile;
+            if (exitCode != 0 || !pdfFile.exists()) {
+                throw new MusescoreException("Error al convertir el archivo '" + xmlFile.getName() + "'");
+            } else {
+                return pdfFile;
+            }
         } catch (IOException e) {
-            throw new MusescoreException("Error al convertir el archivo "+xmlFile.getName(), e);
+            throw new MusescoreException("Error al convertir el archivo '" + xmlFile.getName() + "'", e);
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
-            throw new MusescoreException("Interrupción al convertir el archivo "+xmlFile.getName(), ie);
+            throw new MusescoreException("Interrupción al convertir el archivo '" + xmlFile.getName() + "'", ie);
         }
     }
 }

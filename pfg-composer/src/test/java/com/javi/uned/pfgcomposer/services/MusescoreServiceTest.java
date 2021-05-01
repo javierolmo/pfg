@@ -1,6 +1,7 @@
 package com.javi.uned.pfgcomposer.services;
 
 import com.javi.uned.pfg.ScoreBuilder;
+import com.javi.uned.pfg.exceptions.ExportException;
 import com.javi.uned.pfg.io.Export;
 import com.javi.uned.pfg.model.Instrumento;
 import com.javi.uned.pfg.model.ScoreComposite;
@@ -27,13 +28,13 @@ class MusescoreServiceTest {
     private File filePDF = new File("test.pdf");
 
     @BeforeAll
-    void setUp() {
+    void setUp() throws ExportException {
         Specs specs = new Specs();
         specs.setMeasures(1);
         specs.setInstrumentos(new Instrumento[]{Instrumentos.VIOLIN});
         specs.setAuthors(Arrays.asList("Javier Olmo Injerto"));
         ScoreComposite scoreComposite = ScoreBuilder.getInstance().buildScore(specs);
-        Export.toXML(scoreComposite.toScorePartwise(), fileXML);
+        Export.toXML(scoreComposite, fileXML);
     }
 
     @Test

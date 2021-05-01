@@ -1,13 +1,19 @@
 package com.javi.uned.pfgweb.config;
 
+import com.javi.uned.pfgweb.beans.Sheet;
+import com.javi.uned.pfgweb.repositories.SheetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 
 @Component
 public class FileSystemConfig {
+
+    @Autowired
+    private SheetRepository sheetRepository;
 
     public static final String DATA_FOLDER_PATH = "data";
     private final Logger logger = LoggerFactory.getLogger(FileSystemConfig.class);
@@ -39,4 +45,10 @@ public class FileSystemConfig {
             return true;
         }
     }
+
+    public boolean exists(long sheetId) {
+        File folder = new File(dataFolder, ""+sheetId);
+        return folder.exists();
+    }
+
 }

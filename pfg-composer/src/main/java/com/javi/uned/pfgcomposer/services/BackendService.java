@@ -16,7 +16,7 @@ public class BackendService {
 
     @Value("${API_HOST:localhost}")
     private String apiHost;
-    @Value("${API_PORT:64001}")
+    @Value("${API_PORT:3000}")
     private String apiPort;
 
     public Object persistXMLSheet(File sheet, String id) throws BackendException {
