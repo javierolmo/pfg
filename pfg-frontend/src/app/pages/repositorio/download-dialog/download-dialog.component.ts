@@ -28,4 +28,8 @@ export class DownloadDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  close() {
+    this.dialogRef.close();
+  }
+
 }

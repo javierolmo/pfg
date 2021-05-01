@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { NbToastrService} from '@nebular/theme';
 import { Specs } from 'app/@core/data/specs';
 import { Instrumento } from 'app/@core/data/instrumento';

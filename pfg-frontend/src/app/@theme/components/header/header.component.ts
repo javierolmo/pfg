@@ -68,11 +68,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         return themeName.startsWith('material');
       }));
 
-      this.authService.onTokenChange()
-        .subscribe((token: NbAuthJWTToken) => {
-          if(token.isValid()){
+      this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
+          if (token.isValid()) {
             console.log(token.getPayload());
-            this.usernick = token.getPayload()["sub"];
+            this.usernick = token.getPayload()['sub'];
           }
         });
   }
