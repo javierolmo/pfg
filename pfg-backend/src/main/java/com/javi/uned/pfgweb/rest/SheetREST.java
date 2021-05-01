@@ -4,6 +4,7 @@ import com.javi.uned.pfgweb.beans.Sheet;
 import com.javi.uned.pfgweb.beans.SheetDTO;
 import com.javi.uned.pfgweb.config.FileSystemConfig;
 import com.javi.uned.pfgweb.repositories.SheetRepository;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -111,6 +112,29 @@ public class SheetREST {
         sheetRepository.deleteById(id);
         fileSystemConfig.deleteSheetFolder(id);
         return "Partitura eliminada con éxito";
+    }
+
+    /**
+     * Permite visualizar una partitura en pdf
+     * @param id identificador de la partitura
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/{id}.pdf")
+    public ResponseEntity<byte[]> visualizePDF(@PathVariable int id) throws IOException {
+
+        // File
+        File file = new File(fileSystemConfig.getSheetFolder(id), id + ".pdf");
+        byte[] bytes = FileUtils.readFileToByteArray(file);
+
+        // Headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.add("content-disposition", "inline;filename=" + file.getName());
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+
     }
 
     /**
