@@ -16,10 +16,14 @@
       <nb-list-item class="row" *ngFor="let sheet of sheets">
         <span class="col">{{sheet.name}}</span>
         <span class="col">{{sheet.date}}</span>
+        <ngx-status [sheet]="sheet" class="col"></ngx-status>
+        <!--
         <span class="col">Status:
-          <nb-icon icon="checkmark-outline" *ngIf="sheet.finished"></nb-icon>
+          <nb-icon icon="checkmark-outline" *ngIf="sheet.finished && sheet.pdf && sheet.xml && sheet.specs"></nb-icon>
+          <nb-icon status="danger" icon="alert-triangle-outline" *ngIf="sheet.finished && (!sheet.pdf || !sheet.xml || !sheet.specs)"></nb-icon>
           <mat-spinner [diameter]="20" *ngIf="!sheet.finished"></mat-spinner>
         </span>
+        -->
         <nb-actions class="ml-auto" size="small" disabled="!sheet.finished">
           <nb-action icon="eye-outline" (click)="sheet.pdf?openNewTab(sheet.id):null" [disabled]="!sheet.pdf"></nb-action>
           <nb-action icon="download-outline" (click)="openDownloadDialog(sheet)"></nb-action>

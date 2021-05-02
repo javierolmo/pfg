@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Sheet, SheetPage } from '../data/sheet';
@@ -36,6 +36,11 @@ export class SheetService {
   deleteSheet(id: number) {
     const urlRequest = `${environment.apiUrl}/sheets/${id}`;
     return this.httpClient.delete(urlRequest, { responseType: 'text'});
+  }
+
+  retry(id: number) {
+      const urlRequest = `${environment.apiUrl}/sheets/${id}/retry`;
+      return this.httpClient.get(urlRequest, { responseType: 'text'});
   }
 
 

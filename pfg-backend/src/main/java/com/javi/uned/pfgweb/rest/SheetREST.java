@@ -1,5 +1,7 @@
 package com.javi.uned.pfgweb.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javi.uned.pfg.model.Specs;
 import com.javi.uned.pfgweb.beans.Sheet;
 import com.javi.uned.pfgweb.beans.SheetDTO;
 import com.javi.uned.pfgweb.config.FileSystemConfig;
@@ -17,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,6 +42,10 @@ public class SheetREST {
     private SheetRepository sheetRepository;
     @Autowired
     private FileSystemConfig fileSystemConfig;
+    @Autowired
+    private KafkaTemplate<String, Specs> retryXmlTemplate;
+    @Autowired
+    private KafkaTemplate<String, byte[]> retryPdfTemplate;
 
     @GetMapping("/pages")
     public Page<Sheet> getSheets(
@@ -216,6 +223,39 @@ public class SheetREST {
 
         return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/{id}/retry")
+    public ResponseEntity<String> retry(@PathVariable int id) throws IOException {
+        File specsFile = new File(fileSystemConfig.getSheetFolder(id), "specs.json");
+        Optional<Sheet> optionalSheet = sheetRepository.findById(id);
+
+        if (specsFile.exists() && optionalSheet.isPresent()) {
+            File xml = new File(fileSystemConfig.getSheetFolder(id), id + ".musicxml");
+            File pdf = new File(fileSystemConfig.getSheetFolder(id), id + ".pdf");
+            Sheet sheet = optionalSheet.get();
+            if (!xml.exists()) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                Specs specs = objectMapper.readValue(specsFile, Specs.class);
+                String sheetid = "" + id;
+                retryXmlTemplate.send("melodia.backend.retryxml", sheetid, specs);
+                sheet.setFinished(false);
+                sheetRepository.save(sheet);
+                return ResponseEntity.ok("Se ha planificado el reintento. Reconstruyendo xml y pdf...");
+            } else if (!pdf.exists()) {
+                byte[] xmlbinary = FileUtils.readFileToByteArray(xml);
+                String sheetid = "" + id;
+                retryPdfTemplate.send("melodia.backend.retrypdf", sheetid, xmlbinary);
+                sheet.setFinished(false);
+                sheetRepository.save(sheet);
+                return ResponseEntity.ok("Se ha planificado el reintento. Reconstruyendo pdf...");
+            } else {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Partitura correcta. Se ha omitido el reintento");
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Imposible reconstruir. No se han encontrado las " +
+                    "especificaciones. Eliminar partitura o contactar con administrador");
+        }
     }
 
     /**

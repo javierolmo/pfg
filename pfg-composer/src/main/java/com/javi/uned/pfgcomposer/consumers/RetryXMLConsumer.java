@@ -24,10 +24,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 @Service
-public class SpecsConsumer {
+public class RetryXMLConsumer {
 
-    private final Logger logger = LoggerFactory.getLogger(SpecsConsumer.class);
-    private static final String TOPIC_COMPOSER_EXECUTION = "melodia.composer.specs";
+    private final Logger logger = LoggerFactory.getLogger(RetryPDFConsumer.class);
+    private static final String TOPIC_COMPOSER_EXECUTION = "melodia.composer.retryxml";
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
     @Autowired
@@ -35,7 +35,7 @@ public class SpecsConsumer {
     @Autowired
     private MusescoreService musescoreService;
 
-    @KafkaListener(topics = "melodia.backend.specs", groupId = "0", containerFactory = "specsKafkaListenerFactory")
+    @KafkaListener(topics = "melodia.backend.retryxml", groupId = "0", containerFactory = "specsKafkaListenerFactory")
     public void consume(Specs specs, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
         File xmlFile = null;
         File pdfFile = null;
@@ -89,8 +89,5 @@ public class SpecsConsumer {
             throw new SpecsConsumerException("SpecsConsumer.generarPDF: error al guardar PDF", e);
         }
     }
-
-
-
 
 }

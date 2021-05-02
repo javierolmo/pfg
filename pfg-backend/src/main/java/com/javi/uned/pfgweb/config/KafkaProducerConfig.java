@@ -2,10 +2,13 @@ package com.javi.uned.pfgweb.config;
 
 import com.javi.uned.pfg.model.Specs;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.ByteArraySerializer;
+import org.apache.kafka.common.serialization.BytesSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
@@ -32,8 +35,22 @@ public class KafkaProducerConfig {
     }
 
     @Bean
+    public ProducerFactory<String, byte[]> retryPdfProducerFactory() {
+        Map<String, Object> config = new HashMap<>();
+        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost+":"+kafkaPort);
+        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ByteArraySerializer.class);
+        return new DefaultKafkaProducerFactory<>(config);
+    }
+
+    @Bean
     public KafkaTemplate<String, Specs> kafkaSpecsTemplate() {
         return new KafkaTemplate<>(scoreProducerFactory());
+    }
+
+    @Bean
+    public KafkaTemplate<String, byte[]> kafkaRetryPdfTemplate() {
+        return new KafkaTemplate<>(retryPdfProducerFactory());
     }
 
 }
