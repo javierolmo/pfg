@@ -26,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,12 +51,14 @@ public class SheetREST {
     }
 
     @GetMapping
-    public List<Sheet> getSheets(
+    public List<SheetDTO> getSheets(
             @RequestParam(required = false) String nameContains,
             @RequestParam(required = false) Boolean finished,
             @RequestParam(required = false) Long ownerId,
             @RequestParam(required = false) Integer id
     ){
+
+        // Querying by example
         Sheet sheet = new Sheet();
         sheet.setFinished(finished);
         sheet.setName(nameContains);
@@ -64,7 +67,24 @@ public class SheetREST {
         ExampleMatcher matcher = ExampleMatcher.matching()
                 .withMatcher("name", GenericPropertyMatcher::contains);
         Example<Sheet> sheetExample = Example.of(sheet, matcher);
-        return sheetRepository.findAll(sheetExample);
+        List<Sheet> sheets = sheetRepository.findAll(sheetExample);
+
+        // Building DTOs
+        List<SheetDTO> result = new ArrayList<>();
+        sheets.forEach(sheet1 -> {
+            SheetDTO sheetDTO = new SheetDTO();
+            sheetDTO.setFinished(sheet1.getFinished());
+            sheetDTO.setName(sheet1.getName());
+            sheetDTO.setOwnerId(sheet1.getOwnerId());
+            sheetDTO.setId(sheet1.getId());
+            sheetDTO.setStyle(sheet1.getStyle());
+            sheetDTO.setDate(sheet1.getDate());
+            sheetDTO.setSpecs(new File(fileSystemConfig.getSheetFolder(sheet1.getId()), "specs.json").exists());
+            sheetDTO.setXml(new File(fileSystemConfig.getSheetFolder(sheet1.getId()), sheet1.getId()+".musicxml").exists());
+            sheetDTO.setPdf(new File(fileSystemConfig.getSheetFolder(sheet1.getId()), sheet1.getId()+".pdf").exists());
+            result.add(sheetDTO);
+        });
+        return result;
     }
 
     @PostMapping
@@ -80,9 +100,24 @@ public class SheetREST {
     }
 
     @GetMapping("/{id}")
-    public Sheet sheet(@PathVariable Integer id) {
+    public SheetDTO sheet(@PathVariable Integer id) {
         Optional<Sheet> optionalSheet = sheetRepository.findById(id);
-        return optionalSheet.isPresent()? optionalSheet.get() : null;
+        if (optionalSheet.isPresent()) {
+            Sheet sheet = optionalSheet.get();
+            SheetDTO sheetDTO = new SheetDTO();
+            sheetDTO.setFinished(sheet.getFinished());
+            sheetDTO.setName(sheet.getName());
+            sheetDTO.setOwnerId(sheet.getOwnerId());
+            sheetDTO.setId(sheet.getId());
+            sheetDTO.setStyle(sheet.getStyle());
+            sheetDTO.setDate(sheet.getDate());
+            sheetDTO.setSpecs(new File(fileSystemConfig.getSheetFolder(sheet.getId()), "specs.json").exists());
+            sheetDTO.setXml(new File(fileSystemConfig.getSheetFolder(sheet.getId()), id + ".musicxml").exists());
+            sheetDTO.setPdf(new File(fileSystemConfig.getSheetFolder(sheet.getId()), id + ".pdf").exists());
+            return sheetDTO;
+        } else {
+            return null;
+        }
     }
 
     @PutMapping("/{id}")
@@ -130,6 +165,52 @@ public class SheetREST {
         // Headers
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.add("content-disposition", "inline;filename=" + file.getName());
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+
+    }
+
+    /**
+     * Permite visualizar una partitura en musicxml
+     * @param id identificador de la partitura
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/{id}.musicxml")
+    public ResponseEntity<byte[]> visualizeXML(@PathVariable int id) throws IOException {
+
+        // File
+        File file = new File(fileSystemConfig.getSheetFolder(id), id + ".musicxml");
+        byte[] bytes = FileUtils.readFileToByteArray(file);
+
+        // Headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_XML);
+        headers.add("content-disposition", "inline;filename=" + file.getName());
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+
+    }
+
+    /**
+     * Permite visualizar una partitura en musicxml
+     * @param id identificador de la partitura
+     * @return
+     * @throws IOException
+     */
+    @GetMapping("/{id}.json")
+    public ResponseEntity<byte[]> visualizeSpecs(@PathVariable int id) throws IOException {
+
+        // File
+        File file = new File(fileSystemConfig.getSheetFolder(id), "specs.json");
+        byte[] bytes = FileUtils.readFileToByteArray(file);
+
+        // Headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("content-disposition", "inline;filename=" + file.getName());
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 

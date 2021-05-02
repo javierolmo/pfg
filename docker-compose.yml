@@ -38,11 +38,12 @@ services:
   # Composer
   composer:
     build: ./pfg-composer
+    restart: always
     environment:
       KAFKA_HOST: 'kafka'
       KAFKA_PORT: '29092'
-      API_HOST: 'backend'
-      API_PORT: '3000'
+      API_HOST: '192.168.0.22'
+      API_PORT: '64001'
     depends_on:
       - backend
       - kafka
@@ -53,7 +54,7 @@ services:
     build: ./pfg-frontend
     restart: always
     environment:
-      API_URL: "http://192.168.0.145:64001/api"
+      API_URL: "http://192.168.0.22:64001/api"
     ports:
       - 80:80
     depends_on:
@@ -72,7 +73,7 @@ services:
 
   kafka:
     image: obsidiandynamics/kafka
-    restart: "no"
+    restart: always
     ports:
       - "2181:2181"
       - "9092:9092"

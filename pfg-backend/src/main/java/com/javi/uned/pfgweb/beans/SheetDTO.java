@@ -8,6 +8,9 @@ public class SheetDTO {
     private String date;
     private Long ownerId;
     private Boolean finished;
+    private Boolean specs;
+    private Boolean xml;
+    private Boolean pdf;
 
     public Integer getId() {
         return id;
@@ -55,5 +58,29 @@ public class SheetDTO {
 
     public void setFinished(Boolean finished) {
         this.finished = finished;
+    }
+
+    public Boolean getSpecs() {
+        return specs;
+    }
+
+    public void setSpecs(Boolean specs) {
+        this.specs = specs;
+    }
+
+    public Boolean getXml() {
+        return xml;
+    }
+
+    public void setXml(Boolean xml) {
+        this.xml = xml;
+    }
+
+    public Boolean getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(Boolean pdf) {
+        this.pdf = pdf;
     }
 }

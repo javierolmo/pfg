@@ -54,16 +54,12 @@ export class RepositorioComponent implements OnInit {
     }
   }
 
-  openDownloadDialog(id: number) {
+  openDownloadDialog(sheet: Sheet) {
     this.dialogService.open(DownloadDialogComponent, {
       context: {
-        sheetId: id,
+        sheet: sheet,
       },
     });
-  }
-
-  downloadSheet(id: number) {
-    window.location.href = `${environment.apiUrl}/sheets/${id}/download/xml`;
   }
 
   deleteSheet(id: number) {
@@ -77,20 +73,13 @@ export class RepositorioComponent implements OnInit {
       });
   }
 
-  private snackMessage(message: string) {
-    this._snackBar.open(message, 'OK', { duration: 2000});
-  }
-
-  openSheet(id: number) {
-    this.nbDialogService.open(SheetDialogComponent, {
-      context: {
-        sheetId: id,
-      },
-    });
-  }
-
   showToast(message, title, position, status) {
     this.toastrService.show(message, title, { position, status });
+  }
+
+  openNewTab(id: number) {
+    const url = `${environment.apiUrl}/sheets/${id}.pdf`;
+    window.open(url, '_blank');
   }
 
 }

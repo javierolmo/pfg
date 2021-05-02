@@ -9,15 +9,15 @@ import { RepositorioModule } from './repositorio/repositorio.module';
 import { ComposicionModule } from './composicion/composicion.module';
 
 @NgModule({
-  imports: [
-    PagesRoutingModule,
-    NbMenuModule,
-    MiscellaneousModule,
-    ThemeModule,
-    NbCardModule,
-    RepositorioModule,
-    ComposicionModule
-  ],
+    imports: [
+        PagesRoutingModule,
+        NbMenuModule,
+        MiscellaneousModule,
+        ThemeModule,
+        NbCardModule,
+        RepositorioModule,
+        ComposicionModule,
+    ],
   declarations: [
     PagesComponent,
     HomeComponent,

@@ -21,8 +21,8 @@
           <mat-spinner [diameter]="20" *ngIf="!sheet.finished"></mat-spinner>
         </span>
         <nb-actions class="ml-auto" size="small" disabled="!sheet.finished">
-          <nb-action icon="eye-outline" (click)="openSheet(sheet.id)"></nb-action>
-          <nb-action icon="download-outline" (click)="openDownloadDialog(sheet.id)"></nb-action>
+          <nb-action icon="eye-outline" (click)="sheet.pdf?openNewTab(sheet.id):null" [disabled]="!sheet.pdf"></nb-action>
+          <nb-action icon="download-outline" (click)="openDownloadDialog(sheet)"></nb-action>
           <nb-action icon="trash-2-outline" (click)="deleteSheet(sheet.id)"></nb-action>
         </nb-actions>
       </nb-list-item>

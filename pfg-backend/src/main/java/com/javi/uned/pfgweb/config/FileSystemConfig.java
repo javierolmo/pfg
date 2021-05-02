@@ -1,6 +1,5 @@
 package com.javi.uned.pfgweb.config;
 
-import com.javi.uned.pfgweb.beans.Sheet;
 import com.javi.uned.pfgweb.repositories.SheetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

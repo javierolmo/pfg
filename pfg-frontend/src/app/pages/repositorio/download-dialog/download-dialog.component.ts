@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {environment} from '../../../../environments/environment';
-import {NbDialogRef} from "@nebular/theme";
+import {NbDialogRef} from '@nebular/theme';
+import {Sheet} from '../../../@core/data/sheet';
 
 @Component({
   selector: 'ngx-download-dialog',
@@ -10,7 +11,7 @@ import {NbDialogRef} from "@nebular/theme";
 export class DownloadDialogComponent implements OnInit {
 
   @Input()
-  sheetId: number;
+  sheet: Sheet;
 
   constructor(private dialogRef: NbDialogRef<DownloadDialogComponent>) { }
 
@@ -19,12 +20,12 @@ export class DownloadDialogComponent implements OnInit {
   }
 
   downloadMusicXML() {
-    window.location.href = `${environment.apiUrl}/sheets/${(this.sheetId)}/file/musicxml`;
+    window.location.href = `${environment.apiUrl}/sheets/${(this.sheet.id)}/file/musicxml`;
     this.dialogRef.close();
   }
 
   downloadPDF() {
-    window.location.href = `${environment.apiUrl}/sheets/${(this.sheetId)}/file/pdf`;
+    window.location.href = `${environment.apiUrl}/sheets/${(this.sheet.id)}/file/pdf`;
     this.dialogRef.close();
   }
 

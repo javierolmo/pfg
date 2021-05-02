@@ -5,12 +5,10 @@ export class Sheet {
     date: string;
     sheet: string;
     finished: boolean;
+    specs: boolean;
+    xml: boolean;
+    pdf: boolean;
 }
-
-export interface XmlSheet {
-  text: string;
-}
-
 
 export interface SheetPage {
     content: Sheet[];
