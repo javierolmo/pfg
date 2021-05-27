@@ -6,6 +6,7 @@ import com.javi.uned.pfgweb.beans.Sheet;
 import com.javi.uned.pfgweb.beans.SheetDTO;
 import com.javi.uned.pfgweb.config.FileSystemConfig;
 import com.javi.uned.pfgweb.repositories.SheetRepository;
+import io.swagger.annotations.Api;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -36,6 +37,7 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/sheets")
+@Api(tags = "Sheets")
 public class SheetREST {
 
     @Autowired

@@ -1,7 +1,7 @@
 # Install pfg-core and package pfg-composer
 FROM maven:3.5-jdk-8-alpine
 WORKDIR /app
-COPY ./jfrog-settings.xml /root/.m2/settings.xml
+COPY maven-settings.xml /root/.m2/settings.xml
 COPY ./src /app/pfg-composer/src
 COPY ./pom.xml /app/pfg-composer/pom.xml
 RUN cd /app/pfg-composer && mvn package -DskipTests

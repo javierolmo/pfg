@@ -10,6 +10,7 @@ import com.javi.uned.pfgweb.repositories.SheetRepository;
 import com.javi.uned.pfgweb.repositories.UserRepository;
 import com.javi.uned.pfgweb.services.CustomUserDetailsService;
 import com.javi.uned.pfgweb.services.UtilService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/users")
+@Api(tags = "Users")
 public class UserREST {
 
     @Autowired

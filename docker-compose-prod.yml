@@ -29,7 +29,7 @@ services:
       KAFKA_HOST: 'kafka'
       KAFKA_PORT: '29092'
     ports:
-      - 64001:3000
+      - 64001:8080
     depends_on:
       - database
     volumes:

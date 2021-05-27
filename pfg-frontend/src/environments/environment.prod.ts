@@ -6,4 +6,6 @@
 export const environment = {
   production: true,
   apiUrl: window['env']['apiUrl'] || 'http://localhost:64001/api',
+  docUrl: window['env']['docUrl'] || 'http://localhost:64001/swagger-ui/',
+
 };

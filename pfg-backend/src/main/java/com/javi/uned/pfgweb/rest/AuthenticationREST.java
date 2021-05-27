@@ -8,6 +8,9 @@ import com.javi.uned.pfgweb.config.WebSecurityConfig;
 import com.javi.uned.pfgweb.services.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.SwaggerDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +27,7 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
+@Api(tags = "Authentication")
 public class AuthenticationREST {
 
     @Autowired
