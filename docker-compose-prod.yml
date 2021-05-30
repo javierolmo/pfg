@@ -37,7 +37,7 @@ services:
 
   # Composer
   composer:
-    build: ./pfg-composer
+    image: javiolmo/pfg-composer:latest
     restart: always
     environment:
       KAFKA_HOST: 'kafka'
@@ -50,26 +50,26 @@ services:
 
 
   # Frontend
-  frontend:
-    build: ./pfg-frontend
-    restart: always
-    environment:
-      API_URL: "http://192.168.0.145:64001/api"
-    ports:
-      - 80:80
-    depends_on:
-      - backend
+  #frontend:
+  #  build: ./pfg-frontend
+  #  restart: always
+  #  environment:
+  #    API_URL: "http://192.168.0.22:64001/api"
+  #  ports:
+  #    - 80:80
+  #  depends_on:
+  #    - backend
 
-  kafdrop:
-    image: obsidiandynamics/kafdrop
-    restart: "no"
-    ports:
-      - "9000:9000"
-    environment:
-      KAFKA_BROKERCONNECT: "kafka:29092"
-      JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
-    depends_on:
-      - "kafka"
+  #kafdrop:
+  #  image: obsidiandynamics/kafdrop
+  #  restart: "no"
+  #  ports:
+  #    - "9000:9000"
+  #  environment:
+  #    KAFKA_BROKERCONNECT: "kafka:29092"
+  #    JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+  #  depends_on:
+  #    - "kafka"
 
   kafka:
     image: obsidiandynamics/kafka

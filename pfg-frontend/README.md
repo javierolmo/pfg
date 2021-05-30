@@ -1,4 +1,0 @@
-#PFG Frontend
-
-Interfaz gráfica
-
