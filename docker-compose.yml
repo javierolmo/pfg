@@ -54,8 +54,8 @@ services:
     image: javiolmo/pfg-frontend:latest
     restart: always
     environment:
-      API_URL: "http://pfg-uned.duckdns.org/api"
-      DOC_URL: "http://pfg-uned.duckdns.org/swagger_ui/"
+      API_URL: "localhost:64001/api"
+      DOC_URL: "localhost:64001/swagger_ui/"
     ports:
       - 80:80
     depends_on:
