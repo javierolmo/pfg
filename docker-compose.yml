@@ -51,7 +51,7 @@ services:
 
   # Frontend
   frontend:
-    image: javiolmo/pfg-composer:latest
+    image: javiolmo/pfg-frontend:latest
     restart: always
     environment:
       API_URL: "http://pfg-uned.duckdns.org/api"
