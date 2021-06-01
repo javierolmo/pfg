@@ -28,6 +28,7 @@ services:
       DB_SCHEMA: 'melodia'
       KAFKA_HOST: 'kafka'
       KAFKA_PORT: '29092'
+      TZ: Europe/Madrid
     ports:
       - 64001:8080
     depends_on:
