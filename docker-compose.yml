@@ -50,15 +50,16 @@ services:
 
 
   # Frontend
-  #frontend:
-  #  build: ./pfg-frontend
-  #  restart: always
-  #  environment:
-  #    API_URL: "http://192.168.0.22:64001/api"
-  #  ports:
-  #    - 80:80
-  #  depends_on:
-  #    - backend
+  frontend:
+    image: javiolmo/pfg-composer:latest
+    restart: always
+    environment:
+      API_URL: "http://pfg-uned.duckdns.org/api"
+      DOC_URL: "http://pfg-uned.duckdns.org/swagger_ui/"
+    ports:
+      - 80:80
+    depends_on:
+      - backend
 
   #kafdrop:
   #  image: obsidiandynamics/kafdrop
