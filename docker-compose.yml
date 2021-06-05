@@ -52,8 +52,7 @@ services:
     image: javiolmo/pfg-frontend:latest
     restart: always
     environment:
-      API_URL: "localhost:64001/api"
-      DOC_URL: "localhost:64001/swagger_ui/"
+      API_URL: "localhost:64001"
       TZ: Europe/Madrid
     ports:
       - 80:80
