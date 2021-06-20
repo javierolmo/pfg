@@ -1,0 +1,421 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+
+\end_preamble
+\use_default_options true
+\master maestro-pfg.lyx
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Estructura
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Estructura"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación, se explicará brevemente cómo se organiza el código fuente
+ de este proyecto y qué módulos lo conforman.
+ En los capitulos siguientes se verá más en detalle cada uno de los módulos.
+\end_layout
+
+\begin_layout Section
+Descripción
+\end_layout
+
+\begin_layout Standard
+Como se comentaba anteriormente en la introducción, este proyecto se puede
+ dividir a grandes rasgos en:
+\end_layout
+
+\begin_layout Itemize
+Librería de composición musical
+\end_layout
+
+\begin_layout Itemize
+Servicio web
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Al principio del desarrollo, la estructura era esta, sin embargo, a medida
+ que el servicio web fue adquiriendo mayor complejidad, ha sido necesario
+ migrar la arquitectura monolítica del servicio web a un 
+\series bold
+conjunto de microservicios
+\series default
+.
+ A continuación, se enumeran los módulos finales con su nombre real:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+pfg-core
+\series default
+\emph on
+ 
+\emph default
+(Librería de composición musical) 
+\end_layout
+
+\begin_layout Itemize
+Servicio web:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+pfg-backend
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+pfg-frontend
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+pfg-composer
+\end_layout
+
+\begin_layout Itemize
+Base de datos 
+\emph on
+[de terceros]
+\end_layout
+
+\begin_layout Itemize
+Kafka + Zookeeper
+\emph on
+ [de terceros]
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "esquema-estructura"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ se muestra cómo interactúan entre ellos cada uno de los módulos mencionados.
+ Como se puede observar, el objetivo es que la totalidad del proceso se
+ realice en el servidor, y que se pueda acceder al servicio a través de
+ un navegador desde cualquier parte, o incluso desde otros sistemas de forma
+ sencilla si fuera necesario, únicamente desarrollando un adaptador para
+ el Api.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "esquema-estructura"
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figs/scheme.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Estructura de los módulos en el servidor
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cada uno de los módulos correspondientes al servicio web están preparados
+ para ser ejecutados en 
+\emph on
+Docker
+\emph default
+ (ver 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Docker"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), cada uno contiene su 
+\emph on
+Dockerfile
+\emph default
+ especificando cómo se construye su imagen, o en el caso de los módulos
+ de terceros, son directamente referencias a imágenes de 
+\emph on
+DockerHub
+\emph default
+.
+\end_layout
+
+\begin_layout Section
+Módulos
+\end_layout
+
+\begin_layout Standard
+En la sección anterior se hacía una breve introducción a la organización
+ en módulos del proyecto y a como se disponen.
+ En los próximos capítulos se profundizará más en cada uno de los módulos
+ propios.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación se hará un pequeño resumen de cada uno de ellos, incluyendo
+ también los módulos de terceros:
+\end_layout
+
+\begin_layout Subsection
+pfg-core
+\end_layout
+
+\begin_layout Standard
+Módulo principal, contiene la lógica 
+\end_layout
+
+\begin_layout Subsection
+pfg-backend
+\end_layout
+
+\begin_layout Subsection
+pfg-frontend
+\end_layout
+
+\begin_layout Subsection
+pfg-composer
+\end_layout
+
+\begin_layout Subsection
+base de datos
+\end_layout
+
+\begin_layout Subsection
+kafka
+\end_layout
+
+\begin_layout Section
+Ejemplo de flujo de ejecución
+\end_layout
+
+\begin_layout Standard
+Para ilustrar rápidamente la comunicación entre módulos, se va a explicar
+ el caso de uso de composición de una obra, un caso de uso muy completo
+ ya que requiere de la participación de todos los componentes:
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conclusiones
+\end_layout
+
+\begin_layout Standard
+Una de las prioridades que satisface este diseño es la capacidad de soportar
+ alta concurrencia.
+ Como se muestra en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "esquema-estructura"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ se ha optado por independizar el módulo 
+\emph on
+pfg-composer
+\emph default
+ del módulo 
+\emph on
+pfg-backend.
+ 
+\emph default
+El motivo de esta separación es reducir al mínimo la carga de trabajo del
+ backend, cuyo correcto funcionamiento es esencial para mantener el servicio
+ activo ya que es el centro del sistema, del que dependen el resto de los
+ módulos.
+ Por ejemplo, si el backend se viera afectado y se ralentizara, impactaría
+ directamente en la interfaz web que realiza consultas sobre él vía REST
+ para obtener la información a mostrar.
+ De cara al usuario, una interfaz lenta es lo que da una peor sensación
+ y una experiencia negativa.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Otro motivo por el que se ha optado por este modelo es la alta escalabilidad
+ que proporciona.
+ Al tener módulos independientes para finalidades concretas es relativamente
+ sencillo multiplicar el número de instancias de cualquiera de ellos, ya
+ sea por necesidades de concurrencia o por disponibilidad: 
+\end_layout
+
+\begin_layout Standard
+Continunando el ejemplo anterior, en caso de que hubiera una alta demanda
+ del servicio, probablemente el módulo más sobrecargado sería el 
+\emph on
+pfg-composer 
+\emph default
+ya que es el encargado de realizar las tareas más pesadas.
+ Llegado el punto de necesitar más capacidad de procesamiento, bastaría
+ con replicar el composer tantas veces como fuera necesario.
+ 
+\end_layout
+
+\begin_layout Standard
+Otro motivo interesante por el que replicar módulos podría ser ofrecer una
+ mayor disponibilidad en caso de que falle alguno de los módulos.
+ En este supuesto, el más crítico sería el 
+\emph on
+pfg-composer.
+ 
+\emph default
+Sin él no sólo no podría funcionar ninguno de los demás, sino que el usuario
+ se quedaría sin feedback de qué está pasando.
+ La interfaz no podría autenticar a los usuarios, las peticiones no se resolverí
+an, y en caso de tener otros clientes como una app móvil o de escritorio,
+ tampoco recibirían respuesta.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
