@@ -1,0 +1,26 @@
+<nb-card>
+  <nb-card-header>Repositorio</nb-card-header>
+  <nb-card-body>
+
+    <!-- Filtrado -->
+    <div class="pb-4">
+      <form [formGroup]="busquedaForm" (ngSubmit)="filterSheets(busquedaForm.value.name)">
+        <input style="width: 300px" nbInput formControlName="name" placeholder="Filtrar..." (keyup)="filterSheets(busquedaForm.value.name)">
+        <span class="mx-5 text-secondary">({{filteredSheets.length}} resultados de {{sheets.length}})</span>
+      </form>
+    </div>
+
+    <nb-list [nbSpinner]="loading">
+      <nb-list-item class="row" *ngFor="let sheet of filteredSheets">
+        <span class="col">{{sheet.name}}</span>
+        <span class="col">{{sheet.date}}</span>
+        <ngx-status [sheet]="sheet" class="col"></ngx-status>
+        <nb-actions class="ml-auto" size="small" disabled="!sheet.finished">
+          <nb-action icon="eye-outline" (click)="sheet.pdf?openNewTab(sheet.id):null" [disabled]="!sheet.pdf"></nb-action>
+          <nb-action icon="download-outline" (click)="openDownloadDialog(sheet)"></nb-action>
+          <nb-action icon="trash-2-outline" (click)="deleteSheet(sheet.id)"></nb-action>
+        </nb-actions>
+      </nb-list-item>
+    </nb-list>
+  </nb-card-body>
+</nb-card>
