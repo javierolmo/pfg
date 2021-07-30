@@ -1,16 +1,18 @@
 package com.javi.uned.pfgbackend.domain.sheet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javi.uned.pfg.model.Specs;
 import com.javi.uned.pfgbackend.adapters.filesystem.FileService;
+import com.javi.uned.pfgbackend.adapters.messagebroker.KafkaService;
 import com.javi.uned.pfgbackend.domain.enums.Formats;
 import com.javi.uned.pfgbackend.domain.exceptions.EntityNotFound;
+import com.javi.uned.pfgbackend.domain.exceptions.MelodiaIOException;
 import com.javi.uned.pfgbackend.domain.exceptions.RetryException;
 import com.javi.uned.pfgbackend.domain.exceptions.UnavailableResourceException;
 import com.javi.uned.pfgbackend.domain.ports.database.SheetDAO;
+import com.javi.uned.pfgbackend.domain.ports.messagebroker.MessageBrokerService;
 import com.javi.uned.pfgbackend.domain.sheet.model.Availability;
 import com.javi.uned.pfgbackend.domain.sheet.model.Sheet;
-import org.apache.commons.io.FileUtils;
+import com.javi.uned.pfg.model.Specs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class SheetService {
     @Autowired
     private KafkaTemplate<String, Specs> retryXmlTemplate;
     @Autowired
-    private KafkaTemplate<String, byte[]> retryPdfTemplate;
+    private MessageBrokerService messageBrokerService;
 
     public Sheet save(Sheet sheet) {
         return this.sheetDAO.save(sheet);
@@ -74,9 +75,7 @@ public class SheetService {
                 }
 
                 if (!pdf.exists()) {
-                    byte[] xmlbinary = FileUtils.readFileToByteArray(xml);
-                    String sheetid = "" + id;
-                    retryPdfTemplate.send("melodia.backend.retrypdf", sheetid, xmlbinary);
+                    messageBrokerService.composerGeneticProducePDFRetry(id, xml);
                     sheetDAO.markAsFinished(id);
                 }
 
@@ -84,7 +83,7 @@ public class SheetService {
                 throw new RetryException("Imposible reconstruir. No se han encontrado las especificaciones. Eliminar partitura o contactar con administrador");
             }
 
-        } catch (IOException ioe) {
+        } catch (IOException | MelodiaIOException ioe) {
             throw new RetryException("Error retrying because of IO error", ioe);
         } catch (EntityNotFound entityNotFound) {
             //TODO:

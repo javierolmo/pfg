@@ -1,5 +1,6 @@
 package com.javi.uned.pfgbackend.adapters.api.authentication;
 
+import com.javi.uned.pfgbackend.adapters.api.RestException;
 import com.javi.uned.pfgbackend.adapters.api.authentication.model.LoginDTO;
 import com.javi.uned.pfgbackend.adapters.api.authentication.model.LoginResponse;
 import com.javi.uned.pfgbackend.adapters.api.authentication.model.LoginResponseData;
@@ -40,52 +41,37 @@ public class AuthenticationControllerImpl implements AuthenticationController {
     private UserService userService;
 
 
-    public ResponseEntity login(LoginDTO user) {
-        try {
-            AuthenticationManager authenticationManager = webSecurityConfig.authenticationManagerBean();
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
-            logger.info("Login successful: {}", user.getEmail());
+    //TODO: Ver este throws Exception. Es demasiado genérico
+    public LoginResponse login(LoginDTO user) throws Exception {
 
-            LoginResponse loginResponse = new LoginResponse();
-            LoginResponseData data = new LoginResponseData();
-            data.setToken(TokenFactory.authToken(authentication, userService.findByEmail(user.getEmail())));
-            loginResponse.setData(data);
+        AuthenticationManager authenticationManager = webSecurityConfig.authenticationManagerBean();
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+        logger.info("Login successful: {}", user.getEmail());
 
-            return ResponseEntity.ok(loginResponse);
-        } catch (Exception e) {
-            logger.error("Login failed: {}", user.getEmail());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }
+        LoginResponse loginResponse = new LoginResponse();
+        LoginResponseData data = new LoginResponseData();
+        data.setToken(TokenFactory.authToken(authentication, userService.findByEmail(user.getEmail())));
+        loginResponse.setData(data);
+
+        return loginResponse;
     }
 
-    public ResponseEntity register(RegistrationRequest registrationRequest) {
-        try {
-            User user = UserDTOTransformer.toDomainObject(registrationRequest);
-            user = userService.registerUser(user);
+    public LoginResponse register(RegistrationRequest registrationRequest) throws Exception {
 
-            AuthenticationManager authenticationManager = webSecurityConfig.authenticationManagerBean();
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(registrationRequest.getEmail(), registrationRequest.getPassword()));
-            String token = TokenFactory.authToken(authentication, userService.findById(user.getId()));
+        User user = UserDTOTransformer.toDomainObject(registrationRequest);
+        user = userService.registerUser(user);
 
-            LoginResponse loginResponse = new LoginResponse();
-            LoginResponseData data = new LoginResponseData();
-            data.setToken(token);
-            loginResponse.setData(data);
+        AuthenticationManager authenticationManager = webSecurityConfig.authenticationManagerBean();
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(registrationRequest.getEmail(), registrationRequest.getPassword()));
+        String token = TokenFactory.authToken(authentication, userService.findById(user.getId()));
 
-            return ResponseEntity.ok(loginResponse);
-        } catch (ValidationException e) {
-            logger.error("Invalid sign up request (user: {})", registrationRequest.getEmail());
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (ExistingUserException e) {
-            logger.error("Already existing user trying to sign up (user: {})", registrationRequest.getEmail());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        } catch (EntityNotFound entityNotFound) {
-            logger.error(entityNotFound.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(entityNotFound.getMessage());
-        } catch (Exception e) {
-            logger.error("Unexpected error: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
+        LoginResponse loginResponse = new LoginResponse();
+        LoginResponseData data = new LoginResponseData();
+        data.setToken(token);
+        loginResponse.setData(data);
+
+        return loginResponse;
+
     }
 
 }

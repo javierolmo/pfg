@@ -13,11 +13,15 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements AuthenticationProvider {
@@ -62,7 +66,9 @@ public class UserService implements AuthenticationProvider {
             // Check credentials
             User user = userDAO.findByEmail(email);
             if (passwordEncoder.matches(password, user.getPassword())) {
-                return new UsernamePasswordAuthenticationToken(email, password, user.getRoles());
+                Set<GrantedAuthority> authorities = new HashSet<>();
+                user.getRoles().forEach(role -> authorities.add(role));
+                return new UsernamePasswordAuthenticationToken(email, password, authorities);
             } else {
                 throw new BadCredentialsException("Bad credentials");
             }

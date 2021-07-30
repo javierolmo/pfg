@@ -1,13 +1,14 @@
 package com.javi.uned.pfgbackend.config.database;
 
 import com.javi.uned.pfgbackend.adapters.database.log.LogDAOImpl;
-import com.javi.uned.pfgbackend.adapters.database.privilege.PrivilegeDAOImpl;
 import com.javi.uned.pfgbackend.adapters.database.role.RoleDAOImpl;
 import com.javi.uned.pfgbackend.adapters.database.sheet.SheetDAOImpl;
 import com.javi.uned.pfgbackend.adapters.database.user.UserDAOImpl;
 import com.javi.uned.pfgbackend.domain.ports.database.*;
+import com.javi.uned.pfgbackend.domain.ports.messagebroker.MessageBrokerService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import com.javi.uned.pfgbackend.adapters.messagebroker.KafkaService;
 
 @Configuration
 public class BeanDefinitions {
@@ -18,13 +19,13 @@ public class BeanDefinitions {
     }
 
     @Bean
-    public RoleDAO roleDAO(RoleDAOImpl roleDAO) {
-        return roleDAO;
+    public MessageBrokerService messageBrokerService(KafkaService kafkaService) {
+        return kafkaService;
     }
 
     @Bean
-    public PrivilegeDAO privilegeDAO(PrivilegeDAOImpl privilegeDAO) {
-        return privilegeDAO;
+    public RoleDAO roleDAO(RoleDAOImpl roleDAO) {
+        return roleDAO;
     }
 
     @Bean

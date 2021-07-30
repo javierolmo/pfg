@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ngx-composicion',
-  templateUrl: './composicion.component.html',
-  styleUrls: ['./composicion.component.scss'],
+  template: '<router-outlet></router-outlet>',
 })
 export class ComposicionComponent implements OnInit {
 

@@ -1,7 +1,6 @@
 package com.javi.uned.pfgbackend.domain.user;
 
 import com.javi.uned.pfgbackend.config.JWTAuthorizationFilter;
-import com.javi.uned.pfgbackend.domain.user.model.Role;
 import com.javi.uned.pfgbackend.domain.user.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -9,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class TokenFactory {
@@ -20,7 +18,9 @@ public class TokenFactory {
 
     public static String authToken(Authentication authentication, User user) {
 
-        List<GrantedAuthority> grantedAuthorities = (List<GrantedAuthority>) authentication.getAuthorities();
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
         String token = Jwts.builder()
                 .setId("auth-token")
                 .setSubject(authentication.getName())
@@ -28,7 +28,7 @@ public class TokenFactory {
                 .claim("name", user.getName())
                 .claim("surname", user.getSurname())
                 .claim("email", user.getEmail())
-                .claim("authorities", grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .claim("authorities", authorities)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 600000))
                 .signWith(SignatureAlgorithm.HS512, JWTAuthorizationFilter.SECRET.getBytes())
@@ -38,10 +38,13 @@ public class TokenFactory {
 
     public static String personalToken(User user, long duration) {
 
+        String authorities = user.getRoles().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
         String token = Jwts.builder()
                 .setId("personal-token")
                 .claim("id", user.getId())
-                .claim("authorities", user.getRoles().stream().map(Role::getPrivileges).collect(Collectors.toList()))
+                .claim("authorities", authorities)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + duration))
                 .signWith(SignatureAlgorithm.HS512, JWTAuthorizationFilter.SECRET.getBytes())

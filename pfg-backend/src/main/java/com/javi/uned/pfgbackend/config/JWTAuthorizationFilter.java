@@ -3,6 +3,7 @@ package com.javi.uned.pfgbackend.config;
 import com.javi.uned.pfgbackend.domain.exceptions.AuthException;
 import io.jsonwebtoken.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -12,7 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
@@ -66,6 +67,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
             return claims;
 
+        } catch (ExpiredJwtException expiredJwtException) {
+            throw new AuthException("Token has expired! Please, log in again");
         } catch (Exception e) {
             throw new AuthException("Cannot parse JWT Token", e);
         }
@@ -79,10 +82,12 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
      */
     private void setUpSpringAuthentication(Claims claims) {
         @SuppressWarnings("unchecked")
-        List<String> authorities = (List) claims.get("authorities");
-
-        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
-                authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+        String authorities = claims.get("authorities", String.class);
+        Set<GrantedAuthority> grantedAuthorities = Arrays.stream(authorities.split(","))
+                .filter(authority -> authority.length() > 0)
+                .map(authority -> new SimpleGrantedAuthority(authority))
+                .collect(Collectors.toSet());
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null, grantedAuthorities);
         SecurityContextHolder.getContext().setAuthentication(auth);
 
     }

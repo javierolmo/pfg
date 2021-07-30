@@ -14,7 +14,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Composición',
     icon: 'music-outline',
-    link: '/pages/composicion',
+    children: [
+      {
+        title: 'Genético',
+        link: '/pages/composicion/genetic',
+      },
+      {
+        title: 'Red neuronal',
+        link: '/pages/composicion/neural-network',
+      }
+    ]
   },
   {
     title: 'Mi repositorio',

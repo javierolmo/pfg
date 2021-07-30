@@ -2,10 +2,8 @@ package com.javi.uned.pfgbackend.config.database;
 
 import com.javi.uned.pfgbackend.domain.exceptions.ExistingUserException;
 import com.javi.uned.pfgbackend.domain.exceptions.ValidationException;
-import com.javi.uned.pfgbackend.domain.user.PrivilegeService;
 import com.javi.uned.pfgbackend.domain.user.RoleService;
 import com.javi.uned.pfgbackend.domain.user.UserService;
-import com.javi.uned.pfgbackend.domain.user.model.Privilege;
 import com.javi.uned.pfgbackend.domain.user.model.Role;
 import com.javi.uned.pfgbackend.domain.user.model.User;
 import org.slf4j.Logger;
@@ -27,9 +25,6 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private RoleService roleService;
 
     @Autowired
-    private PrivilegeService privilegeService;
-
-    @Autowired
     private UserService userService;
 
     @Override
@@ -37,13 +32,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         if (alreadySetup) return;
 
-        // Declare and create privileges
-        Privilege readLogsPrivilege = privilegeService.createPrivilegeIfNotFound("READ_LOGS");
-        Privilege disableUsersPrivilege = privilegeService.createPrivilegeIfNotFound("DISABLE_USERS");
-
         // Declare and create roles
-        Role adminRole = roleService.createRoleIfNotFound("ROLE_ADMIN", Arrays.asList(readLogsPrivilege, disableUsersPrivilege));
-        Role userRole = roleService.createRoleIfNotFound("ROLE_USER", new ArrayList<>());
+        Role adminRole = roleService.createRoleIfNotFound("ROLE_ADMIN");
+        Role userRole = roleService.createRoleIfNotFound("ROLE_USER");
 
 
         // Declare users

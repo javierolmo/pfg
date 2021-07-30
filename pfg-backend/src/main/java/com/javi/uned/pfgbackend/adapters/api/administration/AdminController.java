@@ -1,9 +1,11 @@
 package com.javi.uned.pfgbackend.adapters.api.administration;
 
+import com.javi.uned.pfgbackend.adapters.api.RestException;
 import com.javi.uned.pfgbackend.adapters.database.log.LogEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,11 +18,12 @@ public interface AdminController {
      * @param ascendent direction of order sorted by log id
      * @return
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/api/admin/logs/page", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<Page<LogEntity>> getLogs(
+    Page<LogEntity> getLogs(
             @RequestParam(defaultValue = "30", required = false) int size,
             @RequestParam(defaultValue = "0", required = false) int index,
-            @RequestParam(defaultValue = "true", required = false) boolean ascendent);
+            @RequestParam(defaultValue = "true", required = false) boolean ascendent) throws RestException;
 
 
 }

@@ -1,5 +1,6 @@
 package com.javi.uned.pfgbackend.adapters.api.tonalities;
 
+import com.javi.uned.pfg.model.Tonalidad;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,5 +13,5 @@ public interface TonalityController {
      * @return
      */
     @GetMapping(value = "/api/tonalities", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity getAvailableTonality();
+    Tonalidad[] getAvailableTonality();
 }

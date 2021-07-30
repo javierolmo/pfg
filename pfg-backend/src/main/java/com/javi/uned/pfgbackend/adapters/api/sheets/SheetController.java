@@ -1,5 +1,7 @@
 package com.javi.uned.pfgbackend.adapters.api.sheets;
 
+import com.javi.uned.pfgbackend.adapters.api.sheets.model.SheetDTO;
+import com.javi.uned.pfgbackend.domain.exceptions.EntityNotFound;
 import com.javi.uned.pfgbackend.domain.sheet.model.Sheet;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
@@ -61,7 +63,7 @@ public interface SheetController {
      * @return
      */
     @GetMapping(value = "/api/sheets/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity sheet(@PathVariable Integer id);
+    SheetDTO sheet(@PathVariable Integer id) throws EntityNotFound;
 
 
     /**
@@ -70,7 +72,7 @@ public interface SheetController {
      * @param id identificador de la partitura a eliminar
      */
     @DeleteMapping(value = "/api/sheets/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<String> deleteSheet(@PathVariable int id);
+    String deleteSheet(@PathVariable int id);
 
     /**
      * Permite visualizar una partitura en pdf

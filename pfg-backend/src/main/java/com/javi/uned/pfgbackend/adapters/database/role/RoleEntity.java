@@ -1,7 +1,6 @@
 package com.javi.uned.pfgbackend.adapters.database.role;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.javi.uned.pfgbackend.adapters.database.privilege.PrivilegeEntity;
 import com.javi.uned.pfgbackend.adapters.database.user.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -20,14 +19,7 @@ public class RoleEntity implements GrantedAuthority {
     @JsonIgnore
     @ManyToMany(mappedBy = "roleEntities")
     private Collection<UserEntity> userEntities;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "roles_privileges",
-            joinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "privilege_id", referencedColumnName = "id"))
-    private Collection<PrivilegeEntity> privilegeEntities;
+
 
     public RoleEntity() {
         userEntities = new ArrayList<>();
@@ -51,14 +43,6 @@ public class RoleEntity implements GrantedAuthority {
 
     public Collection<UserEntity> getUserEntities() {
         return userEntities;
-    }
-
-    public Collection<PrivilegeEntity> getPrivilegeEntities() {
-        return privilegeEntities;
-    }
-
-    public void setPrivilegeEntities(Collection<PrivilegeEntity> privilegeEntities) {
-        this.privilegeEntities = privilegeEntities;
     }
 
     @Override

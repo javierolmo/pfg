@@ -1,7 +1,6 @@
 package com.javi.uned.pfgbackend.domain.ports.database;
 
 import com.javi.uned.pfgbackend.domain.exceptions.EntityNotFound;
-import com.javi.uned.pfgbackend.domain.user.model.Privilege;
 import com.javi.uned.pfgbackend.domain.user.model.Role;
 
 import java.util.Collection;
@@ -13,5 +12,9 @@ public interface RoleDAO {
 
     Role findByName(String name) throws EntityNotFound;
 
-    Role createRoleIfNotFound(String name, Collection<Privilege> privileges);
+    Role createRoleIfNotFound(String name);
+
+    Role findById(Long id) throws EntityNotFound;
+
+    void delete(Long id) throws EntityNotFound;
 }

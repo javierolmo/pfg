@@ -1,6 +1,5 @@
 package com.javi.uned.pfgbackend.config.kafka;
 
-import com.javi.uned.pfg.model.Specs;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -11,7 +10,7 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-
+import com.javi.uned.pfg.model.Specs;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +46,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, byte[]> kafkaRetryPdfTemplate() {
+    public KafkaTemplate<String, byte[]> kafkaByteArrayTemplate() {
         return new KafkaTemplate<>(retryPdfProducerFactory());
     }
 

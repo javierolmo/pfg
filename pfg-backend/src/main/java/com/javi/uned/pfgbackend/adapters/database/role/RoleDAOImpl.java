@@ -1,16 +1,14 @@
 package com.javi.uned.pfgbackend.adapters.database.role;
 
-import com.javi.uned.pfgbackend.adapters.database.privilege.PrivilegeEntity;
-import com.javi.uned.pfgbackend.adapters.database.privilege.PrivilegeEntityTransformer;
 import com.javi.uned.pfgbackend.domain.exceptions.EntityNotFound;
 import com.javi.uned.pfgbackend.domain.ports.database.RoleDAO;
-import com.javi.uned.pfgbackend.domain.user.model.Privilege;
 import com.javi.uned.pfgbackend.domain.user.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -40,21 +38,37 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
-    public Role createRoleIfNotFound(String name, Collection<Privilege> privileges) {
-        List<PrivilegeEntity> privilegeEntities = privileges.stream()
-                .map(PrivilegeEntityTransformer::toEntity)
-                .collect(Collectors.toList());
+    public Role createRoleIfNotFound(String name) {
 
         RoleEntity roleEntity = roleRepository.findByName(name);
 
         if (roleEntity == null) {
             roleEntity = new RoleEntity();
             roleEntity.setName(name);
-            roleEntity.setPrivilegeEntities(privilegeEntities);
             roleEntity = roleRepository.save(roleEntity);
             return RoleEntityTransformer.toDomainObject(roleEntity);
         } else {
             return RoleEntityTransformer.toDomainObject(roleEntity);
+        }
+    }
+
+    @Override
+    public Role findById(Long id) throws EntityNotFound {
+        Optional<RoleEntity> roleEntityOptional = roleRepository.findById(id);
+        if (roleEntityOptional.isPresent()) {
+            return RoleEntityTransformer.toDomainObject(roleEntityOptional.get());
+        } else {
+            throw new EntityNotFound("Could not find role with id '" + id + "'");
+        }
+
+    }
+
+    @Override
+    public void delete(Long id) throws EntityNotFound {
+        if(roleRepository.existsById(id)){
+            roleRepository.deleteById(id);
+        }else {
+            throw new EntityNotFound("Role with id '"+id+"' does not exist");
         }
     }
 

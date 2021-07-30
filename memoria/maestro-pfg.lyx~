@@ -638,15 +638,16 @@ filename "anexo_a.lyx"
 \end_inset
 
 
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Anexar el resto de anexos, si los hay
-\end_layout
+\begin_inset CommandInset include
+LatexCommand include
+filename "anexo_b.lyx"
 
 \end_inset
 

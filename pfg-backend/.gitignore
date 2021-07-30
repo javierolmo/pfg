@@ -37,3 +37,4 @@ build/
 .mvn/wrapper/maven-wrapper.properties
 config/maven/settings.local.deleted.xml
 config/maven/settings.local.deleted.xml
+/src/main/webapp

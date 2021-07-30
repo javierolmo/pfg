@@ -1,6 +1,8 @@
 package com.javi.uned.pfgbackend.adapters.api.authentication;
 
+import com.javi.uned.pfgbackend.adapters.api.RestException;
 import com.javi.uned.pfgbackend.adapters.api.authentication.model.LoginDTO;
+import com.javi.uned.pfgbackend.adapters.api.authentication.model.LoginResponse;
 import com.javi.uned.pfgbackend.adapters.api.authentication.model.RegistrationRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +17,8 @@ public interface AuthenticationController {
      * @return token
      */
     @PostMapping(value= "/api/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity login(@RequestBody LoginDTO login);
+    LoginResponse login(@RequestBody LoginDTO login) throws Exception;
 
     @PostMapping(value= "/api/auth/register", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity register(@RequestBody RegistrationRequest registrationRequest);
+    LoginResponse register(@RequestBody RegistrationRequest registrationRequest) throws Exception;
 }

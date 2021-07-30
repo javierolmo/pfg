@@ -1,5 +1,7 @@
 package com.javi.uned.pfgbackend.adapters.api.sheets;
 
+import com.javi.uned.pfgbackend.adapters.api.sheets.model.SheetDTO;
+import com.javi.uned.pfgbackend.adapters.api.sheets.model.SheetDTOTransformer;
 import com.javi.uned.pfgbackend.domain.enums.Formats;
 import com.javi.uned.pfgbackend.domain.exceptions.EntityNotFound;
 import com.javi.uned.pfgbackend.domain.exceptions.RetryException;
@@ -59,21 +61,17 @@ public class SheetControllerImpl implements SheetController {
         return sheetService.save(sheet);
     }
 
-    public ResponseEntity sheet(Integer id) {
+    public SheetDTO sheet(Integer id) throws EntityNotFound {
 
-        try {
-            Sheet sheet = sheetService.getSheet(id);
+        Sheet sheet = sheetService.getSheet(id);
 
-            SheetDTO sheetDTO = SheetDTOTransformer.toTransferObject(sheet, sheetService);
-            return ResponseEntity.ok(sheetDTO);
-        } catch (EntityNotFound entityNotFound) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(entityNotFound.getMessage());
-        }
+        SheetDTO sheetDTO = SheetDTOTransformer.toTransferObject(sheet, sheetService);
+        return sheetDTO;
     }
 
-    public ResponseEntity<String> deleteSheet(int id) {
+    public String deleteSheet(int id) {
         sheetService.delete(id);
-        return ResponseEntity.ok("Partitura eliminada con éxito");
+        return "Partitura eliminada con éxito";
     }
 
     public ResponseEntity visualizePDF(int id) {

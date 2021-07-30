@@ -1,6 +1,6 @@
 package com.javi.uned.pfgcomposer.config.kafka;
 
-import com.javi.uned.pfg.model.Specs;
+import com.javi.uned.pfgcommons.domain.model.specs.BoogieSpecs;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.ByteArrayDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -26,14 +26,14 @@ public class KafkaConsumerConfig {
     private String kafkaPort;
 
     @Bean
-    public ConsumerFactory<String, Specs> specsConsumerFactory() {
+    public ConsumerFactory<String, BoogieSpecs> boogieSpecsConsumerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost + ":" + kafkaPort);
         config.put(ConsumerConfig.GROUP_ID_CONFIG, "group_json");
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(),
-                new JsonDeserializer<>(Specs.class));
+                new JsonDeserializer<>(BoogieSpecs.class));
     }
 
     @Bean
@@ -47,9 +47,9 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Specs> specsKafkaListenerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Specs> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(specsConsumerFactory());
+    public ConcurrentKafkaListenerContainerFactory<String, BoogieSpecs> boogieSpecsKafkaListenerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, BoogieSpecs> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(boogieSpecsConsumerFactory());
         return factory;
     }
 

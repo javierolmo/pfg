@@ -1,14 +1,18 @@
 package com.javi.uned.pfgbackend.adapters.api.users;
 
 import com.javi.uned.pfg.model.Specs;
+import com.javi.uned.pfgbackend.adapters.api.users.model.TokenResponse;
 import com.javi.uned.pfgbackend.adapters.api.users.model.UserDTO;
+import com.javi.uned.pfgbackend.domain.exceptions.AuthException;
 import com.javi.uned.pfgbackend.domain.exceptions.EntityNotFound;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
 public interface UserController {
 
@@ -17,15 +21,15 @@ public interface UserController {
      * @return
      */
     @GetMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity getUsers();
+    List<UserDTO> getUsers();
 
     /**
      * TODO:
      * @param id
      * @return
      */
-    @GetMapping(value = "/api/users/{id}/details", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity getDetails(@PathVariable long id) throws EntityNotFound;
+    @GetMapping(value = "/api/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    UserDTO getUser(@PathVariable Long id) throws EntityNotFound;
 
     /**
      * TODO:
@@ -45,13 +49,14 @@ public interface UserController {
      * @param request  complete request to retrieve headers
      * @return valid token for user
      */
+    @PreAuthorize("true")
     @GetMapping(value = "/api/users/{id}/token", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity generateToken(
+    TokenResponse generateToken(
             @PathVariable Long id,
             @RequestParam(defaultValue = "2592000000", required = false) long duration,
-            HttpServletRequest request);
+            HttpServletRequest request) throws EntityNotFound, AuthException;
 
-    @PostMapping(value = "/api/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity updateUser(@RequestBody UserDTO userDTO, @PathVariable Long userId);
+    @PutMapping(value = "/api/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    UserDTO updateUser(@RequestBody UserDTO userDTO, @PathVariable Long userId) throws EntityNotFound;
 
 }

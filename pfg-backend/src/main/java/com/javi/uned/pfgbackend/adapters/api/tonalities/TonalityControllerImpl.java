@@ -1,5 +1,6 @@
 package com.javi.uned.pfgbackend.adapters.api.tonalities;
 
+import com.javi.uned.pfg.model.Tonalidad;
 import com.javi.uned.pfg.model.constants.Tonalidades;
 import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "Tonality")
 public class TonalityControllerImpl implements TonalityController {
 
-    public ResponseEntity getAvailableTonality() {
-        return ResponseEntity.ok(Tonalidades.getTonalidades());
+    public Tonalidad[] getAvailableTonality() {
+        return Tonalidades.getTonalidades();
     }
 
 }
