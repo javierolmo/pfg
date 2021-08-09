@@ -1,9 +1,8 @@
 package com.javi.uned.pfgcomposer.adapters.kafka.consumers;
 
-import com.javi.uned.pfgcomposer.domain.exceptions.ConverterException;
-import com.javi.uned.pfgcomposer.domain.exceptions.MusescoreException;
-import com.javi.uned.pfgcomposer.domain.exceptions.SpecsConsumerException;
 import com.javi.uned.pfgcomposer.adapters.kafka.producers.FileProducer;
+import com.javi.uned.pfgcomposer.domain.exceptions.ConverterException;
+import com.javi.uned.pfgcomposer.domain.exceptions.SpecsConsumerException;
 import com.javi.uned.pfgcomposer.domain.services.ConverterService;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;

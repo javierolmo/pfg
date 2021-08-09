@@ -32,14 +32,14 @@
                 <!-- Tonalidad -->
                 <div class="col">
                     <nb-select formControlName="tonalidad" placeholder="Tonalidad">
-                        <nb-option *ngFor="let tonalidad of tonalidades" [value]="tonalidad">{{tonalidad.nombre}}</nb-option>
+                        <nb-option *ngFor="let tonalidad of tonalidades" [value]="tonalidad">{{tonalidad.traditionalName}}</nb-option>
                     </nb-select>
                 </div>
 
                 <!-- Compás -->
                 <div class="col">
-                    <nb-select formControlName="compas" placeholder="Compás">
-                        <nb-option *ngFor="let compas of compases" [value]="compas">{{compas.numerador}}/{{compas.denominador}}</nb-option>
+                    <nb-select formControlName="measure" placeholder="Compás">
+                        <nb-option *ngFor="let measure of compases" [value]="measure">{{measure.numerador}}/{{measure.denominador}}</nb-option>
                     </nb-select>
                 </div>
 

@@ -1,5 +1,6 @@
 package com.javi.uned.pfgbackend.config.kafka;
 
+import com.javi.uned.pfgcommons.model.specs.GeneticSpecs;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -10,7 +11,6 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import com.javi.uned.pfg.model.Specs;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public class KafkaProducerConfig {
     private String kafkaPort;
 
     @Bean
-    public ProducerFactory<String, Specs> scoreProducerFactory() {
+    public ProducerFactory<String, GeneticSpecs> scoreProducerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaHost+":"+kafkaPort);
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -41,7 +41,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, Specs> kafkaSpecsTemplate() {
+    public KafkaTemplate<String, GeneticSpecs> kafkaSpecsTemplate() {
         return new KafkaTemplate<>(scoreProducerFactory());
     }
 

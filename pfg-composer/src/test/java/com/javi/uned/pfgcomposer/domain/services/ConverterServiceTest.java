@@ -4,7 +4,6 @@ import com.javi.uned.pfgcomposer.domain.exceptions.ConverterException;
 import org.jfugue.midi.MidiFileManager;
 import org.jfugue.midi.MidiParserListener;
 import org.jfugue.pattern.Pattern;
-import org.jfugue.pattern.PatternProducer;
 import org.jfugue.theory.ChordProgression;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

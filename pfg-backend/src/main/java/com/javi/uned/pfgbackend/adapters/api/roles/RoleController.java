@@ -4,7 +4,6 @@ import com.javi.uned.pfgbackend.adapters.api.roles.model.RoleDTO;
 import com.javi.uned.pfgbackend.adapters.api.roles.model.RoleRequest;
 import com.javi.uned.pfgbackend.domain.exceptions.EntityNotFound;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

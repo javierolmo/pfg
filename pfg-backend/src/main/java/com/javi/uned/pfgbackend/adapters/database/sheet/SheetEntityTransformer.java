@@ -15,8 +15,10 @@ public class SheetEntityTransformer {
                 sheetEntity.getName(),
                 sheetEntity.getDate(),
                 sheetEntity.getOwnerId(),
-                sheetEntity.getFinished()
-        );
+                sheetEntity.getFinished(),
+                sheetEntity.getSpecsPath(),
+                sheetEntity.getXmlPath(),
+                sheetEntity.getPdfPath());
     }
 
     public static SheetEntity toEntity(Sheet sheet) {
@@ -27,6 +29,9 @@ public class SheetEntityTransformer {
         sheetEntity.setOwnerId(sheet.getOwnerId());
         sheetEntity.setFinished(sheet.getFinished());
         if (sheetEntity.getFinished() == null) sheetEntity.setFinished(false);
+        sheetEntity.setSpecsPath(sheet.getSpecsPath());
+        sheetEntity.setXmlPath(sheet.getXmlPath());
+        sheetEntity.setPdfPath(sheet.getPdfPath());
         return sheetEntity;
     }
 

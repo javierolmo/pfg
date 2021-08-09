@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>pfg</artifactId>
-		<groupId>com.javi.uned</groupId>
-		<version>1.0</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.4.2</version>
 	</parent>
 	<groupId>com.javi.uned</groupId>
 	<artifactId>pfg-backend</artifactId>
@@ -105,18 +105,11 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Proxymusic -->
-		<dependency>
-			<groupId>org.audiveris</groupId>
-			<artifactId>proxymusic</artifactId>
-			<version>3.0.1</version>
-		</dependency>
-
-		<!-- proyecto -->
+		<!-- Commons -->
 		<dependency>
 			<groupId>com.javi.uned</groupId>
-			<artifactId>pfg-core</artifactId>
-			<version>1.0.7</version>
+			<artifactId>pfg-commons</artifactId>
+			<version>0.0.2</version>
 		</dependency>
 
 		<!-- Mock Database -->
@@ -137,7 +130,7 @@
 
 	<build>
 
-		<finalName>pfg-web-service</finalName>
+		<finalName>pfg-backend</finalName>
 
 		<plugins>
 

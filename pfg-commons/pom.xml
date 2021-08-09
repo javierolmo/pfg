@@ -4,16 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>pfg</artifactId>
-        <groupId>com.javi.uned</groupId>
-        <version>1.0</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.2</version>
     </parent>
     <groupId>com.javi.uned</groupId>
     <artifactId>pfg-commons</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 
 
     <properties>
+        <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <!-- Versions -->
         <slf4j.version>1.7.30</slf4j.version>
         <proxymusic.version>3.0.1</proxymusic.version>
@@ -22,6 +27,7 @@
         <jenetics.version>5.2.0</jenetics.version>
         <apache-commons-lang3.version>3.11</apache-commons-lang3.version>
         <apache-commons-math3.version>3.6.1</apache-commons-math3.version>
+
     </properties>
 
     <dependencies>
@@ -40,6 +46,13 @@
             <version>${slf4j.version}</version>
         </dependency>
 
+        <!-- Proxymusic -->
+        <dependency>
+            <groupId>org.audiveris</groupId>
+            <artifactId>proxymusic</artifactId>
+            <version>${proxymusic.version}</version>
+        </dependency>
+
         <!-- JUnit -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -48,24 +61,69 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- JUnit parameterized -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Jackson Annotations -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Jenetics -->
+        <dependency>
+            <groupId>io.jenetics</groupId>
+            <artifactId>jenetics</artifactId>
+            <version>${jenetics.version}</version>
+        </dependency>
+
+        <!-- Apache commons lang -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache-commons-lang3.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>${apache-commons-math3.version}</version>
+        </dependency>
+
+        <!-- JAXB Api -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
+        <!-- JAXB Runtime -->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.1</version>
+            <scope>runtime</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
-        <finalName>pfg-web-service</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.21.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.junit.platform</groupId>
-                        <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>1.2.0</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-        </plugins>
+        <finalName>pfg-commons</finalName>
     </build>
 
 

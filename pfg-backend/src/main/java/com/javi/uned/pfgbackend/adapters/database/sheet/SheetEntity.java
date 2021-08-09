@@ -9,7 +9,7 @@ public class SheetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "date")
@@ -18,12 +18,18 @@ public class SheetEntity {
     private Long ownerId;
     @Column(name = "finished", nullable = false)
     private Boolean finished;
+    @Column(name = "specs_path")
+    private String specsPath;
+    @Column(name = "xml_path")
+    private String xmlPath;
+    @Column(name = "pdf_path")
+    private String pdfPath;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -59,4 +65,27 @@ public class SheetEntity {
         this.finished = finished;
     }
 
+    public String getSpecsPath() {
+        return specsPath;
+    }
+
+    public void setSpecsPath(String specsPath) {
+        this.specsPath = specsPath;
+    }
+
+    public String getXmlPath() {
+        return xmlPath;
+    }
+
+    public void setXmlPath(String xmlPath) {
+        this.xmlPath = xmlPath;
+    }
+
+    public String getPdfPath() {
+        return pdfPath;
+    }
+
+    public void setPdfPath(String pdfPath) {
+        this.pdfPath = pdfPath;
+    }
 }

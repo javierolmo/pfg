@@ -1,6 +1,7 @@
 export interface Tonality {
   alteraciones: number;
-  nombre: string;
+  traditionalName: string;
+  americanName: string;
   mayor: boolean;
   step;
 }

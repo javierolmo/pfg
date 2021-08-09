@@ -1,11 +1,9 @@
 package com.javi.uned.pfgbackend.adapters.api.authentication;
 
-import com.javi.uned.pfgbackend.adapters.api.RestException;
 import com.javi.uned.pfgbackend.adapters.api.authentication.model.LoginDTO;
 import com.javi.uned.pfgbackend.adapters.api.authentication.model.LoginResponse;
 import com.javi.uned.pfgbackend.adapters.api.authentication.model.RegistrationRequest;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 

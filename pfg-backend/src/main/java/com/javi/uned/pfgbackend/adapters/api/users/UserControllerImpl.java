@@ -1,28 +1,27 @@
 package com.javi.uned.pfgbackend.adapters.api.users;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javi.uned.pfg.model.Instrumento;
-import com.javi.uned.pfg.model.Specs;
 import com.javi.uned.pfgbackend.adapters.api.users.model.TokenResponse;
 import com.javi.uned.pfgbackend.adapters.api.users.model.UserDTO;
 import com.javi.uned.pfgbackend.adapters.api.users.model.UserDTOTransformer;
-import com.javi.uned.pfgbackend.adapters.filesystem.FileService;
-import com.javi.uned.pfgbackend.adapters.messagebroker.KafkaService;
+import com.javi.uned.pfgbackend.adapters.filesystem.FileServiceImpl;
 import com.javi.uned.pfgbackend.config.JWTAuthorizationFilter;
 import com.javi.uned.pfgbackend.domain.exceptions.AuthException;
 import com.javi.uned.pfgbackend.domain.exceptions.EntityNotFound;
 import com.javi.uned.pfgbackend.domain.instrument.InstrumentService;
+import com.javi.uned.pfgbackend.domain.ports.messagebroker.MessageBrokerGeneticComposer;
 import com.javi.uned.pfgbackend.domain.sheet.SheetService;
 import com.javi.uned.pfgbackend.domain.sheet.model.Sheet;
 import com.javi.uned.pfgbackend.domain.user.CustomUserDetailsService;
 import com.javi.uned.pfgbackend.domain.user.UserService;
 import com.javi.uned.pfgbackend.domain.user.model.User;
+import com.javi.uned.pfgcommons.model.Instrumento;
+import com.javi.uned.pfgcommons.model.specs.GeneticSpecs;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,11 +48,11 @@ public class UserControllerImpl implements UserController {
     @Autowired
     private InstrumentService instrumentService;
     @Autowired
-    private FileService fileService;
+    private FileServiceImpl fileServiceImpl;
     @Autowired
     private UserService userService;
     @Autowired
-    private KafkaService kafkaService;
+    private MessageBrokerGeneticComposer messageBrokerGeneticComposer;
 
     @Override
     public List<UserDTO> getUsers() {
@@ -76,7 +75,7 @@ public class UserControllerImpl implements UserController {
 
     }
 
-    public ResponseEntity composeSheet(Specs specs, Long userId) throws IOException {
+    public ResponseEntity composeSheet(GeneticSpecs specs, Long userId) throws IOException {
 
         //Create new sheet
         Sheet sheet = new Sheet(
@@ -84,8 +83,8 @@ public class UserControllerImpl implements UserController {
                 specs.getMovementTitle(),
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")),
                 userId,
-                false
-        );
+                false,
+                "", "", "");
 
         //Save in database
         sheet = sheetService.save(sheet);
@@ -100,12 +99,12 @@ public class UserControllerImpl implements UserController {
 
         // Save request in json
         ObjectMapper objectMapper = new ObjectMapper();
-        File specsFile = new File(fileService.getSheetFolder(sheet.getId()), "specs.json");
+        File specsFile = new File(fileServiceImpl.getSheetFolder(sheet.getId()), "specs.json");
         objectMapper.writeValue(specsFile, specs);
 
         //Order composition request
         String sheetid = "" + sheet.getId();
-        kafkaService.composerGeneticsProduceSpecs(specs, sheetid);
+        messageBrokerGeneticComposer.orderComposition(sheetid, specs);
 
         return ResponseEntity.ok(sheet);
     }

@@ -2,9 +2,6 @@ package com.javi.uned.pfgbackend.adapters.database.role;
 
 import com.javi.uned.pfgbackend.domain.user.model.Role;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class RoleEntityTransformer {
 
     private RoleEntityTransformer() {

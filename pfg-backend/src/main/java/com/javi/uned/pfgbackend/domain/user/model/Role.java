@@ -2,8 +2,6 @@ package com.javi.uned.pfgbackend.domain.user.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Collection;
-
 public class Role implements GrantedAuthority{
 
     private final Long id;

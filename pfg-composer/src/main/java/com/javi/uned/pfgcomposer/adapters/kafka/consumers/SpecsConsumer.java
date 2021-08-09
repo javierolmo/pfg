@@ -1,9 +1,9 @@
 package com.javi.uned.pfgcomposer.adapters.kafka.consumers;
 
 import com.javi.uned.pfgcommons.domain.model.specs.BoogieSpecs;
+import com.javi.uned.pfgcomposer.adapters.kafka.producers.FileProducer;
 import com.javi.uned.pfgcomposer.domain.exceptions.ConverterException;
 import com.javi.uned.pfgcomposer.domain.exceptions.SpecsConsumerException;
-import com.javi.uned.pfgcomposer.adapters.kafka.producers.FileProducer;
 import com.javi.uned.pfgcomposer.domain.services.ConverterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 @Service
 public class SpecsConsumer {

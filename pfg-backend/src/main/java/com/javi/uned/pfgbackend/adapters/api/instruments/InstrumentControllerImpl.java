@@ -1,7 +1,7 @@
 package com.javi.uned.pfgbackend.adapters.api.instruments;
 
-import com.javi.uned.pfg.model.Instrumento;
-import com.javi.uned.pfg.model.constants.Instrumentos;
+import com.javi.uned.pfgcommons.model.Instrumento;
+import com.javi.uned.pfgcommons.model.constants.Instrumentos;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;

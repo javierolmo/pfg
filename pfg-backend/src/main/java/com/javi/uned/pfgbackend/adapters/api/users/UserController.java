@@ -1,10 +1,10 @@
 package com.javi.uned.pfgbackend.adapters.api.users;
 
-import com.javi.uned.pfg.model.Specs;
 import com.javi.uned.pfgbackend.adapters.api.users.model.TokenResponse;
 import com.javi.uned.pfgbackend.adapters.api.users.model.UserDTO;
 import com.javi.uned.pfgbackend.domain.exceptions.AuthException;
 import com.javi.uned.pfgbackend.domain.exceptions.EntityNotFound;
+import com.javi.uned.pfgcommons.model.specs.GeneticSpecs;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,7 +39,7 @@ public interface UserController {
      * @throws IOException
      */
     @PostMapping(value = "/api/users/{userId}/request", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity composeSheet(@RequestBody Specs specs, @PathVariable Long userId) throws IOException;
+    ResponseEntity composeSheet(@RequestBody GeneticSpecs specs, @PathVariable Long userId) throws IOException;
 
     /**
      * Generate a token for specified user. Only for own token

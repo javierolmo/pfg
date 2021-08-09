@@ -2,21 +2,21 @@ package com.javi.uned.pfgbackend.adapters.api.sheets.model;
 
 public class SheetDTO {
 
-    private Integer id;
+    private Long id;
     private String name;
     private String date;
     private Long ownerId;
     private Boolean finished;
-    private Boolean specs;
-    private Boolean xml;
-    private Boolean pdf;
+    private String specsPath;
+    private String xmlPath;
+    private String pdfPath;
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -52,27 +52,27 @@ public class SheetDTO {
         this.finished = finished;
     }
 
-    public Boolean getSpecs() {
-        return specs;
+    public String getSpecsPath() {
+        return specsPath;
     }
 
-    public void setSpecs(Boolean specs) {
-        this.specs = specs;
+    public void setSpecsPath(String specsPath) {
+        this.specsPath = specsPath;
     }
 
-    public Boolean getXml() {
-        return xml;
+    public String getXmlPath() {
+        return xmlPath;
     }
 
-    public void setXml(Boolean xml) {
-        this.xml = xml;
+    public void setXmlPath(String xmlPath) {
+        this.xmlPath = xmlPath;
     }
 
-    public Boolean getPdf() {
-        return pdf;
+    public String getPdfPath() {
+        return pdfPath;
     }
 
-    public void setPdf(Boolean pdf) {
-        this.pdf = pdf;
+    public void setPdfPath(String pdfPath) {
+        this.pdfPath = pdfPath;
     }
 }

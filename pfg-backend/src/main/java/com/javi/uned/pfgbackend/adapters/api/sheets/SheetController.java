@@ -2,12 +2,13 @@ package com.javi.uned.pfgbackend.adapters.api.sheets;
 
 import com.javi.uned.pfgbackend.adapters.api.sheets.model.SheetDTO;
 import com.javi.uned.pfgbackend.domain.exceptions.EntityNotFound;
-import com.javi.uned.pfgbackend.domain.sheet.model.Sheet;
+import com.javi.uned.pfgbackend.domain.exceptions.FileServiceException;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,7 +30,7 @@ public interface SheetController {
             @RequestParam(required = false) String nameContains,
             @RequestParam(required = false) Boolean finished,
             @RequestParam(required = false) Long ownerId,
-            @RequestParam(required = false) Integer id
+            @RequestParam(required = false) Long id
     );
 
     /**
@@ -39,7 +40,7 @@ public interface SheetController {
      * @return
      */
     @PostMapping(value = "/api/sheets", produces = MediaType.APPLICATION_JSON_VALUE)
-    Sheet createSheet(@RequestBody SheetDTO sheetDTO);
+    SheetDTO createSheet(@RequestBody SheetDTO sheetDTO);
 
     /**
      * TODO:
@@ -73,6 +74,13 @@ public interface SheetController {
      */
     @DeleteMapping(value = "/api/sheets/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     String deleteSheet(@PathVariable int id);
+
+    @PutMapping(value = "/api/sheets/{id}.{format}")
+    String uploadFile(
+            @PathVariable long id,
+            @PathVariable String format,
+            @RequestParam("file") MultipartFile multipartFile
+    ) throws IOException, EntityNotFound, FileServiceException;
 
     /**
      * Permite visualizar una partitura en pdf

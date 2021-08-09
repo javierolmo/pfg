@@ -3,7 +3,6 @@ package com.javi.uned.pfgbackend.domain.ports.database;
 import com.javi.uned.pfgbackend.domain.exceptions.EntityNotFound;
 import com.javi.uned.pfgbackend.domain.user.model.Role;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface RoleDAO {

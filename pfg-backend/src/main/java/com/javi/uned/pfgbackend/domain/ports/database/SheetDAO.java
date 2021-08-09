@@ -13,13 +13,21 @@ public interface SheetDAO {
 
     Sheet save(Sheet sheet);
 
-    Sheet findById(int id) throws EntityNotFound;
+    Sheet findById(long id) throws EntityNotFound;
 
-    void deleteById(int id);
+    void deleteById(long id);
 
-    Sheet markAsFinished(int id) throws EntityNotFound;
+    Sheet markAsFinished(long id) throws EntityNotFound;
 
-    List<Sheet> findBy(Integer id, String nameContains, Long ownerId, Boolean finished);
+    List<Sheet> findBy(Long id, String nameContains, Long ownerId, Boolean finished);
 
     Page<Sheet> getSheetPage(PageRequest pageRequest, String name);
+
+    Sheet updateSpecsPath(long id, String path) throws EntityNotFound;
+
+    Sheet updateXMLPath(long id, String path) throws EntityNotFound;
+
+    Sheet updatePDFPath(long id, String path) throws EntityNotFound;
+
+    Sheet setFinished(long id, boolean finished) throws EntityNotFound;
 }

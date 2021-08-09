@@ -1,6 +1,6 @@
 package com.javi.uned.pfgbackend.config;
 
-import com.javi.uned.pfgbackend.adapters.filesystem.FileService;
+import com.javi.uned.pfgbackend.adapters.filesystem.FileServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 public class FileSystemConfig {
 
     @Bean
-    public FileService fileService() {
-        return new FileService();
+    public FileServiceImpl fileService() {
+        return new FileServiceImpl();
     }
 
 }

@@ -1,24 +1,18 @@
 package com.javi.uned.pfgbackend.adapters.api.authentication;
 
-import com.javi.uned.pfgbackend.adapters.api.RestException;
 import com.javi.uned.pfgbackend.adapters.api.authentication.model.LoginDTO;
 import com.javi.uned.pfgbackend.adapters.api.authentication.model.LoginResponse;
 import com.javi.uned.pfgbackend.adapters.api.authentication.model.LoginResponseData;
 import com.javi.uned.pfgbackend.adapters.api.authentication.model.RegistrationRequest;
 import com.javi.uned.pfgbackend.adapters.api.users.model.UserDTOTransformer;
-import com.javi.uned.pfgbackend.domain.exceptions.EntityNotFound;
-import com.javi.uned.pfgbackend.domain.exceptions.ExistingUserException;
-import com.javi.uned.pfgbackend.domain.exceptions.ValidationException;
-import com.javi.uned.pfgbackend.domain.user.TokenFactory;
 import com.javi.uned.pfgbackend.config.WebSecurityConfig;
+import com.javi.uned.pfgbackend.domain.user.TokenFactory;
 import com.javi.uned.pfgbackend.domain.user.UserService;
 import com.javi.uned.pfgbackend.domain.user.model.User;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

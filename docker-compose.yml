@@ -18,7 +18,10 @@ services:
 
 # Backend
   backend:
-    image: javiolmo/pfg-backend:latest
+    image: melodia
+    build:
+      context: .
+      dockerfile: dockerfile-backend.yml
     restart: always
     environment:
       DB_HOST: 'database'
@@ -36,28 +39,15 @@ services:
       - ./data-persistence:/app/data
 
   # Composer
-  composer:
+  composer-genetic:
     image: javiolmo/pfg-composer:latest
     restart: always
     environment:
       KAFKA_HOST: 'kafka'
       KAFKA_PORT: '29092'
     depends_on:
-      - backend
+      - webapp
       - kafka
-
-
-  # Frontend
-  frontend:
-    image: javiolmo/pfg-frontend:latest
-    restart: always
-    environment:
-      API_URL: "localhost:64001"
-      TZ: Europe/Madrid
-    ports:
-      - 80:80
-    depends_on:
-      - backend
 
   # Kafdrop
   kafdrop:

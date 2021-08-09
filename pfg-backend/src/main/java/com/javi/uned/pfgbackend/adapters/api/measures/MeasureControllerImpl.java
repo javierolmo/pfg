@@ -1,9 +1,8 @@
 package com.javi.uned.pfgbackend.adapters.api.measures;
 
-import com.javi.uned.pfg.model.Compas;
-import com.javi.uned.pfg.model.constants.Compases;
+import com.javi.uned.pfgcommons.model.Compas;
+import com.javi.uned.pfgcommons.model.constants.Compases;
 import io.swagger.annotations.Api;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 

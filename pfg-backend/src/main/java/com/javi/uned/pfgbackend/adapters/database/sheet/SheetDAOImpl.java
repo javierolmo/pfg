@@ -39,7 +39,7 @@ public class SheetDAOImpl implements SheetDAO {
     }
 
     @Override
-    public Sheet findById(int id) throws EntityNotFound {
+    public Sheet findById(long id) throws EntityNotFound {
         Optional<SheetEntity> optionalSheetEntity = sheetRepository.findById(id);
         if (optionalSheetEntity.isPresent()) {
             return SheetEntityTransformer.toDomainObject(optionalSheetEntity.get());
@@ -49,12 +49,12 @@ public class SheetDAOImpl implements SheetDAO {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         this.sheetRepository.deleteById(id);
     }
 
     @Override
-    public Sheet markAsFinished(int id) throws EntityNotFound {
+    public Sheet markAsFinished(long id) throws EntityNotFound {
         Optional<SheetEntity> optionalSheetEntity = sheetRepository.findById(id);
         if (optionalSheetEntity.isPresent()) {
             SheetEntity sheetEntity = optionalSheetEntity.get();
@@ -67,7 +67,7 @@ public class SheetDAOImpl implements SheetDAO {
     }
 
     @Override
-    public List<Sheet> findBy(Integer id, String nameContains, Long ownerId, Boolean finished) {
+    public List<Sheet> findBy(Long id, String nameContains, Long ownerId, Boolean finished) {
 
         // Create example
         SheetEntity sheetEntity = new SheetEntity();
@@ -100,5 +100,57 @@ public class SheetDAOImpl implements SheetDAO {
         // Transform result and return
         Page<SheetEntity> sheetEntityPage = sheetRepository.findAll(sheetEntityExample, pageRequest);
         return sheetEntityPage.map(SheetEntityTransformer::toDomainObject);
+    }
+
+    @Override
+    public Sheet updateSpecsPath(long id, String path) throws EntityNotFound {
+        Optional<SheetEntity> optionalSheetEntity = sheetRepository.findById(id);
+        if(optionalSheetEntity.isPresent()) {
+            SheetEntity sheetEntity = optionalSheetEntity.get();
+            sheetEntity.setSpecsPath(path);
+            sheetRepository.save(sheetEntity);
+            return SheetEntityTransformer.toDomainObject(sheetEntity);
+        } else {
+            throw new EntityNotFound("Could not find sheet with id = "+id);
+        }
+    }
+
+    @Override
+    public Sheet updateXMLPath(long id, String path) throws EntityNotFound {
+        Optional<SheetEntity> optionalSheetEntity = sheetRepository.findById(id);
+        if(optionalSheetEntity.isPresent()) {
+            SheetEntity sheetEntity = optionalSheetEntity.get();
+            sheetEntity.setXmlPath(path);
+            sheetRepository.save(sheetEntity);
+            return SheetEntityTransformer.toDomainObject(sheetEntity);
+        } else {
+            throw new EntityNotFound("Could not find sheet with id = "+id);
+        }
+    }
+
+    @Override
+    public Sheet updatePDFPath(long id, String path) throws EntityNotFound {
+        Optional<SheetEntity> optionalSheetEntity = sheetRepository.findById(id);
+        if(optionalSheetEntity.isPresent()) {
+            SheetEntity sheetEntity = optionalSheetEntity.get();
+            sheetEntity.setPdfPath(path);
+            sheetRepository.save(sheetEntity);
+            return SheetEntityTransformer.toDomainObject(sheetEntity);
+        } else {
+            throw new EntityNotFound("Could not find sheet with id = "+id);
+        }
+    }
+
+    @Override
+    public Sheet setFinished(long id, boolean finished) throws EntityNotFound {
+        Optional<SheetEntity> optionalSheetEntity = sheetRepository.findById(id);
+        if(optionalSheetEntity.isPresent()) {
+            SheetEntity sheetEntity = optionalSheetEntity.get();
+            sheetEntity.setFinished(finished);
+            sheetRepository.save(sheetEntity);
+            return SheetEntityTransformer.toDomainObject(sheetEntity);
+        } else {
+            throw new EntityNotFound("Could not find sheet with id = "+id);
+        }
     }
 }
