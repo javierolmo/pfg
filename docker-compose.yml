@@ -36,7 +36,7 @@ services:
     depends_on:
       - database
     volumes:
-      - ./data-persistence:/app/data
+      - data:/app/data
 
   # Composer
   composer-genetic:
@@ -46,7 +46,7 @@ services:
       KAFKA_HOST: 'kafka'
       KAFKA_PORT: '29092'
     depends_on:
-      - webapp
+      - backend
       - kafka
 
   # Kafdrop
@@ -79,4 +79,7 @@ services:
 
 networks:
   pfg-network:
+
+volumes:
+  data:
 

@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
 
-# Database
+  # Database
   database:
     image: mysql:5.7
     restart: always
@@ -16,9 +16,12 @@ services:
     volumes:
       - ./database-persistence:/var/lib/mysql
 
-# Backend
+  # Backend
   backend:
-    image: javiolmo/pfg-backend:latest
+    image: melodia
+    build:
+      context: .
+      dockerfile: dockerfile-backend.yml
     restart: always
     environment:
       DB_HOST: 'database'
@@ -28,16 +31,15 @@ services:
       DB_SCHEMA: 'melodia'
       KAFKA_HOST: 'kafka'
       KAFKA_PORT: '29092'
-      TZ: Europe/Madrid
     ports:
       - 64001:8080
     depends_on:
       - database
     volumes:
-      - ./data-persistence:/app/data
+      - data:/app/data
 
   # Composer
-  composer:
+  composer-genetic:
     image: javiolmo/pfg-composer:latest
     restart: always
     environment:
@@ -46,18 +48,6 @@ services:
     depends_on:
       - backend
       - kafka
-
-
-  # Frontend
-  frontend:
-    image: javiolmo/pfg-frontend:latest
-    restart: always
-    environment:
-      API_URL: "http://pfg-uned.duckdns.org:64001"
-    ports:
-      - 80:80
-    depends_on:
-      - backend
 
   # Kafdrop
   kafdrop:
@@ -90,3 +80,5 @@ services:
 networks:
   pfg-network:
 
+volumes:
+  data:
