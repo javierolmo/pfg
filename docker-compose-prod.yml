@@ -16,6 +16,17 @@ services:
     volumes:
       - ./database-persistence:/var/lib/mysql
 
+  # Frontend
+  frontend:
+    image: javiolmo/pfg-frontend/main
+    restart: always
+    environment:
+      API_URL: "http://pfg-uned.duckdns.org:64001"
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+
   # Backend
   backend:
     image: javiolmo/pfg-backend:main
