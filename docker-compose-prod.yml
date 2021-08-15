@@ -18,10 +18,7 @@ services:
 
   # Backend
   backend:
-    image: melodia
-    build:
-      context: .
-      dockerfile: dockerfile-backend.yml
+    image: javiolmo/pfg-backend:main
     restart: always
     environment:
       DB_HOST: 'database'
