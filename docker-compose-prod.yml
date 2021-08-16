@@ -18,12 +18,12 @@ services:
 
   # Frontend
   frontend:
-    image: javiolmo/pfg-frontend/main
+    image: javiolmo/pfg-frontend:main
     restart: always
     environment:
       API_URL: "http://pfg-uned.duckdns.org:64001"
     ports:
-      - 80:80
+      - "80:80"
     depends_on:
       - backend
 
@@ -40,7 +40,7 @@ services:
       KAFKA_HOST: 'kafka'
       KAFKA_PORT: '29092'
     ports:
-      - 64001:8080
+      - "64001:8080"
     depends_on:
       - database
     volumes:
