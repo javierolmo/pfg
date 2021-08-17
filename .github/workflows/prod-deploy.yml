@@ -1,4 +1,4 @@
-name: Publish frontend
+name: Deploy in production
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
 
   # Build and publish backend image
   publish_backend:
-    name: build and publish backend
+    name: Build and publish backend
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -75,7 +75,7 @@ jobs:
     - name: trigger single Job
       uses: appleboy/jenkins-action@master
       with:
-        url: "http://pfg-uned.duckdns.org:8080"
+        url: "http://pfg-uned.duckdns.org:64002"
         user: ${{ secrets.JENKINS_USERNAME }}"
         token: ${{ secrets.JENKINS_TOKEN }}
         job: "PFG Job"
