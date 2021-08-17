@@ -68,14 +68,16 @@ jobs:
 
   # Deploy in server with jenkins
   deploy:
-    needs: [publish_frontend, publish_backend]
-    name: Deploy
+    name: Deploy in server
+    needs:
+      - publish_frontend
+      - publish_backend
     runs-on: ubuntu-latest
     steps:
-    - name: trigger single Job
-      uses: appleboy/jenkins-action@master
-      with:
-        url: "http://pfg-uned.duckdns.org:64002"
-        user: ${{ secrets.JENKINS_USERNAME }}"
-        token: ${{ secrets.JENKINS_TOKEN }}
-        job: "PFG Job"
+      - name: Build job
+        uses: appleboy/jenkins-action@master
+        with:
+          url: "http://pfg-uned.duckdns.org:64002"
+          user: "admin"
+          token: ${{ secrets.JENKINS_TOKEN }}
+          job: "pfg"
