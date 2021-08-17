@@ -8,7 +8,7 @@ import {
     NbFormFieldModule,
     NbIconModule,
     NbInputModule,
-    NbLayoutModule, NbSelectModule
+    NbLayoutModule, NbSelectModule, NbToggleModule
 } from '@nebular/theme';
 import {ProfileComponent} from './profile.component';
 import { DetailsFormComponent } from './details-form/details-form.component';
@@ -26,6 +26,7 @@ import { DetailsFormComponent } from './details-form/details-form.component';
         NbLayoutModule,
         NbButtonModule,
         NbSelectModule,
+        NbToggleModule,
     ],
 })
 export class ProfileModule { }

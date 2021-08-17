@@ -23,5 +23,19 @@
             </nb-form-field>
         </div>
 
+        <!-- Roles -->
+        <div class="m-4">
+            <label for="roles">Roles:</label>
+            <input id="roles" type="text" nbInput fullWidth status="basic" [value]="findRolesString(user)" disabled>
+        </div>
+
+        <!-- Enabled -->
+        <div class="m-4">
+            <label for="enabled">Enabled:</label>
+            <div id="enabled">
+                <nb-toggle [checked]="user.enabled" disabled></nb-toggle>
+            </div>
+        </div>
+
     </nb-card-body>
 </nb-card>

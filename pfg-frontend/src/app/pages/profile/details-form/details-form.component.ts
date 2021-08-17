@@ -19,4 +19,7 @@ export class DetailsFormComponent implements OnInit {
         // Not empty
     }
 
+    findRolesString(user: User) {
+        return user.roles.map(role => role.name).join(', ');
+    }
 }

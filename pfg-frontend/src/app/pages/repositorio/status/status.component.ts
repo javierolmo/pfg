@@ -30,7 +30,7 @@ export class StatusComponent implements OnInit {
                 this.toastrService.success(result, 'Tarea planificada');
             },
             error => {
-                this.toastrService.danger(error.error.message, 'Error al reintentar');
+                this.toastrService.danger(error.error, 'Error al reintentar');
             },
         );
     }

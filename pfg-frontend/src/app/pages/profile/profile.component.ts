@@ -35,14 +35,14 @@ export class ProfileComponent implements OnInit {
   generateToken(duration: number) {
     this.loadingToken = true;
     this.userService.generateToken(duration, this.user.id).subscribe(
-        value => {
+        tokenResponse => {
           this.loadingToken = false;
-          this.token = value;
+          this.token = tokenResponse.token;
           this.toastrService.success('Token generado con éxito!', 'Éxito');
         },
         error => {
           this.loadingToken = false;
-          this.toastrService.danger(error.message);
+          this.toastrService.danger(error.error);
         },
     );
   }

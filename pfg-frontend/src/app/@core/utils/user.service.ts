@@ -5,6 +5,7 @@ import { User } from '../data/user';
 import {Specs} from '../data/specs';
 import {Sheet} from '../data/sheet';
 import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
+import {TokenResponse} from '../data/token';
 
 @Injectable()
 export class UserService {
@@ -21,7 +22,7 @@ export class UserService {
   }
 
   getDetails(id:  number ) {
-      const urlRequest = `${environment.apiUrl}/api/users/${id}/details`;
+      const urlRequest = `${environment.apiUrl}/api/users/${id}`;
       return this.httpClient.get<User>(urlRequest);
   }
 
@@ -33,7 +34,7 @@ export class UserService {
   generateToken(duration: number, userId: number) {
     const urlRequest = `${environment.apiUrl}/api/users/${userId}/token`;
     const headers = new HttpHeaders().set('Authorization', this.token);
-    return this.httpClient.get(urlRequest, {headers: headers, responseType: 'text'});
+    return this.httpClient.get<TokenResponse>(urlRequest, {headers: headers});
   }
 
 
