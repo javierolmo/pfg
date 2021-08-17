@@ -76,11 +76,11 @@ jobs:
     needs: [publish_frontend, publish_backend]
     name: Deploy
     runs-on: ubuntu-latest
-      steps:
-      - name: trigger single Job
-        uses: appleboy/jenkins-action@master
-        with:
-          url: "http://pfg-uned.duckdns.org:8080"
-          user: ${{ secrets.JENKINS_USERNAME }}"
-          token: ${{ secrets.JENKINS_TOKEN }}
-          job: "PFG Job"
+    steps:
+    - name: trigger single Job
+      uses: appleboy/jenkins-action@master
+      with:
+        url: "http://pfg-uned.duckdns.org:8080"
+        user: ${{ secrets.JENKINS_USERNAME }}"
+        token: ${{ secrets.JENKINS_TOKEN }}
+        job: "PFG Job"
