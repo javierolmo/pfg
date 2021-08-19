@@ -22,8 +22,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Red neuronal',
         link: '/pages/composicion/neural-network',
-      }
-    ]
+      },
+    ],
   },
   {
     title: 'Mi repositorio',
@@ -34,6 +34,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Administración',
     icon: 'settings-outline',
     children: [
+      {
+        title: 'Usuarios',
+        link: '/pages/admin/users',
+      },
       {
         title: 'Logs',
         link: '/pages/admin/logs',

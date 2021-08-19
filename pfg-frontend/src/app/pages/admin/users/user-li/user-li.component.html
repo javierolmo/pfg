@@ -1,0 +1,11 @@
+<div class="row p-3">
+    <span class="col-1">{{user.id}}</span>
+    <span class="col">{{user.email}}</span>
+    <span class="col">
+        <nb-toggle status="basic" [checked]="user.enabled" disabled></nb-toggle>
+    </span>
+    <nb-actions class="ml-auto" size="small">
+        <nb-action icon="edit-outline" (click)="openEditDialog()"></nb-action>
+        <nb-action icon="trash-outline" disabled></nb-action>
+    </nb-actions>
+</div>

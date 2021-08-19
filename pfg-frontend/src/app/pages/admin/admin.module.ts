@@ -5,20 +5,26 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { LogsComponent } from './logs/logs.component';
 import { AdminComponent } from './admin.component';
 import {
+    NbActionsModule,
     NbAlertModule,
-    NbCardModule,
+    NbCardModule, NbFormFieldModule,
     NbIconModule,
     NbInputModule,
-    NbListModule, NbSpinnerModule,
+    NbListModule, NbSelectModule, NbSpinnerModule, NbToggleModule,
     NbTreeGridDataSourceBuilder,
-    NbTreeGridModule
+    NbTreeGridModule,
 } from '@nebular/theme';
 import {AdminService} from '../../@core/utils/admin.service';
 import { LogComponent } from './logs/log/log.component';
+import { UsersComponent } from './users/users.component';
+import { UserLiComponent } from './users/user-li/user-li.component';
+import { UserEditFormComponent } from './users/user-edit-form/user-edit-form.component';
+import {RoleService} from '../../@core/utils/role.service';
+import {CommonsModule} from '../../commons/commons.module';
 
 
 @NgModule({
-  declarations: [LogsComponent, AdminComponent, LogComponent],
+  declarations: [LogsComponent, AdminComponent, LogComponent, UsersComponent, UserLiComponent, UserEditFormComponent],
     imports: [
         CommonModule,
         AdminRoutingModule,
@@ -29,7 +35,12 @@ import { LogComponent } from './logs/log/log.component';
         NbIconModule,
         NbSpinnerModule,
         NbAlertModule,
+        NbActionsModule,
+        NbToggleModule,
+        NbFormFieldModule,
+        NbSelectModule,
+        CommonsModule,
     ],
-  providers: [NbTreeGridDataSourceBuilder, AdminService],
+  providers: [NbTreeGridDataSourceBuilder, AdminService, RoleService],
 })
 export class AdminModule { }

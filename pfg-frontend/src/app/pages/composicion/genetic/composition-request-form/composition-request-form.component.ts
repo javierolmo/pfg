@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { NbToastrService} from '@nebular/theme';
-import { Specs } from 'app/@core/data/specs';
+import { GeneticSpecs } from 'app/@core/data/geneticSpecs';
 import { Instrumento } from 'app/@core/data/instrumento';
 import { UtilService } from 'app/@core/utils/util.service';
 import {UserService} from '../../../../@core/utils/user.service';
@@ -10,7 +10,7 @@ import {Measure} from '../../../../@core/data/measure';
 import {InstrumentService} from '../../../../@core/utils/instrument.service';
 import {TonalityService} from '../../../../@core/utils/tonality.service';
 import {MeasureService} from '../../../../@core/utils/measure.service';
-import {NbAuthJWTToken, NbAuthService} from "@nebular/auth";
+import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
 
 @Component({
   selector: 'ngx-composition-request-form',
@@ -59,7 +59,7 @@ export class CompositionRequestFormComponent implements OnInit {
 
   submit(request: FormGroup) {
     if (request.valid) {
-      const specs: Specs = request.value;
+      const specs: GeneticSpecs = request.value;
       specs.authors = ['Javier Olmo Injerto'];
       this.userService.postSheetRequest(specs, this.userId).subscribe(
         sheet => {

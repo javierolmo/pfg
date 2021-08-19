@@ -37,7 +37,7 @@ export class LogsComponent {
                     cardData.loading = false;
                     cardData.pageToLoadNext++;
                 },
-                error => console.log(error.error));
+                error => {} /*console.log(error.error)*/);
     }
 
 }

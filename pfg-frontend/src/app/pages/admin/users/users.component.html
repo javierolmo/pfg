@@ -1,0 +1,10 @@
+<nb-card>
+    <nb-card-header>Usuarios</nb-card-header>
+    <nb-card-body>
+        <nb-list>
+            <nb-list-item *ngFor="let user of users" class="p-0">
+                <ngx-user-li [user]="user"></ngx-user-li>
+            </nb-list-item>
+        </nb-list>
+    </nb-card-body>
+</nb-card>
