@@ -78,6 +78,6 @@ jobs:
         uses: appleboy/jenkins-action@master
         with:
           url: "http://pfg-uned.duckdns.org:64002"
-          user: "admin"
+          user: ${{ secrets.JENKINS_USERNAME }}
           token: ${{ secrets.JENKINS_TOKEN }}
           job: "pfg"
