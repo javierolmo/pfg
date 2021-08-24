@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 public class DataSourceConfig {
 
     // Host
-    @Value("${DB_HOST:localhost}")
+    @Value("${DB_HOST:192.168.0.145}")
     private String dbHost;
 
     // Port

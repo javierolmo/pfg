@@ -1,8 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserFormComponent } from './user-form/user-form.component';
-import {NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule, NbToggleModule} from '@nebular/theme';
-import {FormsModule} from "@angular/forms";
+import {
+  NbButtonModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbInputModule,
+  NbSelectModule,
+  NbToggleModule,
+} from '@nebular/theme';
+import {FormsModule} from '@angular/forms';
 
 
 
@@ -16,6 +23,7 @@ import {FormsModule} from "@angular/forms";
     NbToggleModule,
     NbInputModule,
     FormsModule,
+    NbButtonModule,
   ],
   exports: [
     UserFormComponent,

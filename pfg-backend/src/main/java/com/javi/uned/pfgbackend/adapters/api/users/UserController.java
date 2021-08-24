@@ -56,7 +56,7 @@ public interface UserController {
             @RequestParam(defaultValue = "2592000000", required = false) long duration,
             HttpServletRequest request) throws EntityNotFound, AuthException;
 
-    @PutMapping(value = "/api/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/api/users/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     UserDTO updateUser(@RequestBody UserDTO userDTO, @PathVariable Long userId) throws EntityNotFound;
 
 }

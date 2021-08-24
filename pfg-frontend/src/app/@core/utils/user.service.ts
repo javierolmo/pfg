@@ -6,6 +6,7 @@ import {GeneticSpecs} from '../data/geneticSpecs';
 import {Sheet} from '../data/sheet';
 import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
 import {TokenResponse} from '../data/token';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -26,7 +27,12 @@ export class UserService {
     return this.httpClient.get<User[]>(urlRequest);
   }
 
-  getDetails(id:  number ) {
+  put(id: number, user: User): Observable<User> {
+    const urlRequest = `${environment.apiUrl}/api/users/${id}`;
+    return this.httpClient.put<User>(urlRequest, user);
+  }
+
+  getUser(id:  number ) {
       const urlRequest = `${environment.apiUrl}/api/users/${id}`;
       return this.httpClient.get<User>(urlRequest);
   }

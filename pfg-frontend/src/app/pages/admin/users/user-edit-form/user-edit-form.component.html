@@ -2,5 +2,15 @@
     <nb-card-header>Editar usuario</nb-card-header>
     <nb-card-body>
         <ngx-user-form [user]="user" [roles]="roles"></ngx-user-form>
+
+        <div class="row">
+            <div class="col text-center">
+                <button nbButton status="danger" outline (click)="cancel()">Cancelar</button>
+            </div>
+            <div class="col text-center">
+                <button nbButton status="success" outline (click)="save()">Guardar</button>
+            </div>
+        </div>
+
     </nb-card-body>
 </nb-card>

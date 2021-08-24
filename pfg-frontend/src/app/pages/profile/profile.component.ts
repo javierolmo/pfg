@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
     this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
       if (token.isValid()) {
         const id = token.getPayload()['id'];
-        this.userService.getDetails(id).subscribe(value => this.user = value);
+        this.userService.getUser(id).subscribe(value => this.user = value);
       }
     });
   }

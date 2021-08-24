@@ -6,7 +6,7 @@ import { LogsComponent } from './logs/logs.component';
 import { AdminComponent } from './admin.component';
 import {
     NbActionsModule,
-    NbAlertModule,
+    NbAlertModule, NbButtonModule,
     NbCardModule, NbFormFieldModule,
     NbIconModule,
     NbInputModule,
@@ -40,6 +40,7 @@ import {CommonsModule} from '../../commons/commons.module';
         NbFormFieldModule,
         NbSelectModule,
         CommonsModule,
+        NbButtonModule,
     ],
   providers: [NbTreeGridDataSourceBuilder, AdminService, RoleService],
 })

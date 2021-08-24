@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {Role, User} from '../../@core/data/user';
 
 @Component({
@@ -12,11 +12,21 @@ export class UserFormComponent implements OnInit {
   user: User;
   @Input()
   roles: Role[];
+  @Output()
+  userEventEmitter = new EventEmitter<User>();
+  editedUser: User;
 
   constructor() {
   }
 
   ngOnInit(): void {
+    this.editedUser = new User();
+    this.editedUser.id = this.user.id;
+    this.editedUser.name = this.user.name;
+    this.editedUser.roles = this.user.roles;
+    this.editedUser.enabled = this.user.enabled;
+    this.editedUser.email = this.user.email;
+    this.editedUser.surname = this.user.surname;
   }
 
   findRolesIds(user: User): number[] {
@@ -32,4 +42,7 @@ export class UserFormComponent implements OnInit {
     }
   }
 
+  isModified(): boolean {
+    return this.user === this.editedUser;
+  }
 }
