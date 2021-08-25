@@ -60,8 +60,12 @@ public interface UserController {
     @PutMapping(value = "/api/users/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     UserDTO updateUser(@RequestBody UserDTO userDTO, @PathVariable Long userId) throws EntityNotFound;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/api/users/{userId}/reset-password")
-    UserDTO resetPassword(@RequestBody NewPasswordRequest newPasswordRequest, @PathVariable Long userId) throws Exception;
+    UserDTO resetPassword(
+            @RequestBody NewPasswordRequest newPasswordRequest,
+            @PathVariable Long userId,
+            HttpServletRequest request) throws Exception;
 
     @PostMapping(value = "/api/users/reset-password/{token}")
     UserDTO resetPassword(@PathVariable String token, @RequestBody NewPasswordRequest newPasswordRequest);

@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../../../@core/data/user';
 import {NbDialogRef, NbToastrService} from "@nebular/theme";
 import {UserService} from "../../../../@core/utils/user.service";
+import {RestError} from "../../../../@core/data/error";
 
 @Component({
   selector: 'ngx-reset-password-dialog',
@@ -29,8 +30,8 @@ export class ResetPasswordDialogComponent implements OnInit {
   submit() {
     this.userService.resetPassword(this.user.id, this.newPassword).subscribe(
         user => this.toastrService.success('Password was modified successfuly', 'SUCCESS'),
-        error => {
-          this.toastrService.danger(error.error, 'ERROR');
+        (response: RestError) => {
+          this.toastrService.danger(response.error.message, 'ERROR');
         },
     );
     this.dialogRef.close();

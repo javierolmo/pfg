@@ -4,6 +4,7 @@ import {RoleService} from '../../../../@core/utils/role.service';
 import {NbDialogRef, NbToastrService} from '@nebular/theme';
 import {UserService} from '../../../../@core/utils/user.service';
 import {UserFormComponent} from '../../../../commons/user-form/user-form.component';
+import {RestError} from "../../../../@core/data/error";
 
 @Component({
   selector: 'ngx-user-edit-form',
@@ -46,7 +47,9 @@ export class UserDialogComponent implements OnInit {
           this.user.email = editedUser.email;
           this.dialogRef.close();
         },
-        error => this.toastrService.danger(error.error, 'ERROR'),
+        (response: RestError) => {
+            this.toastrService.danger(response.error.message, 'ERROR');
+        },
     );
   }
 

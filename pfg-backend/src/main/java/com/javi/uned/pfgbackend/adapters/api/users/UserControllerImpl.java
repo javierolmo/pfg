@@ -24,9 +24,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.File;
@@ -142,11 +145,14 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public UserDTO resetPassword(NewPasswordRequest newPasswordRequest, Long userId) throws Exception {
+    public UserDTO resetPassword(NewPasswordRequest newPasswordRequest, Long userId, HttpServletRequest request) throws Exception {
+
+        //Reset password
         userService.resetPassword(
                 userId,
                 newPasswordRequest.getNewPassword());
 
+        //Return user
         User user = userService.findById(userId);
         return UserDTOTransformer.toTransferObject(user);
     }

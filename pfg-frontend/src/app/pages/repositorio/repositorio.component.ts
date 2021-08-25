@@ -8,6 +8,7 @@ import {SheetService} from 'app/@core/utils/sheet.service';
 import {environment} from 'environments/environment';
 import {DownloadDialogComponent} from './download-dialog/download-dialog.component';
 import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
+import {RestError} from "../../@core/data/error";
 
 @Component({
     selector: 'ngx-repositorio',
@@ -49,6 +50,9 @@ export class RepositorioComponent implements OnInit {
                 this.sheets = sheets;
                 this.loading = false;
                 this.filteredSheets.push(...this.sheets);
+            },
+            (response: RestError) => {
+                this.toastrService.danger(response.error.message, 'ERROR');
             });
     }
 
@@ -72,14 +76,18 @@ export class RepositorioComponent implements OnInit {
         this.sheetService.deleteSheet(id).subscribe(
             value => {
                 this.showToast('Partitura eliminada con éxito!', 'Éxito', 'top-right', 'success');
-                this.sheetService.getSheets().subscribe(sheets => {
-                    this.sheets = sheets;
-                    this.filterSheets('');
-                });
+                this.sheetService.getSheets().subscribe(
+                    sheets => {
+                        this.sheets = sheets;
+                        this.filterSheets('');
+                    },
+                    (response: RestError) => {
+                        this.toastrService.danger(response.error.message, 'ERROR');
+                    });
                 this.filterSheets('');
             },
-            error => {
-                this.showToast('No se ha podido eliminar la partitura', 'Error', 'top-right', 'danger');
+            (response: RestError) => {
+                this.toastrService.danger(response.error.message, 'ERROR');
             });
     }
 

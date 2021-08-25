@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {AdminService} from '../../../@core/utils/admin.service';
 import {Log} from '../../../@core/data/log';
 import {Page} from '../../../@core/data/page';
+import {RestError} from "../../../@core/data/error";
+import {NbToastrService} from "@nebular/theme";
 
 @Component({
     selector: 'ngx-logs',
@@ -19,7 +21,9 @@ export class LogsComponent {
 
     pageSize = 5;
 
-    constructor(private adminService: AdminService) {
+    constructor(
+        private adminService: AdminService,
+        private toastrService: NbToastrService) {
 
     }
 
@@ -31,13 +35,16 @@ export class LogsComponent {
         cardData.loading = true;
         cardData.placeholders = new Array(this.pageSize);
         this.adminService.getLogs(cardData.pageToLoadNext, this.pageSize, false)
-            .subscribe((page: Page<Log>) => {
+            .subscribe(
+                (page: Page<Log>) => {
                     cardData.placeholders = [];
                     cardData.logs.push(...page.content);
                     cardData.loading = false;
                     cardData.pageToLoadNext++;
                 },
-                error => {} /*console.log(error.error)*/);
+                (response: RestError) => {
+                    this.toastrService.danger(response.error.message, 'ERROR');
+                });
     }
 
 }

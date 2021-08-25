@@ -11,6 +11,7 @@ import {InstrumentService} from '../../../../@core/utils/instrument.service';
 import {TonalityService} from '../../../../@core/utils/tonality.service';
 import {MeasureService} from '../../../../@core/utils/measure.service';
 import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
+import {RestError} from "../../../../@core/data/error";
 
 @Component({
   selector: 'ngx-composition-request-form',
@@ -65,8 +66,8 @@ export class CompositionRequestFormComponent implements OnInit {
         sheet => {
           this.showToast('Tu composición se ha puesto a la cola. Dentro de poco estará disponible', 'Solicitud creada!', 'top-right', 'success');
         },
-        error => {
-          this.showToast('El servidor no ha podido procesar tu solicitud', 'Error en el servidor!', 'top-right', 'danger');
+          (response: RestError) => {
+            this.toastrService.danger(response.error.message, 'ERROR');
         });
     } else {
         this.showToast('Parámetros incorrectos', 'Error', 'top-right', 'warning');

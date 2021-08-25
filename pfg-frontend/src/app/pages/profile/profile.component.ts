@@ -3,6 +3,7 @@ import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
 import {User} from '../../@core/data/user';
 import {UserService} from '../../@core/utils/user.service';
 import {NbToastrService} from '@nebular/theme';
+import {RestError} from "../../@core/data/error";
 
 @Component({
   selector: 'ngx-profile',
@@ -40,9 +41,9 @@ export class ProfileComponent implements OnInit {
           this.token = tokenResponse.token;
           this.toastrService.success('Token generado con éxito!', 'Éxito');
         },
-        error => {
+        (response: RestError) => {
           this.loadingToken = false;
-          this.toastrService.danger(error.error);
+          this.toastrService.danger(response.error.message, 'ERROR');
         },
     );
   }

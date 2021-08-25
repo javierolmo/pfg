@@ -3,6 +3,7 @@ import {Sheet} from '../../../@core/data/sheet';
 import {SheetService} from '../../../@core/utils/sheet.service';
 import {NbToastrService} from '@nebular/theme';
 import {interval, Subscription} from 'rxjs';
+import {RestError} from "../../../@core/data/error";
 
 @Component({
     selector: 'ngx-status',
@@ -29,8 +30,8 @@ export class StatusComponent implements OnInit {
                 this.sheet.finished = false;
                 this.toastrService.success(result, 'Tarea planificada');
             },
-            error => {
-                this.toastrService.danger(error.error, 'Error al reintentar');
+            (response: RestError) => {
+                this.toastrService.danger(response.error.message, 'ERROR');
             },
         );
     }
