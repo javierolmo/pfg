@@ -1,5 +1,6 @@
 package com.javi.uned.pfgbackend.adapters.api.users;
 
+import com.javi.uned.pfgbackend.adapters.api.users.model.NewPasswordRequest;
 import com.javi.uned.pfgbackend.adapters.api.users.model.TokenResponse;
 import com.javi.uned.pfgbackend.adapters.api.users.model.UserDTO;
 import com.javi.uned.pfgbackend.domain.exceptions.AuthException;
@@ -58,5 +59,11 @@ public interface UserController {
 
     @PutMapping(value = "/api/users/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     UserDTO updateUser(@RequestBody UserDTO userDTO, @PathVariable Long userId) throws EntityNotFound;
+
+    @PostMapping(value = "/api/users/{userId}/reset-password")
+    UserDTO resetPassword(@RequestBody NewPasswordRequest newPasswordRequest, @PathVariable Long userId) throws Exception;
+
+    @PostMapping(value = "/api/users/reset-password/{token}")
+    UserDTO resetPassword(@PathVariable String token, @RequestBody NewPasswordRequest newPasswordRequest);
 
 }

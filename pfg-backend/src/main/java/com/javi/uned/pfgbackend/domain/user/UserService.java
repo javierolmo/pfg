@@ -1,5 +1,7 @@
 package com.javi.uned.pfgbackend.domain.user;
 
+import com.javi.uned.pfgbackend.config.WebSecurityConfig;
+import com.javi.uned.pfgbackend.domain.exceptions.AuthException;
 import com.javi.uned.pfgbackend.domain.exceptions.EntityNotFound;
 import com.javi.uned.pfgbackend.domain.exceptions.ExistingUserException;
 import com.javi.uned.pfgbackend.domain.exceptions.ValidationException;
@@ -8,6 +10,7 @@ import com.javi.uned.pfgbackend.domain.user.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,6 +34,8 @@ public class UserService implements AuthenticationProvider {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private WebSecurityConfig webSecurityConfig;
 
 
     public User registerUser(User user) throws ValidationException, ExistingUserException {
@@ -139,6 +144,49 @@ public class UserService implements AuthenticationProvider {
                 oldUser.getRoles());
 
         return userDAO.save(newUser);
+
+    }
+
+    /**
+     *
+     * @param idUsuario
+     * @param oldPassword
+     * @param newPassword
+     * @throws Exception
+     */
+    public void changePassword(long idUsuario, String oldPassword, String newPassword) throws Exception {
+
+        User user = userDAO.findById(idUsuario);
+
+        try {
+            AuthenticationManager authenticationManager = webSecurityConfig.authenticationManagerBean();
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+            if(authentication.isAuthenticated()) throw new Exception();
+        } catch (Exception e) {
+            throw new AuthException("Invalid password for user " + user.getEmail());
+        }
+
+        user = new User(user.getId(), user.getEmail(), passwordEncoder.encode(newPassword), user.getName(), user.getSurname(), user.getEnabled(), user.getRoles());
+        userDAO.save(user);
+
+    }
+
+
+    /**
+     * INSECURE METHOD, use only for development purposes, changes the password of an user by id without any security
+     * checks
+     *
+     * @param idUsuario id of the target user
+     * @param newPassword new password for the user
+     * @throws EntityNotFound if user does not exist
+     */
+    @Deprecated
+    public void resetPassword(long idUsuario, String newPassword) throws EntityNotFound {
+
+        User user = userDAO.findById(idUsuario);
+
+        user = new User(user.getId(), user.getEmail(), passwordEncoder.encode(newPassword), user.getName(), user.getSurname(), user.getEnabled(), user.getRoles());
+        userDAO.save(user);
 
     }
 }

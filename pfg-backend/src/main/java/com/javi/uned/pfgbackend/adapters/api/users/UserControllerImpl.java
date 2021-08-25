@@ -1,6 +1,7 @@
 package com.javi.uned.pfgbackend.adapters.api.users;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javi.uned.pfgbackend.adapters.api.users.model.NewPasswordRequest;
 import com.javi.uned.pfgbackend.adapters.api.users.model.TokenResponse;
 import com.javi.uned.pfgbackend.adapters.api.users.model.UserDTO;
 import com.javi.uned.pfgbackend.adapters.api.users.model.UserDTOTransformer;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -137,6 +139,22 @@ public class UserControllerImpl implements UserController {
         userDTO = UserDTOTransformer.toTransferObject(user);
         return userDTO;
 
+    }
+
+    @Override
+    public UserDTO resetPassword(NewPasswordRequest newPasswordRequest, Long userId) throws Exception {
+        userService.resetPassword(
+                userId,
+                newPasswordRequest.getNewPassword());
+
+        User user = userService.findById(userId);
+        return UserDTOTransformer.toTransferObject(user);
+    }
+
+    @Override
+    public UserDTO resetPassword(String token, NewPasswordRequest newPasswordRequest) {
+        //TODO:
+        return null;
     }
 
 

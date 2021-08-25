@@ -18,4 +18,5 @@ public interface UserDAO {
     boolean existsByEmail(String email);
 
     User findByEmail(String email) throws EntityNotFound;
+
 }

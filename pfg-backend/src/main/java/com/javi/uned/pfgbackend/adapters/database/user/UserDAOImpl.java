@@ -72,4 +72,5 @@ public class UserDAOImpl implements UserDAO {
             throw new EntityNotFound("Could not find user with email '"+email+"'");
         }
     }
+
 }
