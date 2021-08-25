@@ -6,7 +6,8 @@
         <nb-toggle status="basic" [checked]="user.enabled" disabled></nb-toggle>
     </span>
     <nb-actions class="ml-auto" size="small">
-        <nb-action icon="edit-outline" (click)="openEditDialog()"></nb-action>
-        <nb-action icon="trash-outline" disabled></nb-action>
+        <nb-action icon="edit-outline" (click)="openEditDialog()" nbTooltip="Edit user"></nb-action>
+        <nb-action icon="unlock-outline" (click)="resetPassword()" nbTooltip="Reset password"></nb-action>
+        <nb-action icon="trash-outline" nbTooltip="Delete user" disabled></nb-action>
     </nb-actions>
 </div>

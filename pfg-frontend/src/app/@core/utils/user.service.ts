@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { User } from '../data/user';
+import {NewPasswordRequest, User} from '../data/user';
 import {GeneticSpecs} from '../data/geneticSpecs';
 import {Sheet} from '../data/sheet';
 import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
@@ -48,7 +48,12 @@ export class UserService {
     return this.httpClient.get<TokenResponse>(urlRequest, {headers: headers});
   }
 
-
+  resetPassword(userId, newPassword) {
+    const newPasswordRequest = new NewPasswordRequest(newPassword);
+    const urlRequest = `${environment.apiUrl}/api/users/${userId}/reset-password`;
+    const headers = new HttpHeaders().set('Authorization', this.token);
+    return this.httpClient.post<User>(urlRequest, newPasswordRequest, {headers: headers});
+  }
 
 }
 

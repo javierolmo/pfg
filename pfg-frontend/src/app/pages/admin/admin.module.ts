@@ -10,7 +10,7 @@ import {
     NbCardModule, NbFormFieldModule,
     NbIconModule,
     NbInputModule,
-    NbListModule, NbSelectModule, NbSpinnerModule, NbToggleModule,
+    NbListModule, NbSelectModule, NbSpinnerModule, NbToggleModule, NbTooltipModule,
     NbTreeGridDataSourceBuilder,
     NbTreeGridModule,
 } from '@nebular/theme';
@@ -21,10 +21,19 @@ import { UserLiComponent } from './users/user-li/user-li.component';
 import { UserDialogComponent } from './users/user-dialog/user-dialog.component';
 import {RoleService} from '../../@core/utils/role.service';
 import {CommonsModule} from '../../commons/commons.module';
+import { ResetPasswordDialogComponent } from './users/reset-password-dialog/reset-password-dialog.component';
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
-  declarations: [LogsComponent, AdminComponent, LogComponent, UsersComponent, UserLiComponent, UserDialogComponent],
+    declarations: [
+        LogsComponent,
+        AdminComponent,
+        LogComponent,
+        UsersComponent,
+        UserLiComponent,
+        UserDialogComponent,
+        ResetPasswordDialogComponent],
     imports: [
         CommonModule,
         AdminRoutingModule,
@@ -41,6 +50,8 @@ import {CommonsModule} from '../../commons/commons.module';
         NbSelectModule,
         CommonsModule,
         NbButtonModule,
+        NbTooltipModule,
+        FormsModule,
     ],
   providers: [NbTreeGridDataSourceBuilder, AdminService, RoleService],
 })
