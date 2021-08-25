@@ -1,7 +1,7 @@
 <nb-card>
     <nb-card-header>Editar usuario</nb-card-header>
     <nb-card-body>
-        <ngx-user-form [user]="user" [roles]="roles"></ngx-user-form>
+        <ngx-user-form [user]="user" [roles]="roles" (userEventEmitter)="update($event)"></ngx-user-form>
 
         <div class="row">
             <div class="col text-center">

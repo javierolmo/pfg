@@ -32,7 +32,7 @@
     <div class="m-4">
         <label for="enabled">Enabled:</label>
         <div id="enabled">
-            <nb-toggle [checked]="editedUser.enabled"></nb-toggle>
+            <nb-toggle [checked]="editedUser.enabled" (checkedChange)="editedUser.enabled = !editedUser.enabled"></nb-toggle>
         </div>
     </div>
 

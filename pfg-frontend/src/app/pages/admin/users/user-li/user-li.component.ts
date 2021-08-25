@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Role, User} from '../../../../@core/data/user';
 import {NbDialogService} from '@nebular/theme';
-import {UserEditFormComponent} from '../user-edit-form/user-edit-form.component';
+import {UserDialogComponent} from '../user-dialog/user-dialog.component';
 import {RoleService} from '../../../../@core/utils/role.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class UserLiComponent implements OnInit {
   }
 
   openEditDialog() {
-    this.dialogService.open(UserEditFormComponent, {context: { user: this.user, roles: this.roles }});
+    this.dialogService.open(UserDialogComponent, {context: { user: this.user, roles: this.roles }});
   }
 
 }

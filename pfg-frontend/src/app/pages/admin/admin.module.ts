@@ -18,13 +18,13 @@ import {AdminService} from '../../@core/utils/admin.service';
 import { LogComponent } from './logs/log/log.component';
 import { UsersComponent } from './users/users.component';
 import { UserLiComponent } from './users/user-li/user-li.component';
-import { UserEditFormComponent } from './users/user-edit-form/user-edit-form.component';
+import { UserDialogComponent } from './users/user-dialog/user-dialog.component';
 import {RoleService} from '../../@core/utils/role.service';
 import {CommonsModule} from '../../commons/commons.module';
 
 
 @NgModule({
-  declarations: [LogsComponent, AdminComponent, LogComponent, UsersComponent, UserLiComponent, UserEditFormComponent],
+  declarations: [LogsComponent, AdminComponent, LogComponent, UsersComponent, UserLiComponent, UserDialogComponent],
     imports: [
         CommonModule,
         AdminRoutingModule,

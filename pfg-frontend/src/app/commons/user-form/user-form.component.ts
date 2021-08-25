@@ -34,15 +34,19 @@ export class UserFormComponent implements OnInit {
   }
 
   selectRole(role: Role) {
-    const isPresent: boolean = this.user.roles.filter(r => r.id === role.id).length > 0;
+    const isPresent: boolean = this.editedUser.roles.filter(r => r.id === role.id).length > 0;
     if (isPresent) {
-      this.user.roles = this.user.roles.filter(r => r.id !== role.id);
+      this.editedUser.roles = this.editedUser.roles.filter(r => r.id !== role.id);
     } else {
-      this.user.roles.push(role);
+      this.editedUser.roles.push(role);
     }
   }
 
   isModified(): boolean {
     return this.user === this.editedUser;
+  }
+
+  emitResult() {
+    this.userEventEmitter.emit(this.editedUser);
   }
 }
