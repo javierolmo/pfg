@@ -4,12 +4,12 @@ import { ComposicionRoutingModule } from './composicion-routing.module';
 import { ComposicionComponent } from './composicion.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  NbButtonModule,
-  NbCardModule,
-  NbInputModule,
-  NbSelectModule,
-  NbTabsetModule,
-  NbToastrModule
+    NbButtonModule,
+    NbCardModule, NbIconModule,
+    NbInputModule,
+    NbSelectModule,
+    NbTabsetModule,
+    NbToastrModule
 } from '@nebular/theme';
 import { CompositionRequestFormComponent } from './genetic/composition-request-form/composition-request-form.component';
 import { UtilService } from 'app/@core/utils/util.service';
@@ -25,18 +25,19 @@ import { EntrenarComponent } from './neuralnetwork/entrenar/entrenar.component';
 
 @NgModule({
   declarations: [ComposicionComponent, CompositionRequestFormComponent, GeneticComponent, NeuralnetworkComponent, IntroduccionComponent, GenerarComponent, EntrenarComponent],
-  imports: [
-    CommonModule,
-    ComposicionRoutingModule,
-    ReactiveFormsModule,
-    NbInputModule,
-    NbSelectModule,
-    NbButtonModule,
-    NbCardModule,
-    FormsModule,
-    NbToastrModule,
-    NbTabsetModule,
-  ],
+    imports: [
+        CommonModule,
+        ComposicionRoutingModule,
+        ReactiveFormsModule,
+        NbInputModule,
+        NbSelectModule,
+        NbButtonModule,
+        NbCardModule,
+        FormsModule,
+        NbToastrModule,
+        NbTabsetModule,
+        NbIconModule,
+    ],
   providers: [UtilService, InstrumentService, TonalityService, MeasureService],
 })
 export class ComposicionModule { }

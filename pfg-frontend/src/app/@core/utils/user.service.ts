@@ -2,7 +2,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import {NewPasswordRequest, User} from '../data/user';
-import {GeneticSpecs} from '../data/geneticSpecs';
+import {GeneticSpecs} from '../data/specs';
 import {Sheet} from '../data/sheet';
 import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
 import {TokenResponse} from '../data/token';
@@ -37,8 +37,8 @@ export class UserService {
       return this.httpClient.get<User>(urlRequest);
   }
 
-  postSheetRequest(specs: GeneticSpecs, userId: number) {
-    const urlRequest = `${environment.apiUrl}/api/users/${userId}/request`;
+  postSheetRequest(specs: GeneticSpecs) {
+    const urlRequest = `${environment.apiUrl}/api/users/${specs.requesterId}/request`;
     return this.httpClient.post<Sheet>(urlRequest, specs);
   }
 

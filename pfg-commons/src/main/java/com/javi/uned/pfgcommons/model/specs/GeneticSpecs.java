@@ -18,7 +18,7 @@ public class GeneticSpecs {
     private Compas compas;
     private Instrumento[] instrumentos;
     private Tonalidad tonalidad;
-    private int phraseLenght = 8;
+    private int phraseLength = 8;
     private Figura minFigura;
     private Figura maxFigura;
 
@@ -78,12 +78,12 @@ public class GeneticSpecs {
         this.tonalidad = tonalidad;
     }
 
-    public int getPhraseLenght() {
-        return phraseLenght;
+    public int getPhraseLength() {
+        return phraseLength;
     }
 
-    public void setPhraseLenght(int phraseLenght) {
-        this.phraseLenght = phraseLenght;
+    public void setPhraseLength(int phraseLength) {
+        this.phraseLength = phraseLength;
     }
 
     public Figura getMinFigura() {

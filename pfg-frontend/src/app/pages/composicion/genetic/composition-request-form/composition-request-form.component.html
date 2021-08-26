@@ -1,51 +1,63 @@
 <nb-card>
     <nb-card-header>Especificaciones</nb-card-header>
     <nb-card-body>
-        <form [formGroup]="requestForm" (ngSubmit)="submit(requestForm)">
-            <div class="row">
 
-                <!-- Título -->
-                <div class="col-9">
-                    <input type="text" nbInput placeholder="Título" fullWidth formControlName="movementTitle">
-                </div>
+        <!-- Title and author -->
+        <div class="row my-4">
 
-                <!-- Número de movimiento -->
-                <div class="col-3">
-                    <input class="col" type="text" nbInput placeholder="Número de movimiento" formControlName="movementNumber">
-                </div>
-
-            </div>
-            <div class="row">
-
-                <!-- Número de compases -->
-                <div class="col">
-                    <input class="col-6" type="text" nbInput placeholder="Número de compases" formControlName="measures">
-                </div>
-
-                <!-- Instrumentos -->
-                <div class="col">
-                    <nb-select class="col-6" multiple formControlName="instrumentos" placeholder="Instrumentos">
-                        <nb-option *ngFor="let instrument of instrumentos" [value]="instrument">{{instrument.name}}</nb-option>
-                    </nb-select>
-                </div>
-
-                <!-- Tonalidad -->
-                <div class="col">
-                    <nb-select formControlName="tonalidad" placeholder="Tonalidad">
-                        <nb-option *ngFor="let tonalidad of tonalidades" [value]="tonalidad">{{tonalidad.traditionalName}}</nb-option>
-                    </nb-select>
-                </div>
-
-                <!-- Compás -->
-                <div class="col">
-                    <nb-select formControlName="measure" placeholder="Compás">
-                        <nb-option *ngFor="let measure of compases" [value]="measure">{{measure.numerador}}/{{measure.denominador}}</nb-option>
-                    </nb-select>
-                </div>
-
+            <!-- Title -->
+            <div class="col pl-4">
+                <label for="title">Título</label>
+                <input id="title" type="text" nbInput fullWidth placeholder="Nombre de la composición" [(ngModel)]="specs.movementTitle">
             </div>
 
-            <button nbButton status="basic" type="submit">Componer!</button>
-        </form>
+            <!-- Author -->
+            <div class="col pl-4">
+                <label for="author">Autor</label>
+                <input id="author" type="text" nbInput fullWidth placeholder="Autor de la obra" [(ngModel)]="specs.authors[0]" disabled>
+            </div>
+
+        </div>
+
+        <!-- Number of measures, instruments, tonalities and measure -->
+        <div class="row my-4">
+
+            <!-- Número de compases -->
+            <div class="col pl-4">
+                <label for="measureNumber">Compases</label>
+                <input id="measureNumber" type="text" nbInput placeholder="Número de compases" fullWidth [(ngModel)]="specs.measures">
+            </div>
+
+            <!-- Instrumentos -->
+            <div class="col pl-4">
+                <label for="instruments">Instrumentos</label>
+                <nb-select id="instruments" multiple formControlName="instrumentos" placeholder="Instrumentos" fullWidth>
+                    <nb-option *ngFor="let instrument of availableInstruments" [value]="instrument">{{instrument.name}}</nb-option>
+                </nb-select>
+            </div>
+
+            <!-- Tonalidad -->
+            <div class="col pl-4">
+                <label for="tonality">Tonalidad</label>
+                <nb-select id="tonality" placeholder="Tonalidad" fullWidth>
+                    <nb-option *ngFor="let tonalidad of availableTonalities" [value]="tonalidad">{{tonalidad.traditionalName}}</nb-option>
+                </nb-select>
+            </div>
+
+            <!-- Compás -->
+            <div class="col pl-4">
+                <label for="measure">Compás</label>
+                <nb-select id="measure" placeholder="Compás" fullWidth>
+                    <nb-option *ngFor="let measure of availableMeasures" [value]="measure">{{measure.numerador}}/{{measure.denominador}}</nb-option>
+                </nb-select>
+            </div>
+
+        </div>
+
+        <button class="mx-3" nbButton status="basic" (click)="submit()">Componer!</button>
+        <button class="mx-3" nbButton status="basic" (click)="specs.randomize()">
+            <nb-icon icon="flip-outline"></nb-icon>
+        </button>
+
     </nb-card-body>
   </nb-card>
