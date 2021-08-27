@@ -1,7 +1,10 @@
 package com.javi.uned.pfgcommons.model.constants;
 
+import com.javi.uned.pfgcommons.model.Compas;
 import com.javi.uned.pfgcommons.model.Instrumento;
 import com.javi.uned.pfgcommons.model.Scope;
+
+import java.util.Random;
 
 public class Instrumentos {
 
@@ -13,5 +16,10 @@ public class Instrumentos {
 
     public static Instrumento[] getInstrumentos(){
         return new Instrumento[]{PIANO, VIOLIN, SAXOFON_TENOR};
+    }
+
+    public static Instrumento random() {
+        Instrumento[] elements = getInstrumentos();
+        return elements[new Random().nextInt(elements.length)];
     }
 }

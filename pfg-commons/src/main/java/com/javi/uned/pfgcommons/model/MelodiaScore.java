@@ -22,7 +22,7 @@ public class MelodiaScore {
         this.geneticSpecs = geneticSpecs;
         this.movementNumber = geneticSpecs.getMovementNumber();
         this.movementTitle = geneticSpecs.getMovementTitle();
-        this.authors = geneticSpecs.getAuthors().toArray(new String[]{});
+        this.authors = geneticSpecs.getAuthors();
         this.estructura = new Estructura(geneticSpecs);
         this.parts = new ArrayList<>();
     }

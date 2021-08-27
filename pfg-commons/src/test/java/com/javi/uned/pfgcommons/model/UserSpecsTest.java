@@ -29,7 +29,7 @@ class UserSpecsTest {
         geneticSpecs.setMeasures(30);
         geneticSpecs.setInstrumentos(new Instrumento[]{Instrumentos.PIANO});
         geneticSpecs.setCompas(Compases.COMPAS_4x4);
-        geneticSpecs.setAuthors(Arrays.asList("Javier Olmo Injerto"));
+        geneticSpecs.setAuthors(new String[]{"Javier Olmo Injerto"});
         geneticSpecs.setTonalidad(Tonalidades.DO_M);
     }
 

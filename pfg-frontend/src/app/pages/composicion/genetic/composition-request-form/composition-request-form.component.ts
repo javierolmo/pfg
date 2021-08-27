@@ -13,6 +13,7 @@ import {MeasureService} from '../../../../@core/utils/measure.service';
 import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
 import {RestError} from '../../../../@core/data/error';
 import {TokenPayload} from '../../../../@core/data/token';
+import {SpecsService} from '../../../../@core/utils/specs.service';
 
 @Component({
   selector: 'ngx-composition-request-form',
@@ -38,6 +39,7 @@ export class CompositionRequestFormComponent implements OnInit {
     private tonalityService: TonalityService,
     private measureService: MeasureService,
     private authService: NbAuthService,
+    private specsService: SpecsService,
   ) {
     this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
       if (token.isValid()) {
@@ -57,7 +59,7 @@ export class CompositionRequestFormComponent implements OnInit {
   submit() {
     const error = this.specs.validate();
     if (error === undefined) {
-      this.userService.postSheetRequest(this.specs).subscribe(
+      this.specsService.postGeneticSpecs(this.specs).subscribe(
           sheet => {
             this.toastrService.success(
                 'Tu composición se ha puesto a la cola. Dentro de poco estará disponible',
@@ -69,6 +71,13 @@ export class CompositionRequestFormComponent implements OnInit {
     } else {
       this.toastrService.warning(error, 'Formulario inválido');
     }
+  }
+
+  async randomize() {
+    this.specsService.getRandomGeneticSpecs(this.specs.requesterId).subscribe(
+        (specs: GeneticSpecs) => this.specs = specs,
+        (response: RestError) => this.toastrService.danger(response.error.message, 'ERROR'),
+    );
   }
 
 }

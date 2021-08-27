@@ -80,40 +80,6 @@ public class UserControllerImpl implements UserController {
 
     }
 
-    public ResponseEntity composeSheet(GeneticSpecs specs, Long userId) throws IOException {
-
-        //Create new sheet
-        Sheet sheet = new Sheet(
-                null,
-                specs.getMovementTitle(),
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")),
-                userId,
-                false,
-                "", "", "");
-
-        //Save in database
-        sheet = sheetService.save(sheet);
-
-        //Complete instruments info
-        Instrumento[] instrumentosIncompletos = specs.getInstrumentos();
-        List<Instrumento> instrumentosCompletos = new ArrayList<>();
-        for (Instrumento instrumentoIncompleto : instrumentosIncompletos) {
-            instrumentosCompletos.add(instrumentService.completarInstrumento(instrumentoIncompleto));
-        }
-        specs.setInstrumentos(instrumentosCompletos.toArray(new Instrumento[]{}));
-
-        // Save request in json
-        ObjectMapper objectMapper = new ObjectMapper();
-        File specsFile = new File(fileServiceImpl.getSheetFolder(sheet.getId()), "specs.json");
-        objectMapper.writeValue(specsFile, specs);
-
-        //Order composition request
-        String sheetid = "" + sheet.getId();
-        messageBrokerGeneticComposer.orderComposition(sheetid, specs);
-
-        return ResponseEntity.ok(sheet);
-    }
-
     public TokenResponse generateToken(Long id, long duration, HttpServletRequest request) throws EntityNotFound, AuthException {
 
         // Check if requestor exists

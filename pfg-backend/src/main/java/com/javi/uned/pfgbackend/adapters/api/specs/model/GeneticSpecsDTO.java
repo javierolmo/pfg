@@ -1,16 +1,12 @@
-package com.javi.uned.pfgcommons.model.specs;
+package com.javi.uned.pfgbackend.adapters.api.specs.model;
 
+import com.javi.uned.pfgbackend.adapters.api.tonalities.model.TonalityDTO;
 import com.javi.uned.pfgcommons.model.Compas;
 import com.javi.uned.pfgcommons.model.Figura;
 import com.javi.uned.pfgcommons.model.Instrumento;
 import com.javi.uned.pfgcommons.model.Tonalidad;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
-public class GeneticSpecs {
-
+public class GeneticSpecsDTO {
     private int requesterId;
     private String movementTitle;
     private String movementNumber;
@@ -18,8 +14,8 @@ public class GeneticSpecs {
     private int measures;
     private Compas compas;
     private Instrumento[] instrumentos;
-    private Tonalidad tonalidad;
-    private int phraseLength = 8;
+    private TonalityDTO tonalidad;
+    private int phraseLength;
     private Figura minFigura;
     private Figura maxFigura;
 
@@ -79,11 +75,11 @@ public class GeneticSpecs {
         this.instrumentos = instrumentos;
     }
 
-    public Tonalidad getTonalidad() {
+    public TonalityDTO getTonalidad() {
         return tonalidad;
     }
 
-    public void setTonalidad(Tonalidad tonalidad) {
+    public void setTonalidad(TonalityDTO tonalidad) {
         this.tonalidad = tonalidad;
     }
 
@@ -109,21 +105,5 @@ public class GeneticSpecs {
 
     public void setMaxFigura(Figura maxFigura) {
         this.maxFigura = maxFigura;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GeneticSpecs that = (GeneticSpecs) o;
-        return requesterId == that.requesterId && measures == that.measures && phraseLength == that.phraseLength && Objects.equals(movementTitle, that.movementTitle) && Objects.equals(movementNumber, that.movementNumber) && Arrays.equals(authors, that.authors) && Objects.equals(compas, that.compas) && Arrays.equals(instrumentos, that.instrumentos) && Objects.equals(tonalidad, that.tonalidad) && Objects.equals(minFigura, that.minFigura) && Objects.equals(maxFigura, that.maxFigura);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(requesterId, movementTitle, movementNumber, measures, compas, tonalidad, phraseLength, minFigura, maxFigura);
-        result = 31 * result + Arrays.hashCode(authors);
-        result = 31 * result + Arrays.hashCode(instrumentos);
-        return result;
     }
 }

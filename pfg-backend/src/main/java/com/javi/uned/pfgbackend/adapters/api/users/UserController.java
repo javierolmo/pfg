@@ -33,16 +33,6 @@ public interface UserController {
     UserDTO getUser(@PathVariable Long id) throws EntityNotFound;
 
     /**
-     * TODO:
-     * @param specs
-     * @param userId
-     * @return
-     * @throws IOException
-     */
-    @PostMapping(value = "/api/users/{userId}/request", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity composeSheet(@RequestBody GeneticSpecs specs, @PathVariable Long userId) throws IOException;
-
-    /**
      * Generate a token for specified user. Only for own token
      *
      * @param id       identifier of user

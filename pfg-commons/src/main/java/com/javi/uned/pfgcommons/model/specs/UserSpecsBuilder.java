@@ -23,8 +23,8 @@ public class UserSpecsBuilder {
         this.geneticSpecs.setTonalidad(Tonalidades.DO_M);
         this.geneticSpecs.setMeasures(80);
         this.geneticSpecs.setInstrumentos(new Instrumento[]{Instrumentos.PIANO});
-        this.geneticSpecs.setAuthors(Arrays.asList("Melodía"));
-        this.geneticSpecs.setPhraseLenght(8);
+        this.geneticSpecs.setAuthors(new String[]{"Melodía"});
+        this.geneticSpecs.setPhraseLength(8);
         this.geneticSpecs.setMovementTitle("Melodía default title");
         this.geneticSpecs.setMovementNumber("1");
     }
@@ -64,12 +64,12 @@ public class UserSpecsBuilder {
     }
 
     public UserSpecsBuilder authors(String...authors) {
-        this.geneticSpecs.setAuthors(Arrays.asList(authors));
+        this.geneticSpecs.setAuthors(authors);
         return this;
     }
 
     public UserSpecsBuilder phraseLength(int phraseLength) {
-        this.geneticSpecs.setPhraseLenght(phraseLength);
+        this.geneticSpecs.setPhraseLength(phraseLength);
         return this;
     }
 

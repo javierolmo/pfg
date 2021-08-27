@@ -7,20 +7,30 @@ import java.util.Objects;
 
 public class Tonalidad {
 
+    private final long id;
     private final MelodiaRelativePitch pitch;
     private final boolean mayor;
 
-    public Tonalidad(MelodiaRelativePitch melodiaRelativePitch, boolean mayor) {
+    public Tonalidad(long id, MelodiaRelativePitch melodiaRelativePitch, boolean mayor) {
+        this.id = id;
         this.mayor = mayor;
         this.pitch = melodiaRelativePitch;
     }
 
-    public int getAlteraciones() {
-        int alteraciones = 0;
+    public short getAlteraciones() {
+        short alteraciones = 0;
         for (MelodiaRelativePitch melodiaRelativePitch : getScale()) {
             alteraciones += melodiaRelativePitch.getAlter();
         }
         return alteraciones;
+    }
+
+    public MelodiaRelativePitch getPitch() {
+        return pitch;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getAmericanName() {

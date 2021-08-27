@@ -9,7 +9,7 @@ import {
     NbInputModule,
     NbSelectModule,
     NbTabsetModule,
-    NbToastrModule
+    NbToastrModule,
 } from '@nebular/theme';
 import { CompositionRequestFormComponent } from './genetic/composition-request-form/composition-request-form.component';
 import { UtilService } from 'app/@core/utils/util.service';
@@ -21,10 +21,19 @@ import { NeuralnetworkComponent } from './neuralnetwork/neuralnetwork.component'
 import { IntroduccionComponent } from './neuralnetwork/introduccion/introduccion.component';
 import { GenerarComponent } from './neuralnetwork/generar/generar.component';
 import { EntrenarComponent } from './neuralnetwork/entrenar/entrenar.component';
+import {SpecsService} from '../../@core/utils/specs.service';
 
 
 @NgModule({
-  declarations: [ComposicionComponent, CompositionRequestFormComponent, GeneticComponent, NeuralnetworkComponent, IntroduccionComponent, GenerarComponent, EntrenarComponent],
+  declarations: [
+      ComposicionComponent,
+      CompositionRequestFormComponent,
+      GeneticComponent,
+      NeuralnetworkComponent,
+      IntroduccionComponent,
+      GenerarComponent,
+      EntrenarComponent,
+  ],
     imports: [
         CommonModule,
         ComposicionRoutingModule,
@@ -38,6 +47,6 @@ import { EntrenarComponent } from './neuralnetwork/entrenar/entrenar.component';
         NbTabsetModule,
         NbIconModule,
     ],
-  providers: [UtilService, InstrumentService, TonalityService, MeasureService],
+  providers: [UtilService, InstrumentService, TonalityService, MeasureService, SpecsService],
 })
 export class ComposicionModule { }

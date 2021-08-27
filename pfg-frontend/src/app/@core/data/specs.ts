@@ -2,7 +2,6 @@ import { Instrumento } from './instrumento';
 import {Tonality} from './tonality';
 import {Measure} from './measure';
 import {Figura} from './figura';
-import {UtilMethods} from './util-methods';
 
 export class GeneticSpecs {
 
@@ -28,7 +27,7 @@ export class GeneticSpecs {
      *
      * @return a description of the error if is not valid. Otherwise returns undefined
      */
-    validate(): string {
+    public validate(): string {
 
         // Movement title
         if (this.movementTitle === undefined) return 'El título no debe estar vacío';
@@ -43,10 +42,4 @@ export class GeneticSpecs {
         return undefined;
     }
 
-    randomize() {
-        this.movementTitle = UtilMethods.randomTitle();
-        this.movementNumber = '1';
-        this.authors = ['Melodía'];
-        this.measures = 30 + Math.floor(Math.random() * (300 - 30));
-    }
 }

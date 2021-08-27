@@ -2,6 +2,8 @@ package com.javi.uned.pfgcommons.model.constants;
 
 import com.javi.uned.pfgcommons.model.Compas;
 
+import java.util.Random;
+
 public class Compases {
 
     public static final Compas COMPAS_2x4 = new Compas(2, 4, 2);
@@ -16,6 +18,11 @@ public class Compases {
 
     public static Compas[] getCompases(){
         return new Compas[]{COMPAS_2x4, COMPAS_3x4, COMPAS_4x4, COMPAS_3X8, COMPAS_6X8, COMPAS_6X8, COMPAS_12X8};
+    }
+
+    public static Compas random() {
+        Compas[] elements = getCompases();
+        return elements[new Random().nextInt(elements.length)];
     }
 
 }
