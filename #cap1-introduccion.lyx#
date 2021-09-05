@@ -1,0 +1,447 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+
+\end_preamble
+\use_default_options true
+\master maestro-pfg.lyx
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Introducción general y objetivos
+\end_layout
+
+\begin_layout Standard
+En este primer capítulo se hará un breve resumen de qué es el proyecto,
+ en qué consiste, y cuáles han sido las motivaciones que me han llevado
+ a desarrollarlo.
+\begin_inset Newline newline
+\end_inset
+
+Con él se pretende poner en contexto al lector y manifestar el punto de
+ vista desde el que se ha enfocado este trabajo.
+\end_layout
+
+\begin_layout Section
+Descripción
+\end_layout
+
+\begin_layout Standard
+Este proyecto consiste en un software de composición musical 
+\begin_inset Quotes eld
+\end_inset
+
+autónomo
+\begin_inset Quotes erd
+\end_inset
+
+, capaz de crear composiciones completas a partir de unas especificaciones
+ mínimas proporcionadas por el usuario, tales como duración de la obra,
+ tonalidad, etc.
+ Para realizar esta tarea hace uso de un algoritmo genético.
+ Su enfoque es orientado a su uso como librería.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Además, también se ha desarrollado un servicio web para proporcionar acceso
+ al usuario final.
+ Este servicio está dividido en varios módulos independientes (tratado en
+ profundidad en el capítulo 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "chap:Estructura"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ El servicio web será el que tome la responsabilidad de interactuar con
+ el usuario final u otros sistemas a través de un api REST (documentada
+ y disponible en 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "chap:Api-REST"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) y de realizar las correspondientes llamadas a la librería de composición
+ para producir los resultados.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/PFG - Esquema general.svg
+	width 40page%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Esquema general simplificado
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Motivación y objetivos
+\end_layout
+
+\begin_layout Standard
+En un primer momento, al elegir un proyecto de modalidad específica, mi
+ idea era no sólo desarrollar un trabajo para presentar , sino sentar las
+ bases de un trabajo potencialmente más extenso y con margen de mejora,
+ que me pudiera servir en el futuro para nuevas investigaciones: un posible
+ trabajo de fin de máster, o simplemente aprender e incorporar nuevas tecnología
+s, ya que siempre resulta más sencillo en un proyecto conocido.
+ Por ello, quería encontrar un problema en el que me sintiera cómodo y me
+ resultara interesante.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Elegir la temática del proyecto fue algo relativamente sencillo.
+ Por una parte pensé que para llevar a cabo un proyecto de una duración
+ no muy extensa como es un proyecto de fin de grado, no podría invertir
+ demasiado tiempo en estudiar a fondo el dominio y la lógica de negocio.
+ Por otra parte, como mencionaba anteriormente, quería un proyecto ambicioso
+ que me pudiera servir en el futuro, por lo que decidí elegir un tema que
+ ya conociera previamente o al menos tuviera una idea general de cuál es
+ el problema y poder plantear diferentes soluciones.
+ Por este motivo, el tema elegido fue la música.
+ Un área en la que tengo alguna formación, y en la que mucha gente puede
+ tener opinión e interés, ya que no es necesario tener conocimientos formales
+ para ser un usuario de la herramienta.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por último, faltaba decidir qué problema en concreto quería resolver y cómo
+ lo iba a hacer.
+ Por las experiencias que había tenido estudiando en el grado, tenía bastante
+ claro que el campo que más me interesaba era la inteligencia artificial,
+ y parecía una ocasión ideal para profundizar algo más en los contenidos
+ incluidos en la carrera y tratar de aplicarlos a un problema real, que
+ probablemente fuera lo que más echaba en falta en este tipo de asignaturas.
+ Tras contemplar varias opciones, me decanté por que el problema fuera la
+ composición de obras musicales, algo que sin duda parece muy amplio, y
+ por lo tanto abre muchas vías de investigación futura.
+ Es por este motivo que a pesar de que la versión actual esté bastante acotada
+ en cuanto a posibilidades, mi intención siempre ha sido la de desarrollar
+ sin cerrar ninguna puerta, pensando en que en el futuro se puedan implementar
+ nuevas funcionalidades o características.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Tras una primera fase de búsqueda, he podido observar que la gran mayoría
+ de proyectos similares utilizan algoritmos basados en 
+\emph on
+Deep Learning
+\emph default
+ alimentados por grandes cantidades de partituras, con resultados realmente
+ buenos en algunos casos.
+ Sin embargo mi objetivo ha sido emplear otro tipo de algoritmo por varios
+ motivos: 
+\end_layout
+
+\begin_layout Itemize
+Probar si sería posible lograr un resultado aceptable utilizando otra técnica
+ que permitiera más flexibilidad y modificabilidad por parte del desarrollador
+ o incluso por parte del usuario.
+\end_layout
+
+\begin_layout Itemize
+Consideré que implementar un algoritmo de 
+\emph on
+Deep Learning
+\emph default
+ implicaba un tiempo de aprendizaje demasiado prolongado dada mi formación
+ actual y la extensión del proyecto.
+\end_layout
+
+\begin_layout Itemize
+Probablemente no poseer la infraestructura necesaria para entrenar un algoritmo
+ de esas características.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ello, ante esta decisión se ha optado por escoger un 
+\series bold
+algoritmo evolutivo
+\series default
+ de tipo 
+\series bold
+genético
+\series default
+, cuyos argumentos a favor han sido:
+\end_layout
+
+\begin_layout Itemize
+Capacidad de definir criterios de evaluación por el desarrollador
+\end_layout
+
+\begin_layout Itemize
+Mayor simplicidad
+\end_layout
+
+\begin_layout Itemize
+Prescindir de fase de entrenamiento
+\end_layout
+
+\begin_layout Standard
+Otro aspecto en el que se ha intentado marcar una diferencia con otros proyectos
+ es en el formato del resultado final.
+ En lugar de producir archivos de audio, los resultados son archivos MusicXML
+ 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+MusicXML es un formato abierto de notación musical basado en XML, cuya extensión
+ es .musicxml
+\end_layout
+
+\end_inset
+
+, tratando de lograr la máxima rigurosidad en la notación y empleando una
+ representación fiel a la teoría musical.
+ Esto ofrece la posibilidad de crear partituras con gran precisión y poder
+ utilizarlas desde editores como MuseScore o Finale, o exportarlas a formatos
+ de lectura o incluso de audio.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A parte del objetivo principal que considero la aplicación del algoritmo
+ al problema, también tenía interés en lo que viene siendo la parte de producto
+ y aprovechar este proyecto para informarme y ponerme al día en las tecnologías
+ y conceptos relacionados con el desarrollo de software a nivel empresarial,
+ como 
+\emph on
+Docker
+\emph default
+, 
+\emph on
+Spring
+\emph default
+, 
+\emph on
+Kafka
+\emph default
+, arquitectura hexagonal...
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Como se verá a lo largo de esta memoria, he dedicado gran parte del tiempo
+ al desarrollo de un sistema completo con el que interactuar con la librería
+ que aplica el algoritmo, haciendo énfasis en algunos de los puntos más
+ relevantes en el desarrollo en el ámbto empresarial, como pueden ser la
+ escalabilidad y la mantenibilidad.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Precisamente por lo que comentaba anteriormente acerca de la posible reutilizaci
+ón de este proyecto, consideré que valía la pena desarrollar este sistema
+ como envoltorio en lugar de limitarse a una interfaz por línea de comandos
+ o similar, ya que probablemente sea la parte más inmutable en caso de ampliar
+ funcionalidades.
+ Entre las funciones de este sistema, se encuentran:
+\end_layout
+
+\begin_layout Itemize
+Gestión de usuarios y roles
+\end_layout
+
+\begin_layout Itemize
+Seguridad
+\end_layout
+
+\begin_layout Itemize
+Gestión de almacenamiento
+\end_layout
+
+\begin_layout Itemize
+Procesamiento distribuido en un servidor
+\end_layout
+
+\begin_layout Itemize
+Soportar concurrencia y posibilidad de escalar
+\end_layout
+
+\begin_layout Standard
+Esto me ha llevado también a elaborar una interfaz de usuario web y descubrir
+ una parte del desarrollo del software que no había tenido la oportunidad
+ de conocer como es la capa de presentación, y más en concreto la programación
+ web frontend, haciendo uso de lenguajes nuevos para mí como javascript,
+ html y css.
+ Posteriormente, profundizando más sobre este campo, me he visto en la necesidad
+ de probar diveros frameworks de desarrollo, finalmente adoptando AngularJS
+ como solución para implementar la interfaz gráfica.
+\end_layout
+
+\begin_layout Section
+Estructura de la memoria
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Estructura-de-la-memoria"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La memoria de esta proyecto se estructura en los siguientes capítulos:
+\end_layout
+
+\begin_layout Enumerate
+Introducción general y objetivos
+\end_layout
+
+\begin_layout Enumerate
+Estructura
+\end_layout
+
+\begin_layout Enumerate
+Conclusiones y trabajos futuros
+\end_layout
+
+\begin_layout Standard
+<Comentar los capítulos>
+\end_layout
+
+\end_body
+\end_document

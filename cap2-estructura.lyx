@@ -1,0 +1,738 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+
+\end_preamble
+\use_default_options true
+\master maestro-pfg.lyx
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Estructura
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Estructura"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En este capítulo se analizará brevemente cómo se organiza el código fuente
+ de este proyecto y qué módulos lo conforman.
+ La estructura actual es resultado de varias evoluciones, se tratará de
+ guiar al lector a través de los cambios de planteamiento sufridos por el
+ proyecto tras algunos intentos no muy exitosos, exponiendo las conclusiones
+ de lo aprendido.
+\end_layout
+
+\begin_layout Section
+Evolución
+\end_layout
+
+\begin_layout Standard
+A continuación se hará un recorrido a través de los escenarios planteados
+ y los motivos de su elección y abandono:
+\end_layout
+
+\begin_layout Subsection
+Primer escenario
+\end_layout
+
+\begin_layout Standard
+En un primer momento, después de hacer un análisis de qué herramientas usar
+ pero sin plantearme en profundidad cómo iba a transcurrir el desarrollo,
+ la prioridad era comenzar a trabajar y resolver los problemas sobre la
+ marcha.
+ La idea era centrar la mayor parte del esfuerzo en implementar el algoritmo,
+ considerando que esta parte sería la más complicada, y que el resto vendría
+ sólo.
+ Para interactuar con el software mi intención era implementar una interfaz
+ gráfica muy simple y una línea de comandos.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+El lenguaje elegido sería exclusivamente 
+\series bold
+Java
+\series default
+, haciendo uso de la librería 
+\series bold
+JFugue
+\series default
+ como base de la lógica de negocio y 
+\series bold
+Jenetics
+\series default
+ para implementar el algoritmo genético.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/estructura-escenario-1.svg
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Estructura primer escenario
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Segundo escenario
+\end_layout
+
+\begin_layout Subsection
+Tercer escenario
+\end_layout
+
+\begin_layout Standard
+Como se comentaba anteriormente en la introducción, este proyecto se puede
+ dividir a grandes rasgos en:
+\end_layout
+
+\begin_layout Itemize
+Librería de composición musical
+\end_layout
+
+\begin_layout Itemize
+Servicio web
+\end_layout
+
+\begin_layout Standard
+Al principio del desarrollo, la estructura era esta, sin embargo, a medida
+ que el servicio web fue adquiriendo mayor complejidad, ha sido necesario
+ migrar la arquitectura monolítica del servicio web a un 
+\series bold
+conjunto de microservicios
+\series default
+.
+ A continuación, se enumeran los módulos finales con su nombre real:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+pfg-commons
+\end_layout
+
+\begin_layout Itemize
+Servicio web:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+pfg-backend
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+pfg-frontend
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+pfg-composer-genetic
+\end_layout
+
+\begin_layout Itemize
+Base de datos 
+\emph on
+(MySQL 5)[de terceros]
+\end_layout
+
+\begin_layout Itemize
+Kafka + Zookeeper
+\emph on
+ [de terceros]
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "esquema-estructura"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ se muestra cómo interactúan entre ellos cada uno de los módulos mencionados.
+ Como se puede observar, el objetivo es que la totalidad del proceso se
+ realice en el servidor, y que se pueda acceder al servicio a través de
+ un navegador desde cualquier equipo, o incluso desde otros sistemas de
+ forma sencilla si fuera necesario, desarrollando un adaptador específico
+ para el Api.
+\begin_inset Newline newline
+\end_inset
+
+A su vez, esta estructura permite una mayor flexibilidad en cuanto al balanceo
+ de carga de trabajo.
+ Separando el software en servicios más pequeños se pretende que estos tengan
+ una funcionalidad más concreta y definida.
+ Esto será importante a la hora de replicar servicios, ya que permitirá
+ escalar estos módulos individualmente.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "esquema-estructura"
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figs/scheme.svg
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Estructura de los módulos en el servidor
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cada uno de los módulos correspondientes al servicio web están preparados
+ para ser ejecutados en 
+\emph on
+Docker
+\emph default
+ (ver 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Docker"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), cada uno contiene su 
+\emph on
+Dockerfile
+\emph default
+ especificando cómo se construye su imagen, o en el caso de los módulos
+ de terceros, son directamente referencias a imágenes de 
+\emph on
+DockerHub
+\emph default
+.
+\end_layout
+
+\begin_layout Section
+Módulos
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+En la sección anterior se hacía una breve introducción a la organización
+ en módulos del proyecto y a como se disponen.
+ En adelante, se obviarán los módulos de terceros y se hará referencia únicament
+e a los que han sido desarrollados específicamente para el proyecto.
+ En los próximos capítulos se profundizará más en cada uno de los módulos,
+ sin embargo a continuación se van a definir las principales características
+ de cada uno.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Módulo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Finalidad
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Lenguaje
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Framework
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+pfg-backend
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Servicio
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Java
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Spring
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+pfg-frontend
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Servicio
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HTML, TS, CSS
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Angular
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+pfg-commons
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Librería
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Java
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+pfg-composer-genetics
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Servicio
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Java
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Características de cada módulo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+pfg-core
+\end_layout
+
+\begin_layout Standard
+Módulo principal, contiene la lógica necesaria para 
+\end_layout
+
+\begin_layout Subsection
+pfg-backend
+\end_layout
+
+\begin_layout Subsection
+pfg-frontend
+\end_layout
+
+\begin_layout Subsection
+pfg-composer
+\end_layout
+
+\begin_layout Section
+Ejemplo de flujo de ejecución
+\end_layout
+
+\begin_layout Standard
+Para ilustrar rápidamente la comunicación entre módulos, se va a explicar
+ el caso de uso de composición de una obra, un caso de uso muy completo
+ ya que requiere de la participación de todos los componentes:
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conclusiones
+\end_layout
+
+\begin_layout Standard
+Una de las prioridades que satisface este diseño es la capacidad de soportar
+ alta concurrencia.
+ Como se muestra en la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "esquema-estructura"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ se ha optado por independizar el módulo 
+\emph on
+pfg-composer-genetic
+\emph default
+ del módulo 
+\emph on
+pfg-backend.
+ 
+\emph default
+El motivo de esta separación es reducir al mínimo la carga de trabajo del
+ backend, cuyo correcto funcionamiento es esencial para mantener el servicio
+ activo ya que es el centro del sistema, del que dependen el resto de los
+ módulos.
+ Por ejemplo, si el backend se viera afectado y se ralentizara, impactaría
+ directamente en la interfaz web que realiza consultas sobre él vía REST
+ para obtener la información a mostrar.
+ De cara al usuario, una interfaz lenta es lo que da una peor sensación
+ y una experiencia negativa.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Otro motivo por el que se ha optado por este modelo es la alta escalabilidad
+ que proporciona.
+ Al tener módulos independientes para finalidades concretas es relativamente
+ sencillo multiplicar el número de instancias de cualquiera de ellos, ya
+ sea por necesidades de concurrencia o por disponibilidad: 
+\end_layout
+
+\begin_layout Standard
+Continunando el ejemplo anterior, en caso de que hubiera una alta demanda
+ del servicio, probablemente el módulo más sobrecargado sería el 
+\emph on
+pfg-composer 
+\emph default
+ya que es el encargado de realizar las tareas más pesadas.
+ Llegado el punto de necesitar más capacidad de procesamiento, bastaría
+ con replicar el composer tantas veces como fuera necesario.
+ 
+\end_layout
+
+\begin_layout Standard
+Otro motivo interesante por el que replicar módulos podría ser ofrecer una
+ mayor disponibilidad en caso de que falle alguno de los módulos.
+ En este supuesto, el más crítico sería el 
+\emph on
+pfg-composer.
+ 
+\emph default
+Sin él no sólo no podría funcionar ninguno de los demás, sino que el usuario
+ se quedaría sin feedback de qué está pasando.
+ La interfaz no podría autenticar a los usuarios, las peticiones no se resolverí
+an, y en caso de tener otros clientes como una app móvil o de escritorio,
+ tampoco recibirían respuesta.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
