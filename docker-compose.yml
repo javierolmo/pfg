@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
 
-# Database
+  # Database
   database:
     image: mysql:5.7
     restart: always
@@ -16,12 +16,24 @@ services:
     volumes:
       - ./database-persistence:/var/lib/mysql
 
-# Backend
-  backend:
-    image: melodia
+  # Frontend
+  frontend:
     build:
       context: .
-      dockerfile: dockerfile-backend.yml
+      dockerfile: ./pfg-frontend/Dockerfile
+    restart: always
+    environment:
+      API_URL: "http://localhost:64001"
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  # Backend
+  backend:
+    build:
+      context: .
+      dockerfile: ./pfg-backend/Dockerfile
     restart: always
     environment:
       DB_HOST: 'database'
@@ -61,6 +73,7 @@ services:
     depends_on:
       - "kafka"
 
+  # Kafka
   kafka:
     image: obsidiandynamics/kafka
     restart: always
