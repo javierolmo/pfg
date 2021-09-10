@@ -10,4 +10,13 @@
   month     = jan,
 }
 
+@Article{olivera2014jwt,
+  author  = {Olivera, Joaqu{\i}n},
+  journal = {Universidad Cat{\'o}lica” Nuestra Se{\~n}ora de la Asunci{\'o}n”, Teor{\'\i}a y Aplicaci{\'o}n de la Inform{\'a}tica},
+  title   = {JWT: Json Web Token},
+  year    = {2014},
+  pages   = {18},
+  volume  = {2},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}

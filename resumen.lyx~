@@ -108,13 +108,70 @@ thispagestyle{empty}
 
 \end_inset
 
-
+ 
 \end_layout
 
 \begin_layout Standard
 El objetivo principal de este proyecto es la implementación de un algoritmo
- genético en un caso real.
- La mayoría de los proyectos 
+ de inteligencia artificial en un problema real: la composición de obras
+ musicales.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+A pesar de que existen trabajos que han logrado resultados realmente buenos
+ haciendo uso de redes neuronales y deep learning, la intención con este
+ proyecto es explorar otras vías menos habituales como es el algoritmo genético,
+ haciendo uso de la librería Jenetics disponible para el lenguaje Java.
+ Otro aspecto diferenciador es que se ha intentado que la base del modelo
+ del dominio sea lo más próximo posible al formato MusicXML para la representaci
+ón escrita en lugar de generación de archivos de audio MIDI.
+ Con esto se pretende lograr una notación más precisa y práctica para un
+ músico, con el fin de que pueda ser técnicamente interpretable.
+ Dado que no se ha encontrado una librería que proporcione esta finalidad,
+ se ha creado una a partir de 
+\begin_inset Quotes eld
+\end_inset
+
+proxymusic
+\begin_inset Quotes erd
+\end_inset
+
+, un proyecto de código abierto disponible en GitHub que permite serializar
+ y deserializar MusicXML.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Por otra parte, se ha dedicado gran parte del tiempo de desarrollo a la
+ creación de un sistema estructurado como un conjunto de microservicios
+ que haga uso del algoritmo de composición y asuma otras responsabilidades
+ como la gestión de autenticación, roles, almacenamiento, y administración
+ a través de su api REST o de su interfaz web desarrollada en Angular.
+ Este sistema está diseñado para su despliegue tanto en un único servidor
+ o en un clúster, permitiendo su escalado y replicación de cada uno de sus
+ módulos por separado.
+ Para ello se han empleado contenedores Docker, y la comunicación entre
+ ellos se gestiona a través de colas de mensajería utilizando Apache Kafka.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Al tratarse de un problema bastante amplio, se ha decidido acotar su ámbito
+ para este trabajo, aunque con intención de poder ser ampliado en el futuro.
+ Algunos de estos límites son los instrumentos a emplear y el estilo de
+ composición, que por el momento se reducen a composiciones para piano solo,
+ basadas en el estilo Boogie-woogie debido a su caracter improvisado y de
+ estructura flexible.
 \end_layout
 
 \end_body

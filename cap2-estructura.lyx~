@@ -100,10 +100,9 @@ name "chap:Estructura"
 \begin_layout Standard
 En este capítulo se analizará brevemente cómo se organiza el código fuente
  de este proyecto y qué módulos lo conforman.
- La estructura actual es resultado de varias evoluciones, se tratará de
- guiar al lector a través de los cambios de planteamiento sufridos por el
- proyecto tras algunos intentos no muy exitosos, exponiendo las conclusiones
- de lo aprendido.
+ Se tratará de guiar al lector a través de los cambios de planteamiento
+ sufridos por el proyecto tras varios intentos fallidos, exponiendo las
+ conclusiones de lo aprendido.
 \end_layout
 
 \begin_layout Section
@@ -111,7 +110,14 @@ Evolución
 \end_layout
 
 \begin_layout Standard
-A continuación se hará un recorrido a través de los escenarios planteados
+La estructura actual es resultado de varias evoluciones.
+ A medida que el proyecto iba creciendo iban surgiendo problemas y nuevas
+ necesidades que no se detectaron desde el inicio.
+ En este proceso se pueden diferenciar a grandes rasgos tres escenarios
+ diferentes.
+ La transición de uno a otro no se hizo de forma drástica, sino más bien
+ progresivamente.
+ A continuación se hará un recorrido a través de los escenarios planteados
  y los motivos de su elección y abandono:
 \end_layout
 
@@ -136,11 +142,11 @@ En un primer momento, después de hacer un análisis de qué herramientas usar
 \begin_inset Newline newline
 \end_inset
 
-El lenguaje elegido sería exclusivamente 
+El lenguaje elegido sería 
 \series bold
 Java
 \series default
-, haciendo uso de la librería 
+ para su totalidad, haciendo uso de la librería 
 \series bold
 JFugue
 \series default
@@ -160,11 +166,12 @@ Jenetics
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename figs/estructura-escenario-1.svg
+	width 100text%
 
 \end_inset
 
@@ -188,8 +195,199 @@ Estructura primer escenario
 
 \end_layout
 
+\begin_layout Standard
+Esta primera aproximación fue útil para empezar a trabajar cuanto antes,
+ pero a medida que iba adquiriendo mayor complejidad, comenzaban a hacerse
+ notar algunas deficiencias.
+ Quizá no tanto por la estructura en sí, sino por una mala implementación.
+ Empecé por hacer la interfaz gráfica para poco a poco ir probando lo que
+ desarrollaba, y esto resultó, a causa de mi poca experiencia, en un alto
+ acoplamiento con esta interfaz, mezclando lógica de negocio en los controladore
+s de las vistas y en general habiendo muchas dependencias que no debería
+ haber.
+ Esto cuando más lo he notado ha sido a la hora de hacer modificaciones
+ o cuando me dispuse a hacer la interfaz por línea de comandos, viendo que
+ estaba reescribiendo mucha lógica que ya había implementado en la interfaz
+ gráfica.
+ 
+\begin_inset Newline newline
+\end_inset
+
+De cualquier modo, el planteamiento no era el ideal, ya que uno de mis objetivos
+ iniciales era poder ampliar el proyecto en el futuro implementando otros
+ algoritmos que pudieran estar en Java o en otros lenguajes y tal y como
+ estaba planteado no me estaba resultando nada cómodo.
+ Por otra parte también me parecía muy interesante tratar de trasladar la
+ tarea a un servidor para evitar problemas de compatibilidad, versiones,
+ librerías...
+ Algo que sería beneficioso tanto para mí durante el desarrollo como para
+ la entrega del proyecto, haciendo que sea fácil de utilizar sin tener que
+ seguir una guía de instalación.
+ Es por este motivo que decidí plantearlo como un servicio web con una interfaz
+ para poder utilizar desde el navegador.
+\begin_inset Newline newline
+\end_inset
+
+En resumen, las 
+\series bold
+ventajas
+\series default
+ de esta estructura fueron:
+\end_layout
+
+\begin_layout Itemize
+Simplicidad
+\end_layout
+
+\begin_layout Itemize
+Velocidad de desarrollo
+\end_layout
+
+\begin_layout Standard
+Mientras que las 
+\series bold
+desventajas
+\series default
+ fueron:
+\end_layout
+
+\begin_layout Itemize
+Alto acoplamiento
+\end_layout
+
+\begin_layout Itemize
+Poca flexibilidad para ampliar o modificar funcionalidades
+\end_layout
+
+\begin_layout Itemize
+Dependencias con la máquina host
+\end_layout
+
 \begin_layout Subsection
 Segundo escenario
+\end_layout
+
+\begin_layout Standard
+Tras las deficiencias reflejadas en el primer escenario, me dispuse a tratar
+ de corregirlas comenzando por independizar partes del código que no deberían
+ estar unidas ya que me estaban creando dependencias innecesarias.
+ Me dispuse a hacer una separación más estricta entre la interfaz y la lógica
+ de negocio, el origen de la mayoría de mis problemas.
+ Una vez conseguido, el siguiente paso era llevar esta independencia más
+ allá, haciendo correr un servicio sobre el que ejecutar las tareas creadas
+ por el usuario desde una interfaz que pudiera estar ubicada en la misma
+ máquina o en otra distinta.
+ Esta tarea resultó ser más compleja de lo que esperaba en un principio,
+ para ello me guié por lo aprendido en el grado acerca de sistemas distribuidos
+ y migré la estructura anterior a una aplicación cliente-servidor utilizando
+ 
+\series bold
+JavaRMI
+\series default
+, una solución que en un primer momento consideré que era suficiente, ya
+ que más o menos lograba el resultado que quería, pero a medida que continuaba
+ con el desarrollo fueron apareciendo una serie de problemas:
+\end_layout
+
+\begin_layout Itemize
+No soporta otros lenguajes, algo que tenía como prioritario, ya que en paralelo
+ estaba tratando de desarrollar con python una solución alternativa.
+\end_layout
+
+\begin_layout Itemize
+Escasa compatibilidad utilizando clientes anteriores, con continuos problemas
+ de serialización.
+\end_layout
+
+\begin_layout Itemize
+Preferencia por interfaz web.
+ Un cliente java seguía suponiendo una limitación.
+\end_layout
+
+\begin_layout Standard
+A esto le sumaría que cuanto más acudía a internet para resolver los problemas
+ puntuales que iba teniendo, más me daba cuenta de que no es la tecnología
+ más actual para este propósito y que existían otras formas de implementar
+ lo que quería, incluso de manera más sencilla.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Tras buscar soluciones alternativas, descubrí los 
+\series bold
+servicios REST
+\series default
+, un protocolo cliente servidor algo que encajaba bastante bien con las
+ necesidades del proyecto.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Tras documentarme y ver implementaciones de otras personas llegué a 
+\series bold
+Spring
+\series default
+, un framework de desarrollo que me facilitó bastante las cosas, tanto para
+ la creación del servicio como para la comunicación con base de datos haciendo
+ uso de su soporte de 
+\series bold
+Hibernate
+\series default
+, una herramienta de mapeo de objetos a tablas para Java que facilita el
+ acceso a información de una base de datos relacional pudiendo hacer consultas
+ desde un nivel de abstracción más alto, sin tener que lidiar directamente
+ con las conexiones ni reinventar la rueda.
+ Probablemente lo más útil que he aprendido a lo largo de este proyecto
+ a raiz de encontrar este tipo de frameworks y librerías es, cada vez que
+ tenga que resolver un problema, comprobar si alguien lo ha hecho ya antes.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/estructura-escenario-2.svg
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Estructura segundo escenario
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection

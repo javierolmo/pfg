@@ -94,10 +94,7 @@ Introducción general y objetivos
 En este primer capítulo se hará un breve resumen de qué es el proyecto,
  en qué consiste, y cuáles han sido las motivaciones que me han llevado
  a desarrollarlo.
-\begin_inset Newline newline
-\end_inset
-
-Con él se pretende poner en contexto al lector y manifestar el punto de
+ Con él se pretende poner en contexto al lector y manifestar el punto de
  vista desde el que se ha enfocado este trabajo.
 \end_layout
 
@@ -116,20 +113,30 @@ autónomo
 
 , capaz de crear composiciones completas a partir de unas especificaciones
  mínimas proporcionadas por el usuario, tales como duración de la obra,
- tonalidad, etc.
- Para realizar esta tarea hace uso de un algoritmo genético.
- Su enfoque es orientado a su uso como librería.
+ la tonalidad, el compás, etc.
+ Para realizar esta tarea hace uso de un algoritmo genético implementado
+ sobre un dominio y una lógica de negocio desarrollados específicamente
+ para este propósito.
+ Este modelo se ha construido a partir de la librería 
+\begin_inset Quotes eld
+\end_inset
+
+musicproxy
+\begin_inset Quotes erd
+\end_inset
+
+, 
 \begin_inset Newline newline
 \end_inset
 
 
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
-Además, también se ha desarrollado un servicio web para proporcionar acceso
- al usuario final.
- Este servicio está dividido en varios módulos independientes (tratado en
- profundidad en el capítulo 
+Además, también se ha desarrollado un sistema al que se accede a través
+ de una interfaz web para proporcionar acceso al usuario final.
+ Este sistema está dividido en varios módulos independientes (tratado en
+ con más detalle en el capítulo 
 \begin_inset CommandInset ref
 LatexCommand vref
 reference "chap:Estructura"
@@ -140,9 +147,26 @@ noprefix "false"
 \end_inset
 
 ).
- El servicio web será el que tome la responsabilidad de interactuar con
- el usuario final u otros sistemas a través de un api REST (documentada
- y disponible en 
+ El sistema será el que tome la responsabilidad de interactuar con el usuario
+ final u otros sistemas a través de un 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "API"
+description "Application programming interface"
+literal "false"
+
+\end_inset
+
+ API 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "REST"
+description "Representational state transfer"
+literal "false"
+
+\end_inset
+
+ REST (documentada y disponible en 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "chap:Api-REST"
@@ -152,8 +176,8 @@ noprefix "false"
 
 \end_inset
 
-) y de realizar las correspondientes llamadas a la librería de composición
- para producir los resultados.
+) y de realizar las llamadas a los módulos correspondientes para producir
+ los resultados.
 \begin_inset Newline newline
 \end_inset
 
@@ -168,8 +192,8 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename figs/PFG - Esquema general.svg
-	width 40page%
+	filename figs/1-introduccion/esquema-backend.svg
+	width 100text%
 
 \end_inset
 
@@ -177,7 +201,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Esquema general simplificado
+Esquema general servicio REST
 \end_layout
 
 \end_inset
@@ -188,6 +212,91 @@ Esquema general simplificado
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Como se puede ver en la figura, el servicio REST se situaría en el centro
+ y actuará como enlace entre el usuario y los demás módulos.
+ Por tomar un ejemplo, en el caso de uso principal de solicitar una composición,
+ el usuario a través de la aplicación web rellenaría un formulario con las
+ especificaciones deseadas y enviaría la solicitud.
+ Al pulsar el botón, se haría una validación sencilla del formulario y si
+ es correcta se ejecutaría la llamada al método 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "HTTP"
+description "HyperText Transfer Protocol"
+literal "false"
+
+\end_inset
+
+HTTP correspondiente contra el servicio REST.
+ Este se comunicaría en primer lugar con la base de datos para crear el
+ registro de la nueva partitura, y a continuación haría llegar al servicio
+ compositor la petición publicando las especificaciones del usuario en una
+ cola de mensajería a la que este estaría suscrito.
+ Una vez el compositor ha terminado la tarea, le enviaría de nuevo el resultado
+ vía REST al servicio central, que depositaría los resultados en el sistema
+ de archivos y actualizaría la disponibilidad en la base de datos para que
+ el usuario sepa que su composición ha terminado.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Este sistema también dispone de seguridad para restringir su uso o el acceso
+ al almacenamiento de otros usuarios, sin embargo dadas las dimensiones
+ del proyecto, no se dispone de un módulo dedicado a ello, sino que se trata
+ de un sistema muy simple implementado directamente en el servicio central.
+ Consiste en un 
+\emph on
+login
+\emph default
+ para controlar el acceso a través de la aplicación web y 
+\emph on
+tokens
+\emph default
+ 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "JWT"
+description "JSON Web Token"
+literal "false"
+
+\end_inset
+
+ JWT 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Los tokens web 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "JSON"
+description "JavaScript Object Notation"
+literal "false"
+
+\end_inset
+
+JSON son un método estándar que permiten la propagación de identidad y privilegi
+os.
+ [
+\begin_inset CommandInset citation
+LatexCommand cite
+key "olivera2014jwt"
+literal "false"
+
+\end_inset
+
+]
+\end_layout
+
+\end_inset
+
+ para securizar los métodos más sensibles del API.
 \end_layout
 
 \begin_layout Section
@@ -198,27 +307,27 @@ Motivación y objetivos
 En un primer momento, al elegir un proyecto de modalidad específica, mi
  idea era no sólo desarrollar un trabajo para presentar como proyecto fin
  de grado, sino sentar las bases de un trabajo potencialmente más extenso
- y con margen de mejora, que me pudiera servir en el futuro para nuevas
- investigaciones, un posible trabajo de fin de máster, o simplemente aprender
- e incorporar nuevas tecnologías, ya que siempre resulta más sencillo en
- un proyecto conocido.
+ y con margen para incorporar nuevas funcionalidades y que me pudiera servir
+ en el futuro para nuevas investigaciones, un posible trabajo de fin de
+ máster, o simplemente aprender e incorporar nuevas tecnologías, ya que
+ siempre resulta más sencillo en un proyecto conocido.
  Por ello, quería encontrar un problema en el que me sintiera cómodo y me
  resultara interesante.
 \begin_inset Newline newline
 \end_inset
 
 
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
 Elegir la temática del proyecto fue algo relativamente sencillo.
  Por una parte pensé que para llevar a cabo un proyecto de una duración
  no muy extensa como es un proyecto de fin de grado, no podría invertir
  demasiado tiempo en estudiar a fondo el dominio y la lógica de negocio.
- Por otra parte, como mencionaba anteriormente, quería un proyecto algo
- ambicioso que me pudiera servir en el futuro, por lo que decidí elegir
- un tema que ya conociera previamente o al menos tuviera una idea general
- de cuál es el problema y poder plantear diferentes soluciones.
+ Por otra parte, como mencionaba anteriormente, quería un proyecto que me
+ resultara interesante y me pudiera servir en el futuro, por lo que decidí
+ elegir un tema que ya conociera previamente o al menos tuviera una idea
+ general de cuál es el problema y poder plantear diferentes soluciones.
  Por este motivo, el tema elegido fue la música.
  Un área en la que tengo alguna formación, y en la que mucha gente puede
  tener opinión e interés, ya que no es necesario tener conocimientos formales
@@ -227,9 +336,9 @@ Elegir la temática del proyecto fue algo relativamente sencillo.
 \end_inset
 
 
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
 Por último, faltaba decidir qué problema en concreto quería resolver y cómo
  lo iba a hacer.
  Por las experiencias que había tenido estudiando durante el grado, tenía
@@ -319,8 +428,25 @@ Otro aspecto en el que se ha intentado marcar una diferencia con otros proyectos
 status open
 
 \begin_layout Plain Layout
-MusicXML es un formato abierto de notación musical basado en XML, cuya extensión
- es .musicxml
+MusicXML es un formato abierto de notación musical basado en 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "XML"
+description "Extensive Markup Language"
+literal "false"
+
+\end_inset
+
+ XML, cuya extensión es .musicxml.
+ [
+\begin_inset CommandInset citation
+LatexCommand cite
+key "good2001musicxml"
+literal "false"
+
+\end_inset
+
+]
 \end_layout
 
 \end_inset
@@ -334,9 +460,9 @@ MusicXML es un formato abierto de notación musical basado en XML, cuya extensi�
 \end_inset
 
 
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
 A parte del objetivo principal que considero la aplicación del algoritmo
  al problema, también tenía interés en lo que viene siendo la parte de producto
  y aprovechar este proyecto para informarme y ponerme al día en las tecnologías
@@ -354,31 +480,16 @@ Spring
 Kafka
 \emph default
 , arquitectura hexagonal...
- 
-\begin_inset Newline newline
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Como se verá a lo largo de esta memoria, he dedicado gran parte del tiempo
+ Como se verá a lo largo de esta memoria, he dedicado gran parte del tiempo
  al desarrollo de un sistema completo con el que interactuar con la librería
  que aplica el algoritmo, haciendo énfasis en algunos de los puntos más
- relevantes en el desarrollo en el ámbto empresarial, como pueden ser la
+ relevantes en el desarrollo en el ámbito empresarial, como pueden ser la
  escalabilidad y la mantenibilidad.
-\begin_inset Newline newline
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Precisamente por lo que comentaba anteriormente acerca de la posible reutilizaci
-ón de este proyecto, consideré que valía la pena desarrollar este sistema
+ Precisamente por lo que comentaba anteriormente acerca de la posible reutilizac
+ión de este proyecto, consideré que valía la pena desarrollar este sistema
  como envoltorio en lugar de limitarse a una interfaz por línea de comandos
- o similar, ya que probablemente sea la parte más inmutable en caso de ampliar
- funcionalidades.
+ o similar, ya que probablemente sea la parte más inmutable en caso de continuar
+ evolucionando el proyecto.
  Entre las funciones de este sistema, se encuentran:
 \end_layout
 
@@ -406,11 +517,81 @@ Soportar concurrencia y posibilidad de escalar
 Esto me ha llevado también a elaborar una interfaz de usuario web y descubrir
  una parte del desarrollo del software que no había tenido la oportunidad
  de conocer como es el desarrollo de interfaces de usuario, y más en concreto
- la programación web frontend, haciendo uso de lenguajes nuevos para mí
- como javascript, html y css.
+ la programación web 
+\emph on
+frontend
+\emph default
+, haciendo uso de lenguajes nuevos para mí como JavaScript, 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "HTML"
+description "HyperText Markup Language"
+literal "false"
+
+\end_inset
+
+HTML y 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "CSS"
+description "Cascading Style Sheets"
+literal "false"
+
+\end_inset
+
+CSS.
  Posteriormente, profundizando más sobre este campo, me he visto en la necesidad
- de probar diveros frameworks de desarrollo, finalmente adoptando AngularJS
- como solución para implementar la interfaz gráfica.
+ de probar diversos frameworks de desarrollo, finalmente adoptando AngularJS
+ como solución para implementar la interfaz gráfica, aunque para ello no
+ partí de cero, sino que parto de una plantilla disponible en GitHub llamada
+ 
+\begin_inset Quotes eld
+\end_inset
+
+ngx-admin
+\begin_inset Quotes erd
+\end_inset
+
+, un 
+\emph on
+dashboard
+\emph default
+ de código abierto basado en los componentes de la librería 
+\begin_inset Quotes eld
+\end_inset
+
+Nebular
+\begin_inset Quotes erd
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Dejando a un lado el resultado final de este proyecto, puedo decir que estoy
+ muy satisfecho de haber trabajado en él porque me ha dado la oportunidad
+ de tratar áreas temas muy diversas y conocer sus principales tecnologías.
+ Desde el tema principal que era la implantación de un algoritmo genético
+ hasta el desarrollo de un servicio distribuido y una interfaz web, pasando
+ por temas de infraestructura y redes en los que no tenía apenas conocimientos,
+ y creándome la necesidad de aplicar flujos de trabajo en plataformas de
+ integración continua como 
+\emph on
+GitHub Actions 
+\emph default
+y 
+\emph on
+Jenkins
+\emph default
+, de los que ni conocía su existencia.
+ Es probable que me haya excedido de la extensión que había planeado en
+ un principio para este proyecto, pero considero que la experiencia ha sido
+ muy positiva y que tras ella, estoy más preparado para decidir a qué área
+ de la informática dedicarme.
 \end_layout
 
 \end_body
