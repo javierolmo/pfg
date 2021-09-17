@@ -74,10 +74,16 @@ jobs:
       - publish_backend
     runs-on: ubuntu-latest
     steps:
-      - name: Build job
-        uses: appleboy/jenkins-action@master
+
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Deploy to portainer
+        uses: bots-house/portainer-deploy-stack-action
         with:
-          url: "http://pfg-uned.duckdns.org:64002"
-          user: ${{ secrets.JENKINS_USERNAME }}
-          token: ${{ secrets.JENKINS_TOKEN }}
-          job: "pfg"
+          portainer-url: ${{ secrets.PORTAINER_URL }}
+          portainer-username: ${{ secrets.PORTAINER_USERNAME }}
+          portainer-password: ${{ secrets.PORTAINER_PASSWORD }}
+          portainer-endpoint: 1
+          stack-name: melodia
+          stack-file: ./github/workflows/docker-compose-prod.yml
