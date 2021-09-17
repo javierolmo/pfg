@@ -115,12 +115,6 @@ Este anexo se utilizará para ampliar información acerca de las distintas
 \end_layout
 
 \begin_layout Section
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:MusicXML"
-
-\end_inset
-
 MusicXML
 \end_layout
 
@@ -196,38 +190,11 @@ Como se puede comprobar examinando el ejemplo, parámetros como el tono (pitch),
  funciones distintas dependiendo de cómo está escrita, por lo que al especificar
  únicamente su tono se está omitiendo información.
  Lo mismo puede ocurrir con la duración.
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-El término MIDI (abreviatura de Musical Instrument Digital Interface), describe
- una interfaz que conecta una variedad de instrumentos digitalizados, computador
-as y dispositivos de audio para reproducir, editar y grabar música.
- MIDI contiene las instrucciones que le dicen a los dispositivos electrónicos
- los parámetros de las notas, es decir, qué, dónde y cuándo deben ocurrir.
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-Por poner un símil con la programación, un fichero .musicxml correspondería
+ Por poner un símil con la programación, un fichero musicxml corresponderí
  al código fuente.
  Puede tener comentarios y código ordenado de una forma concreta que facilita
  la lectura para el programador.
- Por otro lado, un .midi u otro archivo de audio sería un archivo compilado
- que optimiza este código para su ejecución.
- Funcionalmente son equivalentes, pero la forma puede ser muy distinta.
- En el caso de una partitura musical destinada para ser leída por un músico,
- la forma cobra especial importancia.
-\begin_inset Newline newline
-\end_inset
-
-
+ 
 \begin_inset Newline newline
 \end_inset
 
@@ -236,6 +203,25 @@ Por poner un símil con la programación, un fichero .musicxml correspondería
 lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
 inline false
 status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:ejemplo-musicxml"
+
+\end_inset
+
+Ejemplo fragmento musicxml
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \begin_layout Plain Layout
 
@@ -425,21 +411,6 @@ status open
 \begin_layout Plain Layout
 
 	
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "lis:ejemplo-musicxml"
-
-\end_inset
-
-Ejemplo fragmento musicxml
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -486,6 +457,10 @@ Resultado del ejemplo MusicXML
 
 \end_layout
 
+\end_inset
+
+
+\begin_inset Newline newline
 \end_inset
 
 

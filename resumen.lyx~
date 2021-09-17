@@ -123,9 +123,13 @@ El objetivo principal de este proyecto es la implementación de un algoritmo
 \end_inset
 
 A pesar de que existen trabajos que han logrado resultados realmente buenos
- haciendo uso de redes neuronales y deep learning, la intención con este
- proyecto es explorar otras vías menos habituales como es el algoritmo genético,
- haciendo uso de la librería Jenetics disponible para el lenguaje Java.
+ haciendo uso de redes neuronales y 
+\emph on
+Deep Learning
+\emph default
+, la intención con este proyecto es explorar otras vías menos habituales
+ como es el algoritmo genético, haciendo uso de la librería Jenetics disponible
+ para el lenguaje Java.
  Otro aspecto diferenciador es que se ha intentado que la base del modelo
  del dominio sea lo más próximo posible al formato MusicXML para la representaci
 ón escrita en lugar de generación de archivos de audio MIDI.
@@ -141,7 +145,7 @@ proxymusic
 \end_inset
 
 , un proyecto de código abierto disponible en GitHub que permite serializar
- y deserializar MusicXML.
+ y deserializar archivos MusicXML.
 \begin_inset Newline newline
 \end_inset
 

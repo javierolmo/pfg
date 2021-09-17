@@ -418,10 +418,6 @@ reference "lis:Codigo-de-edit"
 \end_layout
 
 \begin_layout Standard
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset listings
 lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
 inline false

@@ -357,9 +357,9 @@ l, y parecía una ocasión ideal para profundizar algo más en los contenidos
 \end_inset
 
 
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
 Tras una primera fase de búsqueda, he podido observar que la gran mayoría
  de proyectos similares utilizan algoritmos basados en 
 \emph on
@@ -422,40 +422,24 @@ Prescindir de fase de entrenamiento
 \begin_layout Standard
 Otro aspecto en el que se ha intentado marcar una diferencia con otros proyectos
  es en el formato del resultado final.
- En lugar de producir archivos de audio, los resultados son archivos MusicXML
- 
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-MusicXML es un formato abierto de notación musical basado en 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "XML"
-description "Extensive Markup Language"
-literal "false"
-
-\end_inset
-
- XML, cuya extensión es .musicxml.
- [
-\begin_inset CommandInset citation
-LatexCommand cite
-key "good2001musicxml"
-literal "false"
-
-\end_inset
-
-]
-\end_layout
-
-\end_inset
-
-, tratando de lograr la máxima rigurosidad en la notación y empleando una
+ En lugar de producir archivos de audio, los resultados son archivos MusicXML,
+ tratando de lograr la máxima rigurosidad en la notación y empleando una
  representación fiel a la teoría musical.
  Esto ofrece la posibilidad de crear partituras con gran precisión y poder
  utilizarlas desde editores como MuseScore o Finale, o exportarlas a formatos
  de lectura o incluso de audio.
+ Se puede encontrar más información sobre este formato y el porqué de su
+ elección en 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:MusicXML"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
 \begin_inset Newline newline
 \end_inset
 
@@ -574,12 +558,12 @@ Nebular
 
 Dejando a un lado el resultado final de este proyecto, puedo decir que estoy
  muy satisfecho de haber trabajado en él porque me ha dado la oportunidad
- de tratar áreas temas muy diversas, desde el tema principal que era la
- implantación de un algoritmo genético hasta el desarrollo de un servicio
- distribuido y una interfaz web, pasando por temas de infraestructura y
- redes en los que no tenía apenas conocimientos, y creándome la necesidad
- de aplicar flujos de trabajo en plataformas de integración continua como
- 
+ de tratar áreas temas muy diversas y conocer sus principales tecnologías.
+ Desde el tema principal que era la implantación de un algoritmo genético
+ hasta el desarrollo de un servicio distribuido y una interfaz web, pasando
+ por temas de infraestructura y redes en los que no tenía apenas conocimientos,
+ y creándome la necesidad de aplicar flujos de trabajo en plataformas de
+ integración continua como 
 \emph on
 GitHub Actions 
 \emph default

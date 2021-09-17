@@ -1,0 +1,891 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+
+\end_preamble
+\use_default_options true
+\master maestro-pfg.lyx
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Módulo 'pfg-frontend'
+\end_layout
+
+\begin_layout Standard
+En este capítulo se profundizará más en el módulo dedicado a la interfaz
+ web con el cliente.
+ En primer lugar, se comenzará por una introducción argumentando el por
+ qué de este módulo y la elección de las tecnologías empleadas, a continuación
+ se hará un recorrido mostrando la interfaz y las posibilidades que ofrece
+ no sólo este módulo, sino el conjunto del sistema, pero a través de la
+ interfaz.
+ Por último se hará una breve descripción a más bajo nivel de cómo está
+ organizado el módulo a nivel de código.
+\end_layout
+
+\begin_layout Section
+Introducción
+\end_layout
+
+\begin_layout Standard
+La elaboración de una interfaz web ha supuesto para mí un reto inesperado.
+ Pese a que en un primer momento el planteamiento original pasaba por crear
+ una interfaz gráfica pensando en un usuario final, no era de esperar más
+ que un formulario sencillo y algunos botones.
+ Sin embargo, a medida que el proyecto ha ido madurando, es una necesidad
+ que ha surgido.
+ Por una parte, al pretender crear un servicio distribuido y accesible desde
+ diferentes dispositivos, y por otra al tener experiencias negativas trabajando
+ con JavaRMI y directamente con sockets, la interfaz web se presentó como
+ una opción asequible y multiplataforma.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Cabe mencionar que no tenía ninguna experiencia previa con tecnologías web,
+ así que como primer paso me puse a aprender desde el principio.
+ HTML, CSS, y javascript.
+ Estos conocimientos básicos, junto con jQuery
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Librería de JavaScript 
+\end_layout
+
+\end_inset
+
+ y AJAX
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Ajax es un acrónimo de Asynchronous JavaScript and XML.
+ La idea esencial es hacer una petición a un servidor sin tener que renderizar
+ la página HTML al completo 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "castillo2017curso"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+, me sirvieron para hacer un primer modelo sencillo e integrarlo con el
+ backend.
+ No era gran cosa pero me permitía crear un formulario con una serie de
+ campos y crear un objeto a partir de ellos para enviar al servidor.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Cualquiera que haya programado alguna vez una página web sabrá que hacer
+ cualquier cosa y que el resultado sea 
+\begin_inset Quotes eld
+\end_inset
+
+más o menos
+\begin_inset Quotes erd
+\end_inset
+
+ estético no es algo trivial, pero eso para mí era otro punto con el que
+ no contaba.
+ Pese a que no era una cuestión prioritaria en este proyecto, me había surgido
+ cierto interés en el tema teniendo curiosidad por cómo se harían estos
+ desarrollos a nivel profesional si a mí hacer un simple formulario (y además
+ con poco gusto) me había llevado una cantidad de tiempo importante.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+De esta manera descubrí en primer lugar 
+\series bold
+Thymeleaf
+\series default
+.
+ Se trata de un motor de plantillas Java (
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "JSP"
+description "Java Server Pages"
+literal "true"
+
+\end_inset
+
+JSP
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Java Server Pages
+\end_layout
+
+\end_inset
+
+) para entornos web e independientes.
+ El objetivo principal de thymeleaf es incorporar plantillas a su flujo
+ de trabajo de desarrollo, HTML, que se puede mostrar correctamente en los
+ navegadores web y también funcionan como prototipos estáticos, lo que permite
+ una colaboración más sólida en los equipos de desarrollo 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "webb2013spring"
+literal "false"
+
+\end_inset
+
+.
+ Las razones por las que escogí esta tecnología fueron:
+\end_layout
+
+\begin_layout Itemize
+Sencillez de uso, similar a HTML nativo y me permitía emplear java en lugar
+ de javascript para varias acciones
+\end_layout
+
+\begin_layout Itemize
+Prescindir de la lógica necesaria para las peticiones HTTP al poder utilizar
+ plantillas
+\end_layout
+
+\begin_layout Itemize
+Integración con Spring, empleado en 
+\begin_inset Quotes eld
+\end_inset
+
+pfg-backend
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/thymeleaf-logo.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Logo de Thymeleaf.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Durante un tiempo mantuve las plantillas de thymeleaf como frontend del
+ servicio, pero en vista de que la interfaz iba creciendo en funcionalidades
+ y extensión, el código fuente se iba haciendo cada vez menos mantenible
+ debido entre otras cosas al poco grado de reutilización entre plantillas.
+ Por poner un ejemplo, cuando surgió la necesidad de crear una barra lateral
+ para facilitar la navegación, cada vez que se modificaba dicha barra, ya
+ sea añadir un nuevo elemento, cambiar un nombre, cambiar un estilo, no
+ quedaba otra que copiar ese cambio en todas las plantillas que tuvieran
+ la barra de navegación, a pesar de ser un componente común a todas ellas.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Buscando una solución alternativa (que había evitado anteriormente por el
+ coste del aprendizaje) me encuentro con la decisión de elegir una de entre
+ las tres tecnologías dominantes en la actualidad en cuanto a la programación
+ web frontend: 
+\series bold
+Angular
+\series default
+, 
+\series bold
+React
+\series default
+ o 
+\series bold
+Vue
+\series default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/angular-react-vue.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Logos de Angular, React y Vue.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Tres frameworks de javascript ampliamente utilizados en el desarrollo de
+ interfaces web.
+ De acuerdo con diversos análisis y estadísticas de uso, no parece haber
+ un claro vencedor ni en rendimiento ni en dominio del mercado, cada uno
+ de ellos tiene sus puntos fuertes y débiles y las fluctuaciones en el tiempo
+ hacen que ninguno de ellos se establezca como ganador.
+ En este caso, la decisión ha sido optar por 
+\series bold
+Angular
+\series default
+.
+ No se pretende hacer una comparativa entre los tres, pero sí una pequeña
+ introducción sobre Angular y hacer mención de los principales puntos considerad
+os:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Angular (o AngularJS) fue desarrollado en javascript por empleados de Google
+ en el año 2008.
+ En aquella época, el desarrollo web se basaba en múltiples páginas de manera
+ que cuando un usuario hacía click en un link el navegador debía solicitar
+ la página web requerida y recargar la página al completo.
+ Dependiendo de la velocidad de conexión y la respuesta del servidor, esto
+ podía suponer un lapso de tiempo notable hasta que el usuario disponga
+ de la nueva página.
+ Gradualmente, los equipos han ido aumentando su rendimiento general, por
+ lo que esta lógica de la aplicación podría ejecutarse en el navegador.
+ Esto condujo al acercamiento de las 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "SPA"
+description "Single Page Application"
+literal "false"
+
+\end_inset
+
+SPA (Single Page Application).
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Angular fue uno de los primeros marcos para el desarrollo de SPA.
+ Era capaz de reemplazar librerías como jQuery ofreciendo a los desarrolladores
+ funciones como enlace de datos bidireccional y la posibilidad de organizarse
+ en módulos para importar scripts externos, y en una jerarquía de componentes
+ que permite una alta reutilización.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Otra importante novedad fue la introducción de Typescript (comunmente abreviado
+ como 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "TS"
+description "TypeScript\\\\"
+literal "false"
+
+\end_inset
+
+TS) a partir de Angular2.
+ Consiste en un 
+\begin_inset Quotes eld
+\end_inset
+
+sucesor
+\begin_inset Quotes erd
+\end_inset
+
+ de JavaScript, un lenguaje basado en y un superconjunto de JavaScript al
+ que se puede traducir en tiempo de compilación a la hora de construir un
+ proyecto.
+ Es un superconjunto de ECMAScript (ES)6 creado y mantenido por Microsoft.
+ Cabe mencionar que tanto Typescript como Angular es open-source.
+ Uno de los méritos de Typescript es la capacidad de hacer uso de característica
+s avanzadas de ES6 como los bucles for...of, lambdas y decoradores, estos últimos
+ jugando un papel muy importante.
+ Otra novedad que introdujo Typescript es el tipado estático.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+En cuanto a la estructura de un proyecto, al igual que otros frameworks
+ y como se ha mencionado, se basa en componentes.
+ Esto significa que los componentes son los bloques principales con los
+ que se construye una página.
+ Cada bloque puede mostrar información y realizar acciones.
+ La práctica recomendada es que cada componente cuente con sus tres propios
+ archivos de código (un HTML para la plantilla, un CSS para el estilo y
+ un TS para el control).
+ Siguiendo esta práctica se garantiza una separación de responsabilidades
+ y un orden de la estructura del proyecto y del código.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+A su vez, los componentes pueden contener otros componentes, es a lo que
+ se refería anteriormente con jerarquía.
+ La información puede fluir entre padre e hijo, componentes hermanos o incluso
+ dos componentes no relacionados.
+ Existe un componente especial llamado app-root que representa el componente
+ de nivel más alto, padre de todos los demás y punto de entrada encargado
+ de inicializar la aplicación.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/PFG-4 Frontend.svg
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Ejemplo jerarquía de componentes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En la figura 4.3 se puede observar un ejemplo de esta jerarquía.
+ Se puede apreciar que es posible (aunque no obligatorio) que cada componente
+ tenga sus propios ficheros independientes siendo el archivo TS el principal
+ e indispensable, ya que en él se especifica la ruta de los otros dos como
+ se puede ver en el fragmento de código 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Ejemplo componente com1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ en las líneas 5 y 6.
+ También es posible declarar varios componentes en un mismo archivo .ts.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Ejemplo componente com1"
+
+\end_inset
+
+Archivo com1.component.ts
+\end_layout
+
+\end_inset
+
+import { Component } from '@angular/core'
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+@Component({
+\end_layout
+
+\begin_layout Plain Layout
+
+	selector: 'com1'
+\end_layout
+
+\begin_layout Plain Layout
+
+	templateUrl: './com1.component.html,
+\end_layout
+
+\begin_layout Plain Layout
+
+	styleUrls: ['./comp1.component.css']
+\end_layout
+
+\begin_layout Plain Layout
+
+})
+\end_layout
+
+\begin_layout Plain Layout
+
+export class Comp1Component {
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	constructor() {
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Mientras que en el archivo HTML de dicho componente se podría incluir a
+ los componentes 'com1' y 'com2' por sus referencias de mismo nombre (ver
+ fragmento de código)
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:com1.component.html"
+
+\end_inset
+
+Archivo com1.component.html
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<div>
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+	<!-- Componente 2 -->
+\end_layout
+
+\begin_layout Plain Layout
+
+	<com2></com2>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	<!-- Componente 3 -->
+\end_layout
+
+\begin_layout Plain Layout
+
+	<com3></com3>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+</div>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Recorrido por la interfaz y ejemplo de flujo de ejecución
+\end_layout
+
+\begin_layout Standard
+En primer lugar, es importante mencionar que esta interfaz está desarrollada
+ a partir de una plantilla 
+\emph on
+open-source
+\emph default
+ llamada 
+\begin_inset Quotes eld
+\end_inset
+
+ngx-admin
+\begin_inset Quotes erd
+\end_inset
+
+, creada por Akveo.
+ Akveo es un grupo compuesto por desarrolladores, especialistas de marketing
+ y diseñadores que proporcionan algunos de sus productos de manera gratuita
+ como en este caso, o a la venta, e incluso su servicio para adaptar dichas
+ plantillas o crear nuevos diseños desde cero.
+ Esta plantilla en concreto está basada en Angular 9+, Nebular y Eva Design
+ System.
+ Tanto Nebular como Eva Design son otros dos proyectos de Akveo, dos librerías
+ 
+\emph on
+open-source 
+\emph default
+que proporcionan componentes Angular, estilos, iconos y más.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+A continuación se va a hacer un recorrido por la interfaz web desde el punto
+ de vista de un usuario.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Comenzando por el principio, al ingresar la url del servicio, este redirecciona
+ al usuario a su página de login en '/auth/login':
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/login.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Página de login
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dado que este proyecto se encuentra en fase de desarrollo se generan una
+ serie de usuarios preconfigurados en base de datos con diferentes roles
+ para agilizar el testeo.
+ Estos usuarios se pueden encontrar en el 
+\begin_inset Quotes eld
+\end_inset
+
+readme.md
+\begin_inset Quotes erd
+\end_inset
+
+ del proyecto en el repositorio Git.
+ Al ya contar con un usuario se van a omitir los casos de uso de registro
+ y recuperar contraseña, ya que no son el objetivo principal de esta memoria.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Esta página de login cuenta con un campo para introducir el email y otro
+ para la contraseña.
+ Una vez introducidos y pulsado el boton 
+\begin_inset Quotes eld
+\end_inset
+
+LOG IN
+\begin_inset Quotes erd
+\end_inset
+
+, se envía una petición POST vía HTTP al servicio REST expuesto por el backend
+ en el endpoint '/api/auth/login'.
+ En adelante, por abreviar, me referiré a procesos de este tipo como 
+\begin_inset Quotes eld
+\end_inset
+
+enviar un POST a '/api/auth/login'
+\begin_inset Quotes erd
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+El cuerpo de este mensaje será un JSON que contenga email y password.
+ En caso de introducir las credenciales correctas, el servidor devolverá
+ un código 200 (OK) acompañado de un token JWT que contiene la información
+ del usuario básica que necesita la interfaz.El servidoque la interfaz interpreta
+rá como login exitoso, notificará al usuario con un 
+\emph on
+pop-up
+\emph default
+ y tras un pequeño 
+\emph on
+delay
+\emph default
+ (establecido en 500 ms), lo redireccionará a la página principal, 
+\end_layout
+
+\begin_layout Section
+Descripción
+\end_layout
+
+\end_body
+\end_document

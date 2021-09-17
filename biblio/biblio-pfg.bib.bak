@@ -19,4 +19,56 @@
   volume  = {2},
 }
 
+@Article{good2001musicxml,
+  author  = {Good, Michael},
+  journal = {The virtual score: representation, retrieval, restoration},
+  title   = {MusicXML for notation and analysis},
+  year    = {2001},
+  number  = {113-124},
+  pages   = {160},
+  volume  = {12},
+}
+
+@InProceedings{5339611,
+  author    = {Xinyang Feng and Jianjing Shen and Ying Fan},
+  booktitle = {2009 First International Conference on Future Information Networks},
+  title     = {REST: An alternative to RPC for Web services architecture},
+  year      = {2009},
+  pages     = {7-10},
+  doi       = {10.1109/ICFIN.2009.5339611},
+}
+
+@InCollection{adamczyk2011rest,
+  author    = {Adamczyk, Paul and Smith, Patrick H and Johnson, Ralph E and Hafiz, Munawar},
+  booktitle = {REST: from research to practice},
+  publisher = {Springer},
+  title     = {Rest and web services: In theory and in practice},
+  year      = {2011},
+  pages     = {35--57},
+}
+
+@Misc{,
+  title    = {{MusicXML} for {Exchanging} {Digital} {Sheet} {Music}},
+  abstract = {MusicXML is the standard open format for exchanging digital sheet music. It allows you to collaborate with musicians using different music applications.},
+  journal  = {MusicXML},
+  language = {en-US},
+  url      = {https://www.musicxml.com/},
+  urldate  = {2021-09-13},
+}
+
+@Book{castillo2017curso,
+  author    = {Castillo, Alberto Ayoze},
+  publisher = {IT Campus Academy},
+  title     = {Curso de Programaci{\'o}n Web: JavaScript, Ajax y jQuery},
+  year      = {2017},
+}
+
+@Article{webb2013spring,
+  author  = {Webb, Phillip and Syer, Dave and Long, Josh and Nicoll, St{\'e}phane and Winch, Rob and Wilkinson, Andy and Overdijk, Marcel and Dupuis, Christian and Deleuze, S{\'e}bastien},
+  journal = {Part IV. Spring Boot features},
+  title   = {Spring boot reference guide},
+  year    = {2013},
+  volume  = {24},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}

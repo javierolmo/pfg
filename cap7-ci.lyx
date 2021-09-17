@@ -86,7 +86,7 @@
 \begin_body
 
 \begin_layout Chapter
-Módulo 'Backend'
+Infraestructura e integración continua
 \end_layout
 
 \begin_layout Standard
@@ -415,10 +415,6 @@ reference "lis:Codigo-de-edit"
  Para cambiar el listado contenido copiar del IDE el trozo de código que
  se desee y pegarlo dentro del listado con Ctrl+May+v, en el menú de Lyx
  Editar->Pegado especial->Texto simple.>
-\end_layout
-
-\begin_layout Standard
-
 \end_layout
 
 \begin_layout Standard

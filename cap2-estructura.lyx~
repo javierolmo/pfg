@@ -111,12 +111,10 @@ Evolución
 
 \begin_layout Standard
 La estructura actual es resultado de varias evoluciones.
- A medida que el proyecto iba creciendo iban surgiendo problemas y nuevas
- necesidades que no se detectaron desde el inicio.
- En este proceso se pueden diferenciar a grandes rasgos tres escenarios
- diferentes.
- La transición de uno a otro no se hizo de forma drástica, sino más bien
- progresivamente.
+ A medida que el proyecto fue creciendo han ido surgiendo problemas y nuevas
+ necesidades que no se detectaron al inicio.
+ A pesar de que esta evolución fue una sucesión de pequeños cambios, en
+ este proceso se pueden diferenciar a grandes rasgos tres escenarios diferentes.
  A continuación se hará un recorrido a través de los escenarios planteados
  y los motivos de su elección y abandono:
 \end_layout
@@ -166,7 +164,7 @@ Jenetics
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -270,11 +268,12 @@ Segundo escenario
 \begin_layout Standard
 Tras las deficiencias reflejadas en el primer escenario, me dispuse a tratar
  de corregirlas comenzando por independizar partes del código que no deberían
- estar unidas ya que me estaban creando dependencias innecesarias.
- Me dispuse a hacer una separación más estricta entre la interfaz y la lógica
- de negocio, el origen de la mayoría de mis problemas.
+ estar unidas ya que estaban creando dependencias innecesarias y complicando
+ el desarrollo.
+ El objetivo principal es hacer una separación más estricta entre la interfaz
+ y la lógica de negocio, el origen de la mayoría de mis problemas.
  Una vez conseguido, el siguiente paso era llevar esta independencia más
- allá, haciendo correr un servicio sobre el que ejecutar las tareas creadas
+ allá, haciendo ejecutar un servicio sobre el que lanzar las tareas creadas
  por el usuario desde una interfaz que pudiera estar ubicada en la misma
  máquina o en otra distinta.
  Esta tarea resultó ser más compleja de lo que esperaba en un principio,
@@ -284,6 +283,16 @@ Tras las deficiencias reflejadas en el primer escenario, me dispuse a tratar
 \series bold
 JavaRMI
 \series default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Java Remote Method Invocation
+\end_layout
+
+\end_inset
+
 , una solución que en un primer momento consideré que era suficiente, ya
  que más o menos lograba el resultado que quería, pero a medida que continuaba
  con el desarrollo fueron apareciendo una serie de problemas:
@@ -309,20 +318,20 @@ A esto le sumaría que cuanto más acudía a internet para resolver los problema
  puntuales que iba teniendo, más me daba cuenta de que no es la tecnología
  más actual para este propósito y que existían otras formas de implementar
  lo que quería, incluso de manera más sencilla.
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-Tras buscar soluciones alternativas, descubrí los 
+ Buscando soluciones alternativas, descubrí los 
 \series bold
 servicios REST
 \series default
 , un protocolo cliente servidor algo que encajaba bastante bien con las
- necesidades del proyecto.
- 
+ necesidades del proyecto: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Un servicio REST 
 \begin_inset Newline newline
 \end_inset
 
@@ -343,7 +352,18 @@ Hibernate
 , una herramienta de mapeo de objetos a tablas para Java que facilita el
  acceso a información de una base de datos relacional pudiendo hacer consultas
  desde un nivel de abstracción más alto, sin tener que lidiar directamente
- con las conexiones ni reinventar la rueda.
+ con las conexiones ni reinventar la rueda (más detalles sobre Spring e
+ Hibernate en 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "chap:Tecnologías-y-herramientas"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
  Probablemente lo más útil que he aprendido a lo largo de este proyecto
  a raiz de encontrar este tipo de frameworks y librerías es, cada vez que
  tenga que resolver un problema, comprobar si alguien lo ha hecho ya antes.

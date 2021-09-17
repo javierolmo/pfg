@@ -535,7 +535,7 @@ filename "cap2-estructura.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "capx-backend.lyx"
+filename "cap3-backend.lyx"
 
 \end_inset
 
@@ -547,12 +547,51 @@ filename "capx-backend.lyx"
 \end_inset
 
 
-\begin_inset Note Note
-status open
+\begin_inset CommandInset include
+LatexCommand include
+filename "cap4-frontend.lyx"
 
-\begin_layout Plain Layout
-Anexar el resto de capítulos, Insertar->Archivo->Documento hijo
+\end_inset
+
+
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
 \end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "cap5-composer.lyx"
+
+\end_inset
+
+
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "cap6-commons.lyx"
+
+\end_inset
+
+
+\begin_inset Newpage cleardoublepage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "cap7-ci.lyx"
 
 \end_inset
 
@@ -569,7 +608,7 @@ Anexar el resto de capítulos, Insertar->Archivo->Documento hijo
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "conclusiones.lyx"
+filename "cap8-conclusiones.lyx"
 
 \end_inset
 
@@ -627,8 +666,9 @@ rightmark}}
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
+btprint "btPrintAll"
 bibfiles "biblio/biblio-pfg"
-options "apalike"
+options "bibtotoc,unsrt"
 
 \end_inset
 
@@ -643,7 +683,7 @@ options "apalike"
 
 \begin_inset CommandInset include
 LatexCommand include
-filename "anexo_a.lyx"
+filename "anexo_a_herramientas.lyx"
 
 \end_inset
 
@@ -657,7 +697,7 @@ filename "anexo_a.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "anexo_b.lyx"
+filename "anexo_b_api.lyx"
 
 \end_inset
 

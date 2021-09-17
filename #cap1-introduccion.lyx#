@@ -422,12 +422,19 @@ Prescindir de fase de entrenamiento
 \begin_layout Standard
 Otro aspecto en el que se ha intentado marcar una diferencia con otros proyectos
  es en el formato del resultado final.
- En lugar de producir archivos de audio, los resultados son archivos MusicXML
- 
-\begin_inset Foot
-status open
+ En lugar de producir archivos de audio, los resultados son archivos MusicXML,
+ tratando de lograr la máxima rigurosidad en la notación y empleando una
+ representación fiel a la teoría musical.
+ Esto ofrece la posibilidad de crear partituras con gran precisión y poder
+ utilizarlas desde editores como MuseScore o Finale, o exportarlas a formatos
+ de lectura o incluso de audio.
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Plain Layout
+
+\begin_inset Newline newline
+\end_inset
+
 MusicXML es un formato abierto de notación musical basado en 
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
@@ -438,25 +445,90 @@ literal "false"
 \end_inset
 
  XML, cuya extensión es .musicxml.
+ Fue diseñado de cero para compartir archivos de partituras entre aplicaciones
+ y para guardar archivos de partituras para su uso en el futuro.
+ Sus archivos son legibles y utilizables por una amplia gama de aplicaciones
+ e notación musical ahora y en el futuro.
+ MusicXML complementa los formatos de archivo nativos utilizados por Finale
+ y otros programas, que están diseñados para un uso rápido e interactivo.
+ Así como los archivos MP3 se han convertido en sinónimo de compartir música
+ grabada, los archivos MusicXML se han convertido en el estándar para compartir
+ partituras interactivas.
+ Con MusicXML se puede crear música en un programa y compartir sus resultados,
+ de ida y vuelta, con personas que utilizan otros programas.
+ Hoy en día más de 250 aplicaciones incluyen compatibilidad con este formato
  [
 \begin_inset CommandInset citation
 LatexCommand cite
-key "good2001musicxml"
+key "MUSICXML"
 literal "false"
 
 \end_inset
 
-]
+].
+ Un ejemplo de este tipo de notación podría ser:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Codigo-de-edit-1"
+
+\end_inset
+
+Código de edit
 \end_layout
 
 \end_inset
 
-, tratando de lograr la máxima rigurosidad en la notación y empleando una
- representación fiel a la teoría musical.
- Esto ofrece la posibilidad de crear partituras con gran precisión y poder
- utilizarlas desde editores como MuseScore o Finale, o exportarlas a formatos
- de lectura o incluso de audio.
-\begin_inset Newline newline
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    <? xml version = "1.0" encoding = "UTF-8" standalone = "no"?>
+\end_layout
+
+\begin_layout Plain Layout
+
+	<! DOCTYPE score-partwise PUBLIC     
+\end_layout
+
+\begin_layout Plain Layout
+
+		"- // Recordare // DTD MusicXML 4.0 Partwise // EN"     
+\end_layout
+
+\begin_layout Plain Layout
+
+		"http://www.musicxml.org/dtds/partwise.dtd"> 
+\end_layout
+
+\begin_layout Plain Layout
+
+	<score-partwise version = "4.0">
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\end_layout
+
 \end_inset
 
 
@@ -574,20 +646,24 @@ Nebular
 
 Dejando a un lado el resultado final de este proyecto, puedo decir que estoy
  muy satisfecho de haber trabajado en él porque me ha dado la oportunidad
- de tratar áreas temas muy diversas, desde el tema principal que era la
- implantación de un algoritmo genético hasta el desarrollo de un servicio
- distribuido y una interfaz web, pasando por temas de infraestructura y
- redes en los que no tenía apenas conocimientos, y creándome la necesidad
- de aplicar flujos de trabajo en plataformas de integración continua como
- 
+ de tratar áreas temas muy diversas y conocer sus principales tecnologías.
+ Desde el tema principal que era la implantación de un algoritmo genético
+ hasta el desarrollo de un servicio distribuido y una interfaz web, pasando
+ por temas de infraestructura y redes en los que no tenía apenas conocimientos,
+ y creándome la necesidad de aplicar flujos de trabajo en plataformas de
+ integración continua como 
 \emph on
 GitHub Actions 
 \emph default
-o 
+y 
 \emph on
 Jenkins
 \emph default
-, de los que n 
+, de los que ni conocía su existencia.
+ Es probable que me haya excedido de la extensión que había planeado en
+ un principio para este proyecto, pero considero que la experiencia ha sido
+ muy positiva y que tras ella, estoy más preparado para decidir a qué área
+ de la informática dedicarme.
 \end_layout
 
 \end_body
