@@ -79,7 +79,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy to portainer
-        uses: bots-house/portainer-deploy-stack-action
+        uses: bots-house/portainer-deploy-stack-action@v1
         with:
           portainer-url: ${{ secrets.PORTAINER_URL }}
           portainer-username: ${{ secrets.PORTAINER_USERNAME }}
