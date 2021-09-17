@@ -44,7 +44,7 @@ services:
     depends_on:
       - database
     volumes:
-      - data:/app/data
+      - ./filesystem:/app/data
 
   # Composer
   composer-genetic:
@@ -69,6 +69,7 @@ services:
     depends_on:
       - "kafka"
 
+  # Kafka
   kafka:
     image: obsidiandynamics/kafka
     restart: always
@@ -84,9 +85,3 @@ services:
       KAFKA_RESTART_ATTEMPTS: "10"
       KAFKA_RESTART_DELAY: "5"
       ZOOKEEPER_AUTOPURGE_PURGE_INTERVAL: "0"
-
-networks:
-  pfg-network:
-
-volumes:
-  data:
