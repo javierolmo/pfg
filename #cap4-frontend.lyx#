@@ -729,7 +729,7 @@ Archivo com1.component.html
 \end_layout
 
 \begin_layout Section
-Recorrido por la interfaz y ejemplo de flujo de ejecución
+Recorrido por la interfaz
 \end_layout
 
 \begin_layout Standard
@@ -871,8 +871,9 @@ enviar un POST a '/api/auth/login'
 El cuerpo de este mensaje será un JSON que contenga email y password.
  En caso de introducir las credenciales correctas, el servidor devolverá
  un código 200 (OK) acompañado de un token JWT que contiene la información
- del usuario básica que necesita la interfaz.El servidoque la interfaz interpreta
-rá como login exitoso, notificará al usuario con un 
+ del usuario básica que necesita la interfaz.
+ La interfaz interpretará esto como login exitoso, notificará al usuario
+ con un 
 \emph on
 pop-up
 \emph default
@@ -880,7 +881,499 @@ pop-up
 \emph on
 delay
 \emph default
- (establecido en 500 ms), lo redireccionará a la página principal, 
+ (establecido en 500 ms), lo redireccionará a la página principal.
+ Una vez autorizado, todas las peticiones siguientes contarán con dicho
+ token en la cabecera hasta su caducidad.
+ Por defecto, la vida útil de este token está fijada por el backend a 15
+ minutos.
+ En el momento en el que el token caduque, la próxima petición realizada
+ por la interfaz con ese token en la cabecera fallará y redireccionará al
+ usuario de nuevo a la página de login.
+ De esta manera, cada vez que el usuaro navegue por la web o haga peticiones
+ contra el servidor, siempre se tendrá presente la identidad del usuario
+ en la cabecera de las peticiones, lo que permite identificar quién las
+ realiza, por ejemplo para poder obtener el rol y mostrar o no mostrar contenido
+ de acuerdo con sus privilegios, o al solicitar una acción como puede ser
+ componer una partitura, saber a qué usuario asignársela.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Una vez autenticado, el usuario debería encontrarse en la página de inicio
+ ubicada en '/pages/home'.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/home.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sección home
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Como se mencionaba anteriormente, el diseño de esta interfaz se corresponde
+ con la plantilla 'ngx-admin', adaptándola a las necesidades de este proyecto.
+ A grandes rasgos se pueden distinguir tres componentes principales:
+\end_layout
+
+\begin_layout Itemize
+Cabecera: Una franja en la parte superior de la interfaz, que de izquierda
+ a derecha contiene un botón para colapsar y expandir el menú de navegación,
+ el nombre de la aplicación, información sobre la versión y un desplegable
+ con la identificación del usuario que permite realizar acciones sobre él.
+\end_layout
+
+\begin_layout Itemize
+Menú de navegación: Barra lateral vertical en la parte izquierda.
+ Permite navegar por la interfaz redirigiendo al usuario a las diferentes
+ 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "URLs"
+description "Uniform Resource Locator"
+literal "false"
+
+\end_inset
+
+URLs correspondientes a cada sección.
+ 
+\end_layout
+
+\begin_layout Itemize
+Panel central: Área situada en el centro de la pantalla en la que se muestra
+ el contenido de cada sección.
+\end_layout
+
+\begin_layout Standard
+La sección 'home' es la principal.
+ A la que se redirige al usuario tras el login.
+ En ella se encuentra una descripción breve del proyecto junto con un 
+\emph on
+changelog
+\emph default
+, un listado que recopila información sobre las últimas versiones y sus
+ cambios.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Haciendo uso de la cabecera, haciendo click en el usuario actual, se puede
+ acceder a las siguientes acciones anteriormente mencionadas:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/user-dropdown.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Desplegable acciones de usuario
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Seleccionando la opción 'Log out', permite al usuario invalidar el token
+ de acceso a la aplicación, lo que provoca la redirección de este de nuevo
+ a la pantalla de login.
+ De esta manera permite iniciar sesión con otro usuario distinto o simplemente
+ cerrar la sesión actual.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+En cuanto a 'Profile', redirige al usuario a la sección '/pages/profile':
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/user.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sección profile
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En la sección profile el usuario podrá ver sus datos de usuario, así como
+ generar un token JWT asociado a su cuenta.
+ Por el momento este token no tiene ninguna finalidad para el usuario, simplemen
+te se ha incluído esta funcionalidad para agilizar el desarrollo.
+ Este token es empleado al hacer llamadas a métodos seguros del API para
+ evitar introducir usuario y contraseña en claro.
+ Poder extraer el token a través de la interfaz permite al desarrollador
+ introducirlo manualmente en apliaciones como 'Postman' para testear APIs.
+ El desplegable permite elegir la duración de este token.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Una posible funcionalidad futura podría ser, por ejemplo, que un usuario
+ quisiera autorizar a una aplicación de terceros a utilizar este servicio
+ en su nombre.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Continuando con el recorrido y pasando al menú de navegación se encuentra
+ la sección de composición.
+ Esta entrada en el menú es un desplegable, que dentro contiene otras dos
+ entradas: 'Genético' y 'Red neuronal', haciendo referencia al tipo de algoritmo
+ empleado para la composición.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/composicion-genetico.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sección composición algoritmo genético
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El caso de uso del que trata este proyecto es la implementación del algoritmo
+ genético y por tanto se va a omitir la otra opción, ya que corresponde
+ a pruebas de implementaciones alternativas que todavía no está disponible.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+La sección de composición utilizando el algoritmo genético consiste en un
+ formulario muy simple, en el que se puede indicar una serie de características
+ de la obra resultante.
+ Es obligatorio cubrir todos los campos antes de pulsar el botón componer.
+ De lo contrario, la fase de validación previa fallará y aparecerá un mensaje
+ de error indicando el problema.
+ A la derecha del botón componer hay otro botón con unas flechas que sirve
+ para cubrir este formulario de manera aleatoria (incluso el título).
+ Muy útil para testeo.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Al cubrir correctamente el formulario y pulsar el botón componer, la validación
+ a nivel de frontend debería ser exitosa y se enviará un 'POST' al API incluyend
+o estas especificaciones en el cuerpo del mensaje.
+ El API recibirá estas especificaciones y creará una entrada en la tabla
+ 'sheets' de la base de datos con campos como un id autogenerado, título,
+ fecha de creación, etc.
+ A continuación generará un archivo JSON conteniendo estas especificaciones
+ y las guardará en el sistema de ficheros de la aplicación para poder reintentar
+ la operación en caso de que la fase posterior de composición falle.
+ Una vez hecho esto, se enviará ese mismo archivo JSON a la cola correspondiente
+ de Kafka, a la espera de que uno de los consumidores disponibles lea el
+ archivo y lo procese.
+ Una vez hecho esto, la tarea del API habrá terminado, y será el consumidor
+ el que continúe con la ejecución.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Dicho consumidor será una instancia del módulo pfg-composer-genetic.
+ Para ilustrar mejor el por qué de esta estructura pongamos el ejemplo de
+ que la funcionalidad de la composición empleando una red neuronal estuviera
+ implementada.
+ En ese caso, podría haber otro tipo de consumidores para resolver este
+ problema suscritos a Kafka.
+ Las especificaciones, dependiendo de qué algoritmo empleen, se publicarán
+ en una cola u en otra pero con el mismo formato, un archivo JSON.
+ De esta manera los dos tipos de consumidores pueden trabajar de manera
+ independiente, estar escritos en lenguajes distintos, y sobre todo escalar
+ de manera independiente.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Volviendo al caso del consumidor que aplica al ejemplo, al detectar que
+ se ha añadido una nueva tarea a su cola entrará en ejecución tan pronto
+ como sea posible.
+ Con esa información ejecutará el algoritmo (se entrará más en detalle en
+ el capítulo correspondiente a este módulo, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Módulo-'pfg-composer'"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) y una vez tenga los archivos resultantes (
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "PDF"
+description "Portable Document Format"
+literal "false"
+
+\end_inset
+
+PDF y MusicXML) enviará peticiones al API incluyendo estos archivos para
+ que los guarde en su sistema de ficheros y marque la composición como terminada.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Todo este proceso se realiza de forma transparente al usuario y no bloqueante.
+ El usuario únicamente recibe una notificación push confirmando que la petición
+ se ha enviado al servidor, e inmediatamente después puede seguir navegando
+ por la web.
+ No recibirá notificación cuando la composición haya terminado, pero puede
+ ver su estado en la sección 'Mi repositorio'.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+La sección 'Mi repositorio' es el lugar en el que el usuario puede ver sus
+ composiciones terminadas o en curso.
+ En resumen, todas las entradas de la tabla 'sheets' de la base de datos
+ asociadas a este usuario.
+ Puede que haya inconsistencias entre la tabla y el sistema de ficheros,
+ como por ejemplo que una partitura no exista, haya habido algún error durante
+ la composición, pero el usuario cuenta con mecanismos para reintentar o
+ borrar estas entradas.
+ Se puede acceder a esta sección a través del menú de navegación haciendo
+ click en la entrada 'Mi repositorio':
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/repositorio.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sección Mi repositorio
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En la imagen se puede ver el aspecto de esta sección.
+ Contiene la tabla mencionada con un campo de búsqueda que filtra en cada
+ pulsación entre los registros mostrados en dicha tabla.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+La imagen representa los tres estados posibles de una partitura:
+\end_layout
+
+\begin_layout Itemize
+Test 1: La composición de la obra se ha llevado a cabo correctamente y está
+ disponible para su visualización, descarga o borrado.
+\end_layout
+
+\begin_layout Itemize
+Test 2: La composición de la obra está todavía en proceso.
+ La diferencia visual con la siguiente fila que no se puede apreciar en
+ esta captura es que el icono de las flechas en círculo está en movimiento
+ indicando que se encuentra en ejecución en un compositor.
+ Como se puede comprobar, la acción de visualizar está deshabilitada al
+ no estar disponible la partitura.
+ El de descarga sigue pareciendo habilitado, esto es porque ese botón no
+ descarga directamente la partitura, sino que abre un diálogo para elegir
+ el formato deseado, en el cual ambas opciones estarán deshabilitadas.
+\end_layout
+
+\begin_layout Itemize
+Test 3: L
 \end_layout
 
 \begin_layout Section
