@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 import {AdminService} from '../../../@core/utils/admin.service';
 import {Log} from '../../../@core/data/log';
 import {Page} from '../../../@core/data/page';
-import {RestError} from "../../../@core/data/error";
-import {NbToastrService} from "@nebular/theme";
+import {RestError} from '../../../@core/data/error';
+import {NbToastrService} from '@nebular/theme';
 
 @Component({
     selector: 'ngx-logs',
