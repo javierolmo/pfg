@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.javi.uned</groupId>
     <artifactId>pfg-commons</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
 
 
     <properties>
@@ -24,7 +24,6 @@
         <proxymusic.version>3.0.1</proxymusic.version>
         <junit.version>5.5.2</junit.version>
         <jackson.version>2.12.1</jackson.version>
-        <jenetics.version>5.2.0</jenetics.version>
         <apache-commons-lang3.version>3.11</apache-commons-lang3.version>
         <apache-commons-math3.version>3.6.1</apache-commons-math3.version>
 
@@ -82,13 +81,6 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
             <scope>test</scope>
-        </dependency>
-
-        <!-- Jenetics -->
-        <dependency>
-            <groupId>io.jenetics</groupId>
-            <artifactId>jenetics</artifactId>
-            <version>${jenetics.version}</version>
         </dependency>
 
         <!-- Apache commons lang -->

@@ -8,7 +8,7 @@ import java.io.File;
 public interface MessageBrokerGeneticComposer {
 
     // Topics
-    String PRODUCE_COMPOSITION_ORDER = "composer.genetic.order";
+    String PRODUCE_COMPOSITION_ORDER = "composer.genetic.specs";
     String PRODUCE_PDF_CONVERSION = "composer.genetic.converter.pdf";
 
     void orderComposition(String sheetId, GeneticSpecs specs);
