@@ -1324,6 +1324,12 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Sección-Mi-repositorio"
+
+\end_inset
+
 Sección Mi repositorio
 \end_layout
 
@@ -1373,7 +1379,225 @@ Test 2: La composición de la obra está todavía en proceso.
 \end_layout
 
 \begin_layout Itemize
-Test 3: L
+Test 3: La composición de la obra se ha marcado como finalizada, sin embargo
+ el archivo no se encuentra en el sistema de ficheros.
+ Esto puede deberse a múltiples motivos, ha surgido una excepción no controlada
+ en el compositor, se ha borrado posteriormente, el volumen docker no ha
+ sido enlazado correctamente al desplegar...
+ En cualquier caso, esta partitura no podrá ser visualizada ni descargada
+ y se habilitará un botón para reintentar la operación.
+ En caso de que las especificaciones sí se encuentren disponibles en el
+ sistema de ficheros, se procederá a repetir el proceso.
+ Por último, si no es el caso ni existe posibilidad de recuperar la partitura,
+ se puede eliminar el registro de la base de datos.
+\end_layout
+
+\begin_layout Standard
+Ya se han introducido las opciones que se pueden realizar en cada registro,
+ veamos más en detalle qué sucede en cada una de ellas:
+\end_layout
+
+\begin_layout Itemize
+Visualizar:
+\end_layout
+
+\begin_layout Itemize
+Descargar:
+\end_layout
+
+\begin_layout Itemize
+Eliminar:
+\end_layout
+
+\begin_layout Itemize
+Reintentar (sólo cuando faltan archivos):
+\end_layout
+
+\begin_layout Standard
+Aprovechando la imagen 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Sección-Mi-repositorio"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ debo destacar el pié de página, un componente adicional que no ha aparecido
+ en imágenes anteriores al situarse siempre al final del contenido principal.
+ En este caso al ser el contenido un panel que cabe en la vista sin necesidad
+ de un 
+\emph on
+scroll
+\emph default
+, es visible.
+ En este pie de página hay un link 'API', que conduce al endpoint del backend
+ donde se encuentra la documentación del API REST.
+ Esta documentación es autogenerada por Swagger.
+ 
+\end_layout
+
+\begin_layout Standard
+Debajo de 'Mi repositorio' en el menú de navegación se encuentra el desplegable
+ 'Administración', en el que se agrupan secciones únicamente accesibles
+ para usuarios con el rol de administrador y permiten llevar a cabo acciones
+ o consultar información sobre datos del sistema que no deberían ser accesibles
+ para el usuario común.
+ La primera sección que encontramos bajo el desplegable de administración
+ es 'Usuarios':
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/admin-usuarios.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Sección-administración-de"
+
+\end_inset
+
+Sección administración de usuarios
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esta sección permite a un administrador acceder a la tabla de usuarios de
+ la base de datos y realizar acciones sobre ella.
+ Como se puede ver en la imagen, por comodidad en el desarrollo existen
+ una serie de usuarios predefinidos que se generan cada vez que se arranca
+ el servicio en caso de que no existan previamente.
+ Los usuarios se muestran en una lista, un usuario por fila.
+ Para cada usuario se pueden realizar una serie de acciones:
+\end_layout
+
+\begin_layout Itemize
+Editar: Abre un diálogo en el que hay un formulario con los datos del usuario.
+ En el se permite modificar cualquiera de estos datos, así como habilitar
+ o deshabilitar la cuenta.
+ Una cuenta deshabilitada produce un error en la autenticación.
+ 
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/formulario-editar-usuario.png
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Formulario editar usuario
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Restablecer contraseña: Permite crear una nueva contraseña para el usuario
+ seleccionado.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/formulario-resetear-contraseña.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Formulario resetear contraseña
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Eliminar: Esta acción debería eliminar el usuario y borrar todas las composicion
+es asociadas a él, sin embargo por el momento se encuentra deshabilitada
+ al no estar implementado el endpoint correspondiente en el backend.
+\end_layout
+
+\begin_layout Standard
+Nótese que en 
 \end_layout
 
 \begin_layout Section

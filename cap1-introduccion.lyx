@@ -117,15 +117,7 @@ autónomo
  Para realizar esta tarea hace uso de un algoritmo genético implementado
  sobre un dominio y una lógica de negocio desarrollados específicamente
  para este propósito.
- Este modelo se ha construido a partir de la librería 
-\begin_inset Quotes eld
-\end_inset
-
-musicproxy
-\begin_inset Quotes erd
-\end_inset
-
-, 
+ Este modelo se ha construido a partir de la librería 'musicproxy', 
 \begin_inset Newline newline
 \end_inset
 
@@ -248,13 +240,14 @@ HTTP correspondiente contra el servicio REST.
 
 Este sistema también dispone de seguridad para restringir su uso o el acceso
  al almacenamiento de otros usuarios, sin embargo dadas las dimensiones
- del proyecto, no se dispone de un módulo dedicado a ello, sino que se trata
- de un sistema muy simple implementado directamente en el servicio central.
+ reducidas del proyecto, no se dispone de un módulo dedicado a ello, sino
+ que se trata de un sistema muy simple implementado directamente en el servicio
+ central.
  Consiste en un 
 \emph on
 login
 \emph default
- para controlar el acceso a través de la aplicación web y 
+ para controlar el acceso a través de la aplicación web, y 
 \emph on
 tokens
 \emph default
@@ -306,8 +299,8 @@ Motivación y objetivos
 \begin_layout Standard
 En un primer momento, al elegir un proyecto de modalidad específica, mi
  idea era no sólo desarrollar un trabajo para presentar como proyecto fin
- de grado, sino sentar las bases de un trabajo potencialmente más extenso
- y con margen para incorporar nuevas funcionalidades y que me pudiera servir
+ de grado, sino crear la base de un trabajo potencialmente más extenso y
+ con margen para incorporar nuevas funcionalidades, que me pudiera servir
  en el futuro para nuevas investigaciones, un posible trabajo de fin de
  máster, o simplemente aprender e incorporar nuevas tecnologías, ya que
  siempre resulta más sencillo en un proyecto conocido.
@@ -348,7 +341,8 @@ l, y parecía una ocasión ideal para profundizar algo más en los contenidos
  probablemente fuera lo que más echaba en falta en este tipo de asignaturas.
  Tras contemplar varias opciones, me decanté por que el problema fuera la
  composición de obras musicales, algo que sin duda parece muy amplio, y
- por lo tanto abre muchas vías de investigación futura.
+ por lo tanto abre muchas posibilidades para continuar desarrollando en
+ el futuro.
  Es por este motivo que a pesar de que la versión actual esté bastante acotada
  en cuanto a posibilidades, mi intención siempre ha sido la de desarrollar
  sin cerrar ninguna puerta, pensando en que más adelante se puedan implementar

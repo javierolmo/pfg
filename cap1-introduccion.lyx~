@@ -117,15 +117,7 @@ autónomo
  Para realizar esta tarea hace uso de un algoritmo genético implementado
  sobre un dominio y una lógica de negocio desarrollados específicamente
  para este propósito.
- Este modelo se ha construido a partir de la librería 
-\begin_inset Quotes eld
-\end_inset
-
-musicproxy
-\begin_inset Quotes erd
-\end_inset
-
-, 
+ Este modelo se ha construido a partir de la librería 'musicproxy', 
 \begin_inset Newline newline
 \end_inset
 
@@ -226,7 +218,7 @@ Como se puede ver en la figura, el servicio REST se situaría en el centro
 LatexCommand nomenclature
 symbol "HTTP"
 description "HyperText Transfer Protocol"
-literal "false"
+literal "true"
 
 \end_inset
 
@@ -248,13 +240,14 @@ HTTP correspondiente contra el servicio REST.
 
 Este sistema también dispone de seguridad para restringir su uso o el acceso
  al almacenamiento de otros usuarios, sin embargo dadas las dimensiones
- del proyecto, no se dispone de un módulo dedicado a ello, sino que se trata
- de un sistema muy simple implementado directamente en el servicio central.
+ reducidas del proyecto, no se dispone de un módulo dedicado a ello, sino
+ que se trata de un sistema muy simple implementado directamente en el servicio
+ central.
  Consiste en un 
 \emph on
 login
 \emph default
- para controlar el acceso a través de la aplicación web y 
+ para controlar el acceso a través de la aplicación web, y 
 \emph on
 tokens
 \emph default
@@ -306,8 +299,8 @@ Motivación y objetivos
 \begin_layout Standard
 En un primer momento, al elegir un proyecto de modalidad específica, mi
  idea era no sólo desarrollar un trabajo para presentar como proyecto fin
- de grado, sino sentar las bases de un trabajo potencialmente más extenso
- y con margen para incorporar nuevas funcionalidades y que me pudiera servir
+ de grado, sino crear la base de un trabajo potencialmente más extenso y
+ con margen para incorporar nuevas funcionalidades, que me pudiera servir
  en el futuro para nuevas investigaciones, un posible trabajo de fin de
  máster, o simplemente aprender e incorporar nuevas tecnologías, ya que
  siempre resulta más sencillo en un proyecto conocido.
