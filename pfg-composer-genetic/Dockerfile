@@ -10,7 +10,8 @@ RUN cd /app/pfg/pfg-composer-genetic && mvn package -DskipTests
 
 # Run pfg-composer-genetic
 FROM openjdk:11-jre AS pfg-composer-genetic
+RUN apt-get update && apt-get install -y musescore
+ENV QT_QPA_PLATFORM=offscreen
 WORKDIR /app
 COPY --from=0 /app/pfg/pfg-composer-genetic/target/pfg-composer-genetic.jar /app/app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
-EXPOSE 8080
