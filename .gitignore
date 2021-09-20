@@ -1,3 +1,5 @@
 .idea
-node_modules
-.*.lyx~
+pfg-frontend
+pfg-backend
+pfg-commons
+pfg-composer-genetic

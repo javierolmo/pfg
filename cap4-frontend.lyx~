@@ -957,14 +957,22 @@ Como se mencionaba anteriormente, el diseño de esta interfaz se corresponde
 \end_layout
 
 \begin_layout Itemize
-Cabecera: Una franja en la parte superior de la interfaz, que de izquierda
- a derecha contiene un botón para colapsar y expandir el menú de navegación,
- el nombre de la aplicación, información sobre la versión y un desplegable
- con la identificación del usuario que permite realizar acciones sobre él.
+
+\bar under
+Cabecera
+\bar default
+: Una franja en la parte superior de la interfaz, que de izquierda a derecha
+ contiene un botón para colapsar y expandir el menú de navegación, el nombre
+ de la aplicación, información sobre la versión y un desplegable con la
+ identificación del usuario que permite realizar acciones sobre él.
 \end_layout
 
 \begin_layout Itemize
-Menú de navegación: Barra lateral vertical en la parte izquierda.
+
+\bar under
+Menú de navegación
+\bar default
+: Barra lateral vertical en la parte izquierda.
  Permite navegar por la interfaz redirigiendo al usuario a las diferentes
  
 \begin_inset CommandInset nomenclature
@@ -980,12 +988,20 @@ URLs correspondientes a cada sección.
 \end_layout
 
 \begin_layout Itemize
-Panel central: Área situada en el centro de la pantalla en la que se muestra
- el contenido de cada sección.
+
+\bar under
+Panel central
+\bar default
+: Área situada en el centro de la pantalla en la que se muestra el contenido
+ de cada sección.
 \end_layout
 
 \begin_layout Standard
-La sección 'home' es la principal.
+La sección 
+\series bold
+'Home'
+\series default
+ es la principal.
  A la que se redirige al usuario tras el login.
  En ella se encuentra una descripción breve del proyecto junto con un 
 \emph on
@@ -1048,11 +1064,15 @@ Desplegable acciones de usuario
 \end_layout
 
 \begin_layout Standard
-Seleccionando la opción 'Log out', permite al usuario invalidar el token
- de acceso a la aplicación, lo que provoca la redirección de este de nuevo
- a la pantalla de login.
- De esta manera permite iniciar sesión con otro usuario distinto o simplemente
- cerrar la sesión actual.
+Seleccionando la opción 
+\series bold
+'Log out'
+\series default
+, redireciona al usuario a la ruta '/auth/login', permitiéndole al usuario
+ invalidar el token de acceso a la aplicación, lo que provoca la redirección
+ de este de nuevo a la pantalla de login.
+ De esta manera se permite iniciar sesión con otro usuario distinto o simplement
+e cerrar la sesión actual.
 \begin_inset Newline newline
 \end_inset
 
@@ -1060,7 +1080,11 @@ Seleccionando la opción 'Log out', permite al usuario invalidar el token
 \begin_inset Newline newline
 \end_inset
 
-En cuanto a 'Profile', redirige al usuario a la sección '/pages/profile':
+En cuanto a 
+\series bold
+'Profile'
+\series default
+, redirige al usuario a la sección '/pages/profile':
 \begin_inset Newline newline
 \end_inset
 
@@ -1130,10 +1154,21 @@ Una posible funcionalidad futura podría ser, por ejemplo, que un usuario
 \end_inset
 
 Continuando con el recorrido y pasando al menú de navegación se encuentra
- la sección de composición.
+ la sección de 
+\series bold
+'Composición'
+\series default
+.
  Esta entrada en el menú es un desplegable, que dentro contiene otras dos
- entradas: 'Genético' y 'Red neuronal', haciendo referencia al tipo de algoritmo
- empleado para la composición.
+ entradas: 
+\series bold
+'Genético'
+\series default
+ y 
+\series bold
+'Red neuronal'
+\series default
+, haciendo referencia al tipo de algoritmo empleado para la composición.
 \begin_inset Newline newline
 \end_inset
 
@@ -1286,8 +1321,12 @@ Todo este proceso se realiza de forma transparente al usuario y no bloqueante.
 \begin_inset Newline newline
 \end_inset
 
-La sección 'Mi repositorio' es el lugar en el que el usuario puede ver sus
- composiciones terminadas o en curso.
+La sección '
+\series bold
+Mi repositorio
+\series default
+' es el lugar en el que el usuario puede ver sus composiciones terminadas
+ o en curso.
  En resumen, todas las entradas de la tabla 'sheets' de la base de datos
  asociadas a este usuario.
  Puede que haya inconsistencias entre la tabla y el sistema de ficheros,
@@ -1398,19 +1437,87 @@ Ya se han introducido las opciones que se pueden realizar en cada registro,
 \end_layout
 
 \begin_layout Itemize
-Visualizar:
+
+\bar under
+Visualizar
+\bar default
+: Abre el archivo PDF generado durante la fase de composición en una pestaña
+ nueva del navegador.
 \end_layout
 
 \begin_layout Itemize
-Descargar:
+
+\bar under
+Descargar
+\bar default
+: Abre una ventana de diálogo para elegir en qué formato se desea descargar
+ el archivo.
+ Las opciones disponibles por el momento son PDF y MusicXML.
+ En caso de uno de estos archivos no esté disponible, aparecerá la opción
+ deshabilitada y el usuario no podrá hacer click en ella.
+ Si el archivo está disponible, se descargará en el equipo.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/dialogo-descarga.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diálogo descargar partitura con opciones deshabilitadas
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-Eliminar:
+
+\bar under
+Eliminar
+\bar default
+: Elimina del sistema de ficheros los archivos relacionados con la composición
+ seleccionada y elimina el registro de la tabla 'sheets' de la base de datos.
 \end_layout
 
 \begin_layout Itemize
-Reintentar (sólo cuando faltan archivos):
+
+\bar under
+Reintentar
+\bar default
+ (sólo cuando faltan archivos): En caso de que falte el pdf pero el archivo
+ xml sí exista, se añade a la cola del compositor una nueva tarea de conversión
+ de la partitura en xml.
+ Si faltan ambos archivos, a partir de las especificaciones introducidas
+ inicialmente se solicita una nueva composición.
+ En caso de que no se encuentre tampoco el archivo con las especificaciones
+ introducidas, se notifica el error y no será posible reintentar.
 \end_layout
 
 \begin_layout Standard
@@ -1443,12 +1550,20 @@ scroll
 \end_inset
 
 Debajo de 'Mi repositorio' en el menú de navegación se encuentra el desplegable
- 'Administración', en el que se agrupan secciones únicamente accesibles
- para usuarios con el rol de administrador y permiten llevar a cabo acciones
- o consultar información sobre datos del sistema que no deberían ser accesibles
- para el usuario común.
+ '
+\series bold
+Administración
+\series default
+', en el que se agrupan secciones únicamente accesibles para usuarios con
+ el rol de administrador y permiten llevar a cabo acciones o consultar informaci
+ón sobre datos del sistema que no deberían ser accesibles para el usuario
+ común.
  La primera sección que encontramos bajo el desplegable de administración
- es 'Usuarios':
+ es '
+\series bold
+Usuarios
+\series default
+':
 \begin_inset Newline newline
 \end_inset
 
@@ -1511,7 +1626,11 @@ Esta sección permite a un administrador acceder a la tabla de usuarios de
 \end_layout
 
 \begin_layout Itemize
-Editar: Abre un diálogo en el que hay un formulario con los datos del usuario.
+
+\bar under
+Editar
+\bar default
+: Abre un diálogo en el que hay un formulario con los datos del usuario.
  En el se permite modificar cualquiera de estos datos, así como habilitar
  o deshabilitar la cuenta.
  Una cuenta deshabilitada produce un error en la autenticación.
@@ -1554,8 +1673,11 @@ Formulario editar usuario
 \end_layout
 
 \begin_layout Itemize
-Restablecer contraseña: Permite crear una nueva contraseña para el usuario
- seleccionado.
+
+\bar under
+Restablecer contraseña
+\bar default
+: Permite crear una nueva contraseña para el usuario seleccionado.
 \begin_inset Float figure
 placement H
 wide false
@@ -1584,27 +1706,30 @@ Formulario resetear contraseña
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
 \end_layout
 
 \begin_layout Itemize
-Eliminar: Esta acción debería eliminar el usuario y borrar todas las composicion
-es asociadas a él, sin embargo por el momento se encuentra deshabilitada
- al no estar implementado el endpoint correspondiente en el backend.
+
+\bar under
+Eliminar
+\bar default
+: Esta acción debería eliminar el usuario y borrar todas las composiciones
+ asociadas a él, sin embargo por el momento se encuentra deshabilitada al
+ no estar implementado el endpoint correspondiente en el backend.
 \end_layout
 
 \begin_layout Standard
-Bajo el menú de administración, también se encuentra la sección de logs,
- un lugar en el que se hace un volcado de los logs guardados en base de
+Dentro del menú de administración también se encuentra la sección de 
+\series bold
+'Logs'
+\series default
+, un lugar en el que se hace un volcado de los logs guardados en base de
  datos.
- Por el momento, no todos los logs son publicados en la correspondiente
- tabla, sólo algunos, los más relevantes, a la espera de encontrar un método
+ Por el momento, no todos los logs son publicados en la tabla destinada
+ a dicho fin, sólo los más relevantes, a la espera de encontrar un método
  más adecuado para almacenarlos y mostrarlos por la interfaz.
 \begin_inset Newline newline
 \end_inset
@@ -1614,10 +1739,84 @@ Bajo el menú de administración, también se encuentra la sección de logs,
 \end_inset
 
 
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/administracon-logs.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sección logs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Su diseño es muy simple, consiste únicamente en una lista con una línea
+ de log por fila, ordenados de más a menos recientes.
+ El color de cada fila variará según el tipo de log (info, warning, error...).
+ Esta interfaz permite al desarrollador obtener la causa de un error de
+ forma sencilla y rápida sin necesidad de acceder al fichero de logs del
+ servidor.
+ En un principio no me pareció la mejor idea guardar los logs de toda la
+ aplicación en base de datos, sin embargo por sencillez se ha optado por
+ guardar los más relevantes.
+ Por este motivo, muchos de los errores no aparecerán en esta sección y
+ sólo se podrán encontrar en los ficheros guardados en el servidor.
+ Un punto pendiente para el futuro es decidir una forma mejor de implementar
+ esta sección e incluir algún tipo de filtro, ya sea por fecha, tipo o contenido
+ del mensaje.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Por último tenemos el botón de '
+\series bold
+Cerrar sesión
+\series default
+', que no es más que otro enlace para navegar a la ruta '/auth/logout' al
+ igual que pulsando sobre el usuario de la cabecera y seleccionando la opción
+ 'Logout' ya mencionada anteriormente.
 \end_layout
 
 \begin_layout Section
 Descripción
+\end_layout
+
+\begin_layout Standard
+En la introducción de este capítulo se ha descrito a grandes rasgos cómo
+ ha ido evolucionando este módulo hasta el resultado que existe a día de
+ escribir esta memoria, concluyendo en que se ha empleado Angular como framework
+ de desarrollo y se ha partido de la plantilla 'ngx-admin' de 'Akveo'.
+ 
 \end_layout
 
 \end_body
