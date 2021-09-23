@@ -92,10 +92,10 @@ Módulo 'pfg-frontend'
 \begin_layout Standard
 En este capítulo se profundizará más en el módulo dedicado a la interfaz
  web con el cliente.
- En primer lugar, se comenzará por una introducción argumentando el por
- qué de este módulo y la elección de las tecnologías empleadas, a continuación
+ En primer lugar, se comenzará por una introducción argumentando el porqué
+ de este módulo y la elección de las tecnologías empleadas, a continuación
  se hará un recorrido mostrando la interfaz y las posibilidades que ofrece
- no sólo este módulo, sino el conjunto del sistema, pero a través de la
+ no solo este módulo, sino el conjunto del sistema, pero a través de la
  interfaz.
  Por último se hará una breve descripción a más bajo nivel de cómo está
  organizado el módulo a nivel de código.
@@ -180,8 +180,8 @@ más o menos
  no contaba.
  Pese a que no era una cuestión prioritaria en este proyecto, me había surgido
  cierto interés en el tema teniendo curiosidad por cómo se harían estos
- desarrollos a nivel profesional si a mí hacer un simple formulario (y además
- con poco gusto) me había llevado una cantidad de tiempo importante.
+ desarrollos a nivel profesional, ya que a mí hacer un simple formulario
+ ya me había llevado una cantidad de tiempo importante.
 \begin_inset Newline newline
 \end_inset
 
@@ -375,354 +375,18 @@ Tres frameworks de javascript ampliamente utilizados en el desarrollo de
 Angular
 \series default
 .
- No se pretende hacer una comparativa entre los tres, pero sí una pequeña
- introducción sobre Angular y hacer mención de los principales puntos considerad
-os:
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-Angular (o AngularJS) fue desarrollado en javascript por empleados de Google
- en el año 2008.
- En aquella época, el desarrollo web se basaba en múltiples páginas de manera
- que cuando un usuario hacía click en un link el navegador debía solicitar
- la página web requerida y recargar la página al completo.
- Dependiendo de la velocidad de conexión y la respuesta del servidor, esto
- podía suponer un lapso de tiempo notable hasta que el usuario disponga
- de la nueva página.
- Gradualmente, los equipos han ido aumentando su rendimiento general, por
- lo que esta lógica de la aplicación podría ejecutarse en el navegador.
- Esto condujo al acercamiento de las 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "SPA"
-description "Single Page Application"
-literal "false"
-
-\end_inset
-
-SPA (Single Page Application).
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-Angular fue uno de los primeros marcos para el desarrollo de SPA.
- Era capaz de reemplazar librerías como jQuery ofreciendo a los desarrolladores
- funciones como enlace de datos bidireccional y la posibilidad de organizarse
- en módulos para importar scripts externos, y en una jerarquía de componentes
- que permite una alta reutilización.
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-Otra importante novedad fue la introducción de Typescript (comunmente abreviado
- como 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "TS"
-description "TypeScript\\\\"
-literal "false"
-
-\end_inset
-
-TS) a partir de Angular2.
- Consiste en un 
-\begin_inset Quotes eld
-\end_inset
-
-sucesor
-\begin_inset Quotes erd
-\end_inset
-
- de JavaScript, un lenguaje basado en y un superconjunto de JavaScript al
- que se puede traducir en tiempo de compilación a la hora de construir un
- proyecto.
- Es un superconjunto de ECMAScript (ES)6 creado y mantenido por Microsoft.
- Cabe mencionar que tanto Typescript como Angular es open-source.
- Uno de los méritos de Typescript es la capacidad de hacer uso de característica
-s avanzadas de ES6 como los bucles for...of, lambdas y decoradores, estos últimos
- jugando un papel muy importante.
- Otra novedad que introdujo Typescript es el tipado estático.
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-En cuanto a la estructura de un proyecto, al igual que otros frameworks
- y como se ha mencionado, se basa en componentes.
- Esto significa que los componentes son los bloques principales con los
- que se construye una página.
- Cada bloque puede mostrar información y realizar acciones.
- La práctica recomendada es que cada componente cuente con sus tres propios
- archivos de código (un HTML para la plantilla, un CSS para el estilo y
- un TS para el control).
- Siguiendo esta práctica se garantiza una separación de responsabilidades
- y un orden de la estructura del proyecto y del código.
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-A su vez, los componentes pueden contener otros componentes, es a lo que
- se refería anteriormente con jerarquía.
- La información puede fluir entre padre e hijo, componentes hermanos o incluso
- dos componentes no relacionados.
- Existe un componente especial llamado app-root que representa el componente
- de nivel más alto, padre de todos los demás y punto de entrada encargado
- de inicializar la aplicación.
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Float figure
-placement h
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename figs/4-frontend/PFG-4 Frontend.svg
-	width 80text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Ejemplo jerarquía de componentes
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-En la figura 4.3 se puede observar un ejemplo de esta jerarquía.
- Se puede apreciar que es posible (aunque no obligatorio) que cada componente
- tenga sus propios ficheros independientes siendo el archivo TS el principal
- e indispensable, ya que en él se especifica la ruta de los otros dos como
- se puede ver en el fragmento de código 
+ Se puede encontrar algo más de información sobre este framework en 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "lis:Ejemplo componente com1"
+LatexCommand vref
+reference "sec:AngularJS"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- en las líneas 5 y 6.
- También es posible declarar varios componentes en un mismo archivo .ts.
-\begin_inset Newline newline
-\end_inset
-
 
 \begin_inset Newline newline
-\end_inset
-
-
-\begin_inset listings
-lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "lis:Ejemplo componente com1"
-
-\end_inset
-
-Archivo com1.component.ts
-\end_layout
-
-\end_inset
-
-import { Component } from '@angular/core'
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\end_layout
-
-\begin_layout Plain Layout
-
-@Component({
-\end_layout
-
-\begin_layout Plain Layout
-
-	selector: 'com1'
-\end_layout
-
-\begin_layout Plain Layout
-
-	templateUrl: './com1.component.html,
-\end_layout
-
-\begin_layout Plain Layout
-
-	styleUrls: ['./comp1.component.css']
-\end_layout
-
-\begin_layout Plain Layout
-
-})
-\end_layout
-
-\begin_layout Plain Layout
-
-export class Comp1Component {
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-	constructor() {
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-	}
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Mientras que en el archivo HTML de dicho componente se podría incluir a
- los componentes 'com1' y 'com2' por sus referencias de mismo nombre (ver
- fragmento de código)
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset listings
-lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "lis:com1.component.html"
-
-\end_inset
-
-Archivo com1.component.html
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-<div>
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\end_layout
-
-\begin_layout Plain Layout
-
-	<!-- Componente 2 -->
-\end_layout
-
-\begin_layout Plain Layout
-
-	<com2></com2>
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-	<!-- Componente 3 -->
-\end_layout
-
-\begin_layout Plain Layout
-
-	<com3></com3>
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-</div>
-\end_layout
-
 \end_inset
 
 
@@ -831,7 +495,7 @@ readme.md
 \end_inset
 
  del proyecto en el repositorio Git.
- Al ya contar con un usuario se van a omitir los casos de uso de registro
+ Al contar ya con un usuario se van a omitir los casos de uso de registro
  y recuperar contraseña, ya que no son el objetivo principal de esta memoria.
 \begin_inset Newline newline
 \end_inset
@@ -919,7 +583,8 @@ wide false
 sideways false
 status open
 
-\begin_layout Plain Layout
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
 \begin_inset Graphics
 	filename figs/4-frontend/home.png
 	width 100text%
@@ -1068,7 +733,7 @@ Seleccionando la opción
 \series bold
 'Log out'
 \series default
-, redireciona al usuario a la ruta '/auth/login', permitiéndole al usuario
+, redirecciona al usuario a la ruta '/auth/login', permitiéndole al usuario
  invalidar el token de acceso a la aplicación, lo que provoca la redirección
  de este de nuevo a la pantalla de login.
  De esta manera se permite iniciar sesión con otro usuario distinto o simplement
@@ -1259,7 +924,7 @@ o estas especificaciones en el cuerpo del mensaje.
 \end_inset
 
 Dicho consumidor será una instancia del módulo pfg-composer-genetic.
- Para ilustrar mejor el por qué de esta estructura pongamos el ejemplo de
+ Para ilustrar mejor el porqué de esta estructura pongamos el ejemplo de
  que la funcionalidad de la composición empleando una red neuronal estuviera
  implementada.
  En ese caso, podría haber otro tipo de consumidores para resolver este
@@ -1453,7 +1118,7 @@ Descargar
 : Abre una ventana de diálogo para elegir en qué formato se desea descargar
  el archivo.
  Las opciones disponibles por el momento son PDF y MusicXML.
- En caso de uno de estos archivos no esté disponible, aparecerá la opción
+ En caso de que uno de estos archivos no esté disponible, aparecerá la opción
  deshabilitada y el usuario no podrá hacer click en ella.
  Si el archivo está disponible, se descargará en el equipo.
 \begin_inset Newline newline
@@ -1818,6 +1483,752 @@ En la introducción de este capítulo se ha descrito a grandes rasgos cómo
  de desarrollo y se ha partido de la plantilla 'ngx-admin' de 'Akveo'.
  A continuación, se va a profundizar algo más en él a nivel de código y
  de organización de archivos del proyecto:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+En cuanto a la jerarquía del arbol de ficheros, se va a evitar hablaro sobre
+ los ficheros y directorios presentes en la raíz a excepción de la carpeta
+ src, ya que el resto son elementos comunes a todos los proyectos desarrollados
+ con NodeJS o Angular.
+ En cuanto a la carpeta src, contiene todo el código fuente de la web.
+ Está formada por los archivos de la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Carpeta-src"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Los más relevantes son:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/carpeta-src.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Carpeta-src"
+
+\end_inset
+
+Carpeta src
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\bar under
+app
+\bar default
+: Contiene los componentes en los que están definidos la lógica y los datos
+ de la aplicación.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\bar under
+assets
+\bar default
+: Contiene los adjuntos, archivos a los que se puede hacer referencia desde
+ la web, tales como imágenes, documentos...
+ Estos archivos son copiados cuando se ejecuta un 
+\emph on
+build
+\emph default
+ de la aplicación.
+\end_layout
+
+\begin_layout Itemize
+
+\bar under
+environments
+\bar default
+: Contiene opciones de configuración para los distintos entornos.
+\end_layout
+
+\begin_layout Itemize
+
+\bar under
+index.html
+\bar default
+: Archivo HTML principal mostrado cada vez que alguien visita la página.
+ Padre de todos los demás.
+ Durante la compilación, el CLI de Angular se encarga de añadir automáticamente
+ todos los javascript, css por lo que no será necesario indicar manualmente.
+\end_layout
+
+\begin_layout Itemize
+
+\bar under
+main.ts
+\bar default
+: Punto de entrada a la aplicación.
+ Compila la aplicación con el compilador 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "JIT"
+description "Just In Time"
+literal "false"
+
+\end_inset
+
+JIT
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+El compilador JIT (o just-in-time) convierte los archivos Angular HTML y
+ TypeScript en JavaScript optimizado para lograr una mayor eficiencia
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+La carpeta 
+\series bold
+app
+\series default
+ es la fundamental del proyecto, donde se encuentra la mayor parte del trabajo.
+ En ella se encuentran los siguientes archivos:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename carpeta-src-app.PNG
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Carpeta-src/app"
+
+\end_inset
+
+Carpeta src/app
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Comenzando por la carpeta 
+\series bold
+
+\begin_inset Quotes eld
+\end_inset
+
+@core
+\series default
+
+\begin_inset Quotes erd
+\end_inset
+
+, esta consiste en un módulo que contiene la lógica de negocio de la aplicación.
+ Sus archivos están organizados en dos subidrectorios (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Carpeta-src/app/@core"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), la carpeta 
+\begin_inset Quotes eld
+\end_inset
+
+data
+\begin_inset Quotes erd
+\end_inset
+
+, en la que se han ido guardando las clases e interfaces correspondientes
+ con el modelado de datos, y la carpeta 
+\begin_inset Quotes eld
+\end_inset
+
+utils
+\begin_inset Quotes erd
+\end_inset
+
+, donde se encuentran mayoritariamente clases con los decoradores 
+\begin_inset Quotes eld
+\end_inset
+
+@Injectable()
+\begin_inset Quotes erd
+\end_inset
+
+, empleados para ser inyectados en los módulos de los componentes y se encargan
+ de realizar las llamadas al API
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/carpeta-core.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Carpeta-src/app/@core"
+
+\end_inset
+
+Carpeta src/app/@core
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Por ejemplificar el tipo de contenido de esta carpeta, centrándonos en el
+ caso de uso de consultar las partituras de un usuario nos encontraríamos
+ dentro del directorio 
+\begin_inset Quotes eld
+\end_inset
+
+utils
+\begin_inset Quotes erd
+\end_inset
+
+ una clase que implemente los métodos necesarios para hacer estas consultas.
+ Por convención, en Angular un servicio termina en 
+\begin_inset Quotes eld
+\end_inset
+
+.service.ts
+\begin_inset Quotes erd
+\end_inset
+
+, por lo tanto su nombre de archivo seria 
+\begin_inset Quotes eld
+\end_inset
+
+sheets.service.ts
+\begin_inset Quotes erd
+\end_inset
+
+.
+ En él se definen métodos para obtener un listado de partituras con determinados
+ filtros, obtener una partitura en concreto, descargar los documentos asociados
+ a dicha partitura, reintentar...
+ En el fragmento de código 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Archivo-sheets.service.ts"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ se representa una simplificación de este servicio.
+\begin_inset listings
+lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Archivo-sheets.service.ts"
+
+\end_inset
+
+Archivo sheets.service.ts
+\end_layout
+
+\end_inset
+
+import {HttpClient} from '@angular/common/http'; 
+\end_layout
+
+\begin_layout Plain Layout
+
+import {Injectable} from '@angular/core'; 
+\end_layout
+
+\begin_layout Plain Layout
+
+import {environment} from 'environments/environment'; 
+\end_layout
+
+\begin_layout Plain Layout
+
+import {Sheet, SheetPage} from '../data/sheet';
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@Injectable() 
+\end_layout
+
+\begin_layout Plain Layout
+
+export class SheetService {
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    constructor(private httpClient: HttpClient) {
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	getSheet(id: number) {         
+\end_layout
+
+\begin_layout Plain Layout
+
+		const urlRequest = `${environment.apiUrl}/api/sheets/${id}`;         
+\end_layout
+
+\begin_layout Plain Layout
+
+		return this.httpClient.get<Sheet>(urlRequest);     
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+Como se puede ver en él, se emplea un cliente HTTP para realizar una llamada
+ al API utilizando el correspondiente endpoint, e indica en la línea 15
+ que el resultado es un objeto de tipo Sheet.
+ La declaración de esta interfaz está definida en la carpeta data, siendo
+ algo similar al fragmento 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Archivo-sheet.ts"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, adaptándose a la definición que devuelve este método documentado en el
+ API.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Archivo-sheet.ts"
+
+\end_inset
+
+Archivo sheet.ts
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+export interface Sheet {     
+\end_layout
+
+\begin_layout Plain Layout
+
+	id: number;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	name: string;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	style: string;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	date: string;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	sheet: string;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	finished: boolean;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	specs: boolean;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	xml: boolean;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	pdf: boolean; 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+El siguiente sería 
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+@theme
+\series default
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Este módulo contiene archivos y definiciones relacionadas con el estilo
+ y la disposición de los elementos en pantalla, así como los componentes
+ de la interfaz tales como cabecera, pie de página, menú de navegación...
+ No va a ser analizada en profundidad ya que pertenece casi en su totalidad
+ a la plantilla de origen.
+ Lo único que se ha modificado en él son los componentes que han sido adaptados
+ a la finalidad de este proyecto, por ejemplo al modificar la cabecera para
+ incluir título, versión y usuario actual.
+\end_layout
+
+\begin_layout Itemize
+En 
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+auth
+\series default
+
+\begin_inset Quotes erd
+\end_inset
+
+ se encuentran los componentes relacionados con la autenticación.
+ Por defecto, la plantilla ngx-admin viene con sus componentes predeterminados
+ dentro de la librería de nebular (login, register, logout, reset password).
+ Aunque cuentan con funciones de personalización, no son lo suficientemente
+ flexibles para según qué modificaciones, por lo tanto si se quiere ir más
+ allá la solución que proporciona esta librería es crear tus propios componentes
+ extendiendo los que ya existen.
+ La carpeta 
+\begin_inset Quotes eld
+\end_inset
+
+auth
+\begin_inset Quotes erd
+\end_inset
+
+ no existía de origen en la plantilla, sino que se ha creado para meter
+ en ella esos componentes extendidos que se vayan necesitando.
+ En este caso por ejemplo, ha sido necesario crear un nuevo componente de
+ registro para poder mapear las propiedades del usuario de la aplicación
+ añadiendo nuevos campos al formulario de registro.
+\end_layout
+
+\begin_layout Itemize
+En 
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+pages
+\series default
+
+\begin_inset Quotes erd
+\end_inset
+
+ están todos los módulos y componentes que se visualizan en la interfaz.
+ En la imagen 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Carpeta-pages"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ se puede ver que se intenta guardar una correspondencia entre la jerarquía
+ de carpetas y las rutas de la aplicación.
+ Por ejemplo, la sección /pages/home se encuentra en el directorio 
+\begin_inset Quotes eld
+\end_inset
+
+home
+\begin_inset Quotes erd
+\end_inset
+
+ dentro del directorio 
+\begin_inset Quotes eld
+\end_inset
+
+pages
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Cada una de las carpetas que se encuentran dentro de 
+\begin_inset Quotes eld
+\end_inset
+
+pages
+\begin_inset Quotes erd
+\end_inset
+
+ constituye un módulo de Angular.
+ Un módulo permite declarar sus propias dependencias con otros módulos,
+ y servicios.
+ De esta manera se puede independizar las relaciones de cada uno de ellos
+ haciendo posible que, en el caso de un módulo más sencillo como puede ser
+ el de 
+\begin_inset Quotes eld
+\end_inset
+
+home
+\begin_inset Quotes erd
+\end_inset
+
+, no requiera un tiempo de carga excesivo al tener que importar dependencias
+ relativas a otro módulo como el de 
+\begin_inset Quotes eld
+\end_inset
+
+repositorio
+\begin_inset Quotes erd
+\end_inset
+
+ y que no tenga que utilizar en ningún momento.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/carpeta-pages.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Carpeta-pages"
+
+\end_inset
+
+Carpeta pages
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Por último, en la carpeta 
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+commons
+\series default
+
+\begin_inset Quotes erd
+\end_inset
+
+ se han ido guardando aquellos componentes transversales a varios módulos
+ y que por lo tanto no se han podido asignar a uno u otro.
+ Un ejemplo de componente común es el formulario de usuario, que se emplea
+ tanto en la sección de perfil donde el usuario puede ver los datos de su
+ cuenta, como en administración al tratar de editar un usuario.
+ Este componente se ha reutilizado en ambos sitios, sin embargo no pertenece
+ ni a uno ni a otro.
+ De esta manera, no es necesario en el módulo de administración, importar
+ todo el módulo de perfil completo, cuando es sólo un componente el que
+ va a ser utilizado.
+ Además de por eficiencia, separar este componente permite reutilizarlo
+ facilmente sin tener ningún acoplamiento con cualquiera de los otros módulos.
 \end_layout
 
 \end_body

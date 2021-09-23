@@ -130,7 +130,7 @@ En un primer momento, después de hacer un análisis de qué herramientas usar
  marcha.
  La idea era centrar la mayor parte del esfuerzo en implementar el algoritmo,
  considerando que esta parte sería la más complicada, y que el resto vendría
- sólo.
+ solo.
  Para interactuar con el software mi intención era implementar una interfaz
  gráfica muy simple y una línea de comandos.
 \begin_inset Newline newline
@@ -211,10 +211,14 @@ s de las vistas y en general habiendo muchas dependencias que no debería
 \begin_inset Newline newline
 \end_inset
 
+
+\begin_inset Newline newline
+\end_inset
+
 De cualquier modo, el planteamiento no era el ideal, ya que uno de mis objetivos
  iniciales era poder ampliar el proyecto en el futuro implementando otros
  algoritmos que pudieran estar en Java o en otros lenguajes y tal y como
- estaba planteado no me estaba resultando nada cómodo.
+ estaba planteado no resultaba nada cómodo.
  Por otra parte también me parecía muy interesante tratar de trasladar la
  tarea a un servidor para evitar problemas de compatibilidad, versiones,
  librerías...
@@ -297,7 +301,17 @@ JavaRMI
 status open
 
 \begin_layout Plain Layout
-Java Remote Method Invocation
+Java 
+\emph on
+Remote
+\emph default
+ 
+\emph on
+Method
+\emph default
+ 
+\emph on
+Invocation
 \end_layout
 
 \end_inset
@@ -340,7 +354,43 @@ servicios REST
 \begin_inset Newline newline
 \end_inset
 
-Un servicio REST 
+Un servicio REST (Representational State Transfer) como su nombre indica,
+ tiene que ver con la relación cliente-servidor y cómo se almacena el estado.
+ La arquitectura REST se basa en el estilo de arquitectura cliente-servidor,
+ por lo tanto las solicitudes y las respuestas se construyen sobre la base
+ del proceso de transferencia de los recursos.
+ Todos los recursos están identificados por un único 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "URI"
+description "Unique Resource Identifier"
+literal "false"
+
+\end_inset
+
+URI (identificador único de recursos) que normalmente representa un documento
+ que captura el estado del recurso.
+ Generalmente la arquitectura de estilo REST es mucho más ligera en comparación
+ con 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "SOAP"
+description "Simple Access Object Protocol"
+literal "false"
+
+\end_inset
+
+SOAP, la principal alternativa.
+ Por otro lado, utiliza JSON, unas cien veces más rápido que XML.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "halili2018web"
+literal "false"
+
+\end_inset
+
+
 \begin_inset Newline newline
 \end_inset
 
@@ -374,8 +424,9 @@ noprefix "false"
 
 ).
  Probablemente lo más útil que he aprendido a lo largo de este proyecto
- a raiz de encontrar este tipo de frameworks y librerías es, cada vez que
- tenga que resolver un problema, comprobar si alguien lo ha hecho ya antes.
+ a raíz de encontrar este tipo de frameworks y librerías es que cada vez
+ que tenga que resolver un problema, compensa invertir algo de tiempo en
+ comprobar si alguien lo ha hecho ya antes.
 \begin_inset Newline newline
 \end_inset
 
@@ -424,72 +475,134 @@ Tercer escenario
 \end_layout
 
 \begin_layout Standard
-Como se comentaba anteriormente en la introducción, este proyecto se puede
- dividir a grandes rasgos en:
-\end_layout
+El escenario anterior daba buen resultado.
+ Era sencillo y efectivo, una solución válida para conseguir el objetivo.
+ Sin embargo, profundizando algo más en temas de arquitectura cambió mi
+ perspectiva sobre cómo debía organizar un sistema de este tipo, haciéndome
+ pensar en cómo afectaría al sistema una carga de trabajo más elevada que
+ correspondiera a varias personas utilizándolo y no solo yo mismo haciendo
+ pruebas durante el desarrollo.
+ La conclusión fue que el esquema anterior poseía varios puntos críticos
+ de procesamiento que podían impactar gravemente en el usuario.
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Itemize
-Librería de composición musical
-\end_layout
 
-\begin_layout Itemize
-Servicio web
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
-Al principio del desarrollo, la estructura era esta, sin embargo, a medida
- que el servicio web fue adquiriendo mayor complejidad, ha sido necesario
- migrar la arquitectura monolítica del servicio web a un 
-\series bold
-conjunto de microservicios
-\series default
+Por una parte, la interfaz web se encontraba junto con el servicio que realiza
+ todas las demás operaciones.
+ Esto implica que ante un colapso de dicho servicio, no podría proporcionar
+ a los usuarios las páginas de la interfaz requeridas y por lo tanto, producir
+ una sensación de inestabilidad.
+ La primera medida a tomar fue la de separar la interfaz a un servicio independi
+ente dedicado exclusivamente a esta finalidad.
+ De todos modos, es cierto que la interfaz gráfica en varias situaciones
+ necesita de la respuesta proporcionada por el servicio, por ejemplo para
+ consultar las composiciones disponibles o para solicitar una nueva composición,
+ pero en cualquier caso la sensación del usuario es más satisfactoria si
+ la interfaz funciona fluida a pesar de que una tabla no logre cargar su
+ contenido en un momento dado, o al realizar una acción salte una notificación
+ de error.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Por otra parte, el servicio en el que se apoya la interfaz lleva a cabo
+ acciones muy diversas que pueden separarse en diferentes servicios.
+ En este caso, las tareas de composición son mucho más pesadas que las que
+ dan respuesta al servicio REST como pueden ser consultas a base de datos.
+ Haciendo una separación entre compositor y servicio REST se rebajaría drásticam
+ente la carga de este último, haciendo que soporte muchos más usuarios concurren
+tes sin que esto afecte a la interfaz como se comentaba en el párrafo anterior,
+ ya que las acciones más pesadas se estarían ejecutando en otro módulo independi
+ente.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+La separación de servicio REST y compositor me llevó al problema de cómo
+ implementar el compositor de manera que no fuera bloqueante, sino que admitiera
+ trabajo en paralelo y una 
+\begin_inset Quotes eld
+\end_inset
+
+lista de espera
+\begin_inset Quotes erd
+\end_inset
+
+ en caso de trabajar a pleno rendimiento.
+ Esto me llevó a la programación dirigida por eventos, las colas de mensajería
+ y Kafka.
+ En resumen, un servicio de mensajería (como Apache Kafka, más información
+ en 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "sec:Kafka"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) permite tener varias colas donde ir acumulando mensajes hasta que sean
+ procesados.
+ Aplicándolo al problema, el servicio REST irá acumulando especificaciones
+ del usuario en la cola, y el compositor las irá sacando de ella y procesando
+ en orden de llegada.
+ De esta forma por muchas peticiones pendientes que tenga el compositor,
+ esto no bloquea al servicio REST porque no interactúa directamente con
+ él sino con Kafka que se encarga de gestionar las diferentes colas.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Esta forma de estructurar un sistema es conocida como arquitectura de microservi
+cios.
+ Se considera un microservicio una pequeña aplicación que puede ser desplegada,
+ escalada y testeada de manera independiente.
+ Otro criterio algo más difuso es que debe tener una única responsabilidad
+ bien definida, lo que a veces no es tan sencillo de identificar 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "thones2015microservices"
+literal "false"
+
+\end_inset
+
 .
- A continuación, se enumeran los módulos finales con su nombre real:
-\end_layout
+ La forma más usual de manejar microservicios es mediante contenedores,
+ y para ello la tecnología más popular actualmente es Docker (más información
+ en 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "sec:Docker"
+plural "false"
+caps "false"
+noprefix "false"
 
-\begin_layout Itemize
+\end_inset
 
-\series bold
-pfg-commons
-\end_layout
+).
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Itemize
-Servicio web:
-\end_layout
 
-\begin_deeper
-\begin_layout Itemize
+\begin_inset Newline newline
+\end_inset
 
-\series bold
-pfg-backend
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-pfg-frontend
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-pfg-composer-genetic
-\end_layout
-
-\begin_layout Itemize
-Base de datos 
-\emph on
-(MySQL 5)[de terceros]
-\end_layout
-
-\begin_layout Itemize
-Kafka + Zookeeper
-\emph on
- [de terceros]
-\end_layout
-
-\end_deeper
-\begin_layout Standard
 En la figura 
 \begin_inset CommandInset ref
 LatexCommand vref
@@ -505,7 +618,11 @@ noprefix "false"
  realice en el servidor, y que se pueda acceder al servicio a través de
  un navegador desde cualquier equipo, o incluso desde otros sistemas de
  forma sencilla si fuera necesario, desarrollando un adaptador específico
- para el Api.
+ para el API.
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset Newline newline
 \end_inset
 
@@ -584,7 +701,7 @@ noprefix "false"
 Dockerfile
 \emph default
  especificando cómo se construye su imagen, o en el caso de los módulos
- de terceros, son directamente referencias a imágenes de 
+ de terceros, son directamente referencias a imágenes del registro de 
 \emph on
 DockerHub
 \emph default
@@ -593,10 +710,6 @@ DockerHub
 
 \begin_layout Section
 Módulos
-\end_layout
-
-\begin_layout Standard
-
 \end_layout
 
 \begin_layout Standard
@@ -785,7 +898,7 @@ Java
 \begin_inset Text
 
 \begin_layout Plain Layout
-pfg-composer-genetics
+pfg-composer-genetic
 \end_layout
 
 \end_inset
@@ -846,38 +959,43 @@ Características de cada módulo
 
 \end_layout
 
-\begin_layout Subsection
-pfg-core
+\begin_layout Itemize
+
+\series bold
+pfg-commons
+\series default
+: Se trata del núcleo del sistema.
+ Contiene el modelado de datos y la lógica de negocio común a todo el proyecto
+ y está destinado a su uso como librería.
+ Figura entre las dependencias del módulo pfg-backend y pfg-frontend.
 \end_layout
 
-\begin_layout Standard
-Módulo principal, contiene la lógica necesaria para 
-\end_layout
+\begin_layout Itemize
 
-\begin_layout Subsection
+\series bold
 pfg-backend
+\series default
+: Servicio central que actúa como coordinador del sistema.
+ Comunica a los demás módulos entre sí.
+ Desarrollado en Java con Spring.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Itemize
+
+\series bold
 pfg-frontend
+\series default
+: Interfaz gráfica de usuario en formato web, desarrollada en Angular
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Itemize
+
+\series bold
 pfg-composer
-\end_layout
-
-\begin_layout Section
-Ejemplo de flujo de ejecución
-\end_layout
-
-\begin_layout Standard
-Para ilustrar rápidamente la comunicación entre módulos, se va a explicar
- el caso de uso de composición de una obra, un caso de uso muy completo
- ya que requiere de la participación de todos los componentes:
-\begin_inset Newline newline
-\end_inset
-
-
+\series default
+: Módulo ejecutor de las tareas de composición.
+ Recibe solicitudes de composición y las consume generando resultados que
+ luego envía al backend.
 \end_layout
 
 \begin_layout Section
@@ -919,18 +1037,22 @@ El motivo de esta separación es reducir al mínimo la carga de trabajo del
 \end_inset
 
 
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
 Otro motivo por el que se ha optado por este modelo es la alta escalabilidad
  que proporciona.
  Al tener módulos independientes para finalidades concretas es relativamente
  sencillo multiplicar el número de instancias de cualquiera de ellos, ya
  sea por necesidades de concurrencia o por disponibilidad: 
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
-Continunando el ejemplo anterior, en caso de que hubiera una alta demanda
+
+\begin_inset Newline newline
+\end_inset
+
+Continuando el ejemplo anterior, en caso de que hubiera una alta demanda
  del servicio, probablemente el módulo más sobrecargado sería el 
 \emph on
 pfg-composer 
@@ -939,9 +1061,13 @@ ya que es el encargado de realizar las tareas más pesadas.
  Llegado el punto de necesitar más capacidad de procesamiento, bastaría
  con replicar el composer tantas veces como fuera necesario.
  
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
+
+\begin_inset Newline newline
+\end_inset
+
 Otro motivo interesante por el que replicar módulos podría ser ofrecer una
  mayor disponibilidad en caso de que falle alguno de los módulos.
  En este supuesto, el más crítico sería el 
@@ -949,8 +1075,12 @@ Otro motivo interesante por el que replicar módulos podría ser ofrecer una
 pfg-composer.
  
 \emph default
-Sin él no sólo no podría funcionar ninguno de los demás, sino que el usuario
- se quedaría sin feedback de qué está pasando.
+Sin él no solo no podría funcionar ninguno de los demás, sino que el usuario
+ se quedaría sin 
+\emph on
+feedback
+\emph default
+ de qué está pasando.
  La interfaz no podría autenticar a los usuarios, las peticiones no se resolverí
 an, y en caso de tener otros clientes como una app móvil o de escritorio,
  tampoco recibirían respuesta.

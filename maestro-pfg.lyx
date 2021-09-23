@@ -668,7 +668,7 @@ rightmark}}
 LatexCommand bibtex
 btprint "btPrintAll"
 bibfiles "biblio/biblio-pfg"
-options "bibtotoc,unsrt"
+options "bibtotoc,apalike"
 
 \end_inset
 

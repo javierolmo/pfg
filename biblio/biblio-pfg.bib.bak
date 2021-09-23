@@ -48,7 +48,9 @@
 }
 
 @Misc{,
+  author   = {Makemusic},
   title    = {{MusicXML} for {Exchanging} {Digital} {Sheet} {Music}},
+  year     = {2015},
   abstract = {MusicXML is the standard open format for exchanging digital sheet music. It allows you to collaborate with musicians using different music applications.},
   journal  = {MusicXML},
   language = {en-US},
@@ -69,6 +71,58 @@
   title   = {Spring boot reference guide},
   year    = {2013},
   volume  = {24},
+}
+
+@PhdThesis{wohlgethan2018supportingweb,
+  author = {Wohlgethan, Eric},
+  school = {Hochschule f{\"u}r Angewandte Wissenschaften Hamburg},
+  title  = {SupportingWeb Development Decisions by Comparing Three Major JavaScript Frameworks: Angular, React and Vue. js},
+  year   = {2018},
+}
+
+@Article{halili2018web,
+  author  = {Halili, Festim and Ramadani, Erenis},
+  journal = {Modern Applied Science},
+  title   = {Web services: a comparison of soap and rest services},
+  year    = {2018},
+  number  = {3},
+  pages   = {175},
+  volume  = {12},
+}
+
+@InProceedings{elliott2000declarative,
+  author    = {Elliott, Conal},
+  booktitle = {Proceedings of the 2nd ACM SIGPLAN international conference on Principles and practice of declarative programming},
+  title     = {Declarative event-oriented programming},
+  year      = {2000},
+  pages     = {56--67},
+}
+
+@Article{thones2015microservices,
+  author    = {Th{\"o}nes, Johannes},
+  journal   = {IEEE software},
+  title     = {Microservices},
+  year      = {2015},
+  number    = {1},
+  pages     = {116--116},
+  volume    = {32},
+  publisher = {IEEE},
+}
+
+@Article{smart2005introduction,
+  author  = {Smart, John Ferguson and others},
+  journal = {JavaWorld Magazine. Available at: http://www. javaworld. com/javaworld/jw-12-2005/jw-1205-maven. html},
+  title   = {An introduction to Maven 2},
+  year    = {2005},
+  pages   = {27},
+}
+
+@Article{framework2018spring,
+  author  = {Framework, Spring},
+  journal = {Available on:< https://spring. io/>. Access in},
+  title   = {Spring framework},
+  year    = {2018},
+  volume  = {3},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}

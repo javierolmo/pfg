@@ -146,6 +146,14 @@ MusicXML es un formato abierto de notación musical basado en XML, cuya extensi�
  de ida y vuelta, con personas que utilizan otros programas.
  Hoy en día más de 250 aplicaciones incluyen compatibilidad con este formato.
  
+\begin_inset CommandInset citation
+LatexCommand cite
+key "good2001musicxml"
+literal "false"
+
+\end_inset
+
+
 \begin_inset Newline newline
 \end_inset
 
@@ -534,6 +542,346 @@ name "sec:AngularJS"
 \end_inset
 
 AngularJS
+\end_layout
+
+\begin_layout Standard
+Angular (o AngularJS) fue desarrollado en javascript por empleados de Google
+ en el año 2008.
+ En aquella época, el desarrollo web se basaba en múltiples páginas de manera
+ que cuando un usuario hacía click en un link el navegador debía solicitar
+ la página web requerida y recargar la página al completo.
+ Dependiendo de la velocidad de conexión y la respuesta del servidor, esto
+ podía suponer un lapso de tiempo notable hasta que el usuario disponga
+ de la nueva página.
+ Gradualmente, los equipos han ido aumentando su rendimiento general, por
+ lo que esta lógica de la aplicación podría ejecutarse en el navegador.
+ Esto condujo al acercamiento de las 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "SPA"
+description "Single Page Application"
+literal "false"
+
+\end_inset
+
+SPA (Single Page Application).
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Angular fue uno de los primeros marcos para el desarrollo de SPA.
+ Era capaz de reemplazar librerías como jQuery ofreciendo a los desarrolladores
+ funciones como enlace de datos bidireccional y la posibilidad de organizarse
+ en módulos para importar scripts externos, y en una jerarquía de componentes
+ que permite una alta reutilización.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Otra importante novedad fue la introducción de Typescript (comunmente abreviado
+ como 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "TS"
+description "TypeScript\\\\"
+literal "false"
+
+\end_inset
+
+TS) a partir de Angular2.
+ Consiste en un 
+\begin_inset Quotes eld
+\end_inset
+
+sucesor
+\begin_inset Quotes erd
+\end_inset
+
+ de JavaScript, un lenguaje basado en y un superconjunto de JavaScript al
+ que se puede traducir en tiempo de compilación a la hora de construir un
+ proyecto.
+ Es un superconjunto de ECMAScript (ES)6 creado y mantenido por Microsoft.
+ Cabe mencionar que tanto Typescript como Angular es open-source.
+ Uno de los méritos de Typescript es la capacidad de hacer uso de característica
+s avanzadas de ES6 como los bucles for...of, lambdas y decoradores, estos últimos
+ jugando un papel muy importante.
+ Otra novedad que introdujo Typescript es el tipado estático.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+En cuanto a la estructura de un proyecto, al igual que otros frameworks
+ y como se ha mencionado, se basa en componentes.
+ Esto significa que los componentes son los bloques principales con los
+ que se construye una página.
+ Cada bloque puede mostrar información y realizar acciones.
+ La práctica recomendada es que cada componente cuente con sus tres propios
+ archivos de código (un HTML para la plantilla, un CSS para el estilo y
+ un TS para el control).
+ Siguiendo esta práctica se garantiza una separación de responsabilidades
+ y un orden de la estructura del proyecto y del código.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+A su vez, los componentes pueden contener otros componentes, es a lo que
+ se refería anteriormente con jerarquía.
+ La información puede fluir entre padre e hijo, componentes hermanos o incluso
+ dos componentes no relacionados.
+ Existe un componente especial llamado app-root que representa el componente
+ de nivel más alto, padre de todos los demás y punto de entrada encargado
+ de inicializar la aplicación.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/4-frontend/PFG-4 Frontend.svg
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Ejemplo jerarquía de componentes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En la figura 4.3 se puede observar un ejemplo de esta jerarquía.
+ Se puede apreciar que es posible (aunque no obligatorio) que cada componente
+ tenga sus propios ficheros independientes siendo el archivo TS el principal
+ e indispensable, ya que en él se especifica la ruta de los otros dos como
+ se puede ver en el fragmento de código 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Ejemplo componente com1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ en las líneas 5 y 6.
+ También es posible declarar varios componentes en un mismo archivo .ts.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Ejemplo componente com1"
+
+\end_inset
+
+Archivo com1.component.ts
+\end_layout
+
+\end_inset
+
+import { Component } from '@angular/core'
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+@Component({
+\end_layout
+
+\begin_layout Plain Layout
+
+	selector: 'com1'
+\end_layout
+
+\begin_layout Plain Layout
+
+	templateUrl: './com1.component.html,
+\end_layout
+
+\begin_layout Plain Layout
+
+	styleUrls: ['./comp1.component.css']
+\end_layout
+
+\begin_layout Plain Layout
+
+})
+\end_layout
+
+\begin_layout Plain Layout
+
+export class Comp1Component {
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	constructor() {
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Mientras que en el archivo HTML de dicho componente se podría incluir a
+ los componentes 'com1' y 'com2' por sus referencias de mismo nombre (ver
+ fragmento de código)
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:com1.component.html"
+
+\end_inset
+
+Archivo com1.component.html
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<div>
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+	<!-- Componente 2 -->
+\end_layout
+
+\begin_layout Plain Layout
+
+	<com2></com2>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	<!-- Componente 3 -->
+\end_layout
+
+\begin_layout Plain Layout
+
+	<com3></com3>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+</div>
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section

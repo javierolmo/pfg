@@ -157,7 +157,7 @@ Por otra parte, se ha dedicado gran parte del tiempo del desarrollo a la
  creación de un sistema estructurado como un conjunto de microservicios
  que haga uso del algoritmo de composición y asuma otras responsabilidades
  como la gestión de autenticación, roles, almacenamiento, y administración
- a través de su api REST o de su interfaz web desarrollada en Angular.
+ a través de su API REST o de su interfaz web desarrollada en Angular.
  Este sistema está diseñado para su despliegue tanto en un único servidor
  o en un clúster, permitiendo su escalado y replicación de cada uno de sus
  módulos por separado.
@@ -174,7 +174,7 @@ Al tratarse de un problema bastante amplio, se ha decidido acotar su ámbito
  para este trabajo, aunque con intención de poder ser ampliado en el futuro.
  Algunos de estos límites son los instrumentos a emplear y el estilo de
  composición, que por el momento se reducen a composiciones para piano solo,
- basadas en el estilo Boogie-woogie debido a su caracter improvisado y de
+ basadas en el estilo Boogie-woogie debido a su carácter improvisado y de
  estructura flexible.
 \end_layout
 

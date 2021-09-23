@@ -89,98 +89,1079 @@
 Módulo 'pfg-backend'
 \end_layout
 
-\begin_layout Standard
-<Intro ...
- >
-\end_layout
-
 \begin_layout Section
-Motivación y objetivos
+Introducción
 \end_layout
 
 \begin_layout Standard
-<Ejemplo biblio
-\begin_inset CommandInset citation
-LatexCommand cite
-key "eckel03,gamma95,sommerville05"
-literal "true"
+En el capítulo dedicado a la estructura del proyecto (
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "chap:Estructura"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
->
+) se explica que el módulo pfg-backend surge de la necesidad de separar
+ un único servicio, que originalmente daba soporte a la interfaz web, en
+ varios microservicios, dividiendo la carga de trabajo según su finalidad.
+ De esta manera se extraen a este módulo el API REST y básicamente todas
+ las funciones a parte de las tareas de composición.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+El módulo pfg-backend es, por así decirlo, el intermediario entre todos
+ los demás microservicios, ya que no existe conexión entre ninguno de ellos
+ que no pase por él.
+ Es un servicio clave, imprescindible para el correcto funcionamiento del
+ sistema, y por este motivo se pretende que cuente con una alta disponibilidad
+ y una baja carga de trabajo, delegando las tareas más pesadas en otros
+ servicios.
+ Por lo general, todas las tareas que realiza son de una duración corta
+ y de poco peso.
+ Entre las tareas que debe asumir este módulo se encuentran:
+\end_layout
+
+\begin_layout Itemize
+Realizar 
+\series bold
+consultas
+\series default
+ a base de datos
+\end_layout
+
+\begin_layout Itemize
+Dar respuesta a las peticiones 
+\series bold
+REST
+\end_layout
+
+\begin_layout Itemize
+Interactuar con el 
+\series bold
+sistema de ficheros
+\series default
+ para lectura y escritura de documentos
+\end_layout
+
+\begin_layout Itemize
+Solicitar composiciones a través de las 
+\series bold
+colas de mensajería
+\series default
+, que serán atendidas por los compositores
 \end_layout
 
 \begin_layout Standard
-<Ejemplo referencia a sección
+Está desarrollado en su totalidad en Java, empleando 
+\series bold
+Maven
+\series default
+ como gestor de proyectos.
+ Maven es una herramienta de código abierto que permite automatizar varias
+ tareas de gestión y configuración de proyectos Java y derivados, además
+ de proporcionar un modelo de estructura de carpetas en las que dividir
+ el código.
+ Maven es empleado en todos los módulos Java desarrollados en este proyecto.
+ Más información en 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Estructura-de-la-memoria"
-
-\end_inset
-
- y a subsección de otro capítulo, que en este caso es un anexo
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:<Primera-subsección-anexo>"
+LatexCommand vref
+reference "sec:Maven"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
 .
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Pese a que la primera aproximación al modelo cliente-servidor se intentó
+ haciendo uso de JavaRMI basándose en la invocación remota de métodos desde
+ un cliente Java, pronto se reemplazó por un servicio REST.
+ Para ello se ha hecho uso de 
 \series bold
-Para que funcionen correctamente las referencias a otros capítulos al exportar
- a pdf, debe estar abierto el archivo maestro, abrir/editar el archivo a
- exportar desde él y exportar desde el maestro
+Spring
 \series default
-.>
-\end_layout
+ por ser uno de los frameworks más populares para el desarrollo Java en
+ la actualidad y de los más demandados en el mercado laboral.
+ A continuación se muestra un grafico estadístico comparándolo con sus principal
+es competidores:
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
-<Ejemplo referencia a figura
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Ejemplo-de-figura"
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/3-backend/estadistica-spring.png
+	width 100text%
 
 \end_inset
 
->
-\end_layout
 
-\begin_layout Standard
-<Ejemplo referencia a tabla
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Ejemplo-de-tabla"
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparativa frameworks Java en el año 2020.
+ (fuente: dzone.com) 
+\end_layout
 
 \end_inset
 
->
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-<Ejemplo de nomenclatura
+Existe una sección en el anexo donde encontrar más información acerca de
+ Spring (
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "sec:Spring-Boot"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Este módulo supuso la primera vez que desarrollaba un programa de estas
+ características, por lo tanto la organización al principio fue algo caótica
+ a medida que ha ido creciendo y se ha visto sometido a varios replanteos
+ para intentar mantener la coherencia y la cohesión de las clases.
+ A causa de esta necesidad de cambios y junto con muchas horas de leer y
+ ver otros proyectos, he dado con una aproximación que tiene sus ventajas
+ y desventajas, pero desde luego proporcionaba la coherencia que necesitaba.
+ Se trata de la arquitectura hexagonal, un enfoque que me ayudó a mantener
+ un orden que no estaba consiguiendo anteriormente con algo similar a una
+ arquitectura por capas.
+ Más adelante se profundizará sobre el tema.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Por último, acerca del API REST, se han empleado las librerías para Java
+ de Swagger, un conjunto de herramientas de software de código abierto para
+ diseñar, construir, documentar y utilizar servicios web RESTful.
+ Estas librerías permiten escanear paquetes concretos de código y generar
+ una documentación del API para poder consultar y facilitar las labores
+ de desarrollo, así como una web interactiva que permite testear los endpoints
+ definiendo los parámetros de las peticiones.
+ Más adelante en el capítulo dedicado a la interfaz se verá como acceder
+ a esta documentación, y el documento generado se adjunta también como anexo
+ de esta memoria en 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "chap:Api-REST"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Arquitectura hexagonal 
+\end_layout
+
+\begin_layout Standard
+En primer lugar, antes de comenzar a explorar los paquetes de este módulo,
+ conviene explicar algo más acerca de la 
+\series bold
+arquitectura hexagonal
+\series default
+, ya que se ha intentado adoptar en la medida de lo posible una estructura
+ acorde con esta idea.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Comenzando por qué es una arquitectura de software, consiste en un conjunto
+ de patrones que proporcionan un marco de referencia necesario para guiar
+ la construcción de un software, permitiendo a desarrolladores estar alineados
+ y tener objetivos comunes.
+ Ejemplos de arquitecturas son MVC, programación por capas, peer-to-peer,
+ orientada a servicios...
+ Dado que la complejidad de los sistemas de software ha ido (y va) en aumento,
+ cada vez es más necesario el uso de arquitecturas bien organizadas que
+ permitan separar responsabilidades mediante capas y definir dependencias
+ entre ellas.
+ Todo ello con el objetivo final de mantener un bajo acoplamiento y una
+ alta cohesión.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Salguero2020"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Algo de lo que siempre se habla y yo me he dado cuenta a raíz de este proyecto
+ es que aunque un software cumpla su objetivo y sea eficiente, si no está
+ bien organizado no vale de mucho.
+ La mayoría de refactorizaciones y cambios de gran magnitud que ha sufrido
+ este proyecto han sido porque cada vez se estaba volviendo más difícil
+ trabajar en él.
+ En definitiva, un software mantenible, reutilizable, desacoplado y testeable
+ favorece su supervivencia y hace más fácil y agradable trabajar en él.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+En este sentido, la intención de la arquitectura hexagonal no es otra que
+ permitir que una aplicación sea usada de la misma forma por usuarios, programas
+, pruebas automatizadas o scripts, y sea desarrollada y probada de forma
+ aislada de otros sistemas con los que trabaje.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Una de las grandes pesadillas, en las aplicaciones de software ha sido la
+ infiltración de la lógica del negocio en el código de la interfaz de usuario
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Salguero2020"
+literal "false"
+
+\end_inset
+
+, algo que por mi inexperiencia sufrí en este proyecto.
+ Esto trae problemas como:
+\end_layout
+
+\begin_layout Itemize
+Dificultad en la automatización de pruebas
+\end_layout
+
+\begin_layout Itemize
+Impide el cambio de uso de la aplicación
+\end_layout
+
+\begin_layout Itemize
+Dificluta o impide el uso por otro programa
+\end_layout
+
+\begin_layout Standard
+La arquitectura hexagonal también es conocida como el patrón 
+\begin_inset Quotes eld
+\end_inset
+
+puertos y adaptadores
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Tiene como objetivo principal la separación del código en regiones con
+ una única responsabilidad.
+ De esta manera, se logra desacoplar las capas permitiendo que evolucionen
+ de manera aislada.
+ Este desacoplamiento favorece el poder testear las capas sin que intervengan
+ otras externas.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Esta arquitectura se suele representar con un hexágono, algo que de primeras
+ puede resultar confuso ya que el número de lados no es lo que importa,
+ sino lo que estos representan.
+ Cada lado simboliza un puerto hacia dentro o hacia fuera del sistema.
+ Por ejemplo, un puerto puede ser el HTTP o la conexión a una base de datos.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/3-backend/arquitectura-hexagonal.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Arquitectura hexagonal
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A grandes rasgos, se basa en la idea de que el núcleo de la aplicación debe
+ ser nuestro dominio y este se encuentre separado de la infraestructura
+ por una capa de aplicación, que es con la única que debe tener contacto.
+ En el núcleo se encuentra la parte más estable que, con suerte, cambiará
+ menos.
+ La capa de aplicación, muy cercana al dominio, actúa como fachada a través
+ de la cual los clientes interactuarán con el dominio.
+ Siguiendo este enfoque, debería ser muy sencillo poder intercambiar los
+ sistemas conectados a la capa de infraestructura definiendo puertos o puntos
+ de entrada e interfaces para que otros módulos (interfaz gráfica, base
+ de datos, etc) puedan integrarse y conectarse con la capa de negocio sin
+ que ésta deba saber el origen de la conexión.
+ Los conceptos de puertos y adaptadores, de vital importancia, podrían ser
+ definidos como:
+\end_layout
+
+\begin_layout Itemize
+
+\bar under
+Puerto
+\bar default
+: definición de una interfaz pública
+\end_layout
+
+\begin_layout Itemize
+
+\bar under
+Adaptador
+\bar default
+: especialización de un puerto para un contexto concreto
+\end_layout
+
+\begin_layout Standard
+Al ser una arquitectura que fomenta que nuestro dominio sea el núcleo de
+ todas las capas y que no se acople a nada externo, encaja muy bien con
+ la idea de 
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
-symbol "POO"
-description "Programación Orientada a Objetos"
-literal "true"
+symbol "DDD"
+description "Domain Driven Design"
+literal "false"
 
 \end_inset
 
- (POO)>
+DDD (Domain Driven Design).
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Desde mi punto de vista y respecto a este proyecto, puedo decir que las
+ 
+\series bold
+ventajas
+\series default
+ han sido:
+\end_layout
+
+\begin_layout Itemize
+Facilita el estar desacoplado de módulos externos y por tanto preparado
+ para cambios, lo que ha sido una constante en este desarrollo.
+\end_layout
+
+\begin_layout Itemize
+Uso de forma bastante estricta de los principios SOLID.
+\end_layout
+
+\begin_layout Itemize
+Desacoplamiento interno en la lógica de negocio.
 \end_layout
 
 \begin_layout Standard
+Por otra parte, como todo tiene un coste, algunos 
+\series bold
+aspectos negativos
+\series default
+:
+\end_layout
+
+\begin_layout Itemize
+Al menos en mi experiencia, pérdida de agilidad y mucho tiempo invertido
+ en pensar la mejor forma de plantear algunos problemas.
+\end_layout
+
+\begin_layout Itemize
+Sensación de complejidad adicional al necesitar más capas para implementar
+ funcionalidades 
+\begin_inset Quotes eld
+\end_inset
+
+simples
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Descripción
+\end_layout
+
+\begin_layout Standard
+Una vez tratados los puntos previos a los que se hará referencia, continúo
+ con la descripción del código de este módulo.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+En primer lugar, como ya se ha comentado, al ser un proyecto gestionado
+ con Maven se utilizará su sistema de organización de carpetas que consiste
+ básicamente en algo similar a la imagen 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Carpeta-src-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Una carpeta 
+\begin_inset Quotes eld
+\end_inset
+
+src
+\begin_inset Quotes erd
+\end_inset
+
+ ubicada en el directorio base, que contiene por un lado una carpeta 
+\begin_inset Quotes eld
+\end_inset
+
+main
+\begin_inset Quotes erd
+\end_inset
+
+ con el código del programa y otra 
+\begin_inset Quotes eld
+\end_inset
+
+test
+\begin_inset Quotes erd
+\end_inset
+
+ donde se guarda todo lo relacionado con los tests.
+ Ambas tienen sus respectivas carpetas para guardar recursos, tales como
+ archivos .properties, archivos de datos, imágenes...
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/3-backend/carpeta-src.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Carpeta-src-1"
+
+\end_inset
+
+Carpeta src
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En el resto del capítulo nos centraremos en el contenido de la carpeta 
+\begin_inset Quotes eld
+\end_inset
+
+main
+\begin_inset Quotes erd
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Comenzando por la carpeta 
+\begin_inset Quotes eld
+\end_inset
+
+resources
+\begin_inset Quotes erd
+\end_inset
+
+, en ella nos encontramos archivos de configuración.
+ El archivo application.properties es habitual en los proyectos Spring Boot.
+ Contiene propiedades configurables acerca del servicio definidos como clave-val
+or.
+ También es habitual en Spring definir este tipo de propiedades a través
+ de código empleando clases anotadas con @Configuration, sin embargo, por
+ preferencia personal, el criterio que he seguido ha sido incluir en este
+ archivo las propiedades que consideré más 
+\begin_inset Quotes eld
+\end_inset
+
+fijas
+\begin_inset Quotes erd
+\end_inset
+
+, mientras que otras propiedades tales como direcciones y puertos de servidores
+ de BBDD o brokers de mensajería ponerlos en código para después poderlos
+ redefinir de manera sencilla a través de variables de entorno.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/3-backend/resources.png
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Carpeta src/main/resources
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ejemplificar el tipo de contenido de un archivo .properties, añado un
+ fragmento de este archivo (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:fragmento-application.properties"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ Como se puede observar, esas propiedades hacen referencia a la configuración
+ de la conexión a base de datos, sin embargo son propiedades que raramente
+ vayan a ser modificadas, mientras que otros parámetros como el puerto,
+ el servidor, el usuario y contraseña no se encuentran aquí, sino en código,
+ y será posible introducirlos mediante variables de entorno como se indica
+ en el readme.md
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:fragmento-application.properties"
+
+\end_inset
+
+Fragmento application.properties
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#Hibernate 
+\end_layout
+
+\begin_layout Plain Layout
+
+spring.jpa.database-platform = org.hibernate.dialect.MySQL55Dialect 
+\end_layout
+
+\begin_layout Plain Layout
+
+spring.jpa.generate-ddl=true 
+\end_layout
+
+\begin_layout Plain Layout
+
+spring.jpa.hibernate.ddl-auto = update 
+\end_layout
+
+\begin_layout Plain Layout
+
+entitymanager.packagesToScan = com
+\end_layout
+
+\begin_layout Plain Layout
+
+spring.jpa.open-in-view = false
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En cuanto al archivo 
+\begin_inset Quotes eld
+\end_inset
+
+logback.xml
+\begin_inset Quotes erd
+\end_inset
+
+, se trata de un archivo de configuración de la librería logback, utilizada
+ para volcar logs a base de datos.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Dentro de la carpeta 
+\begin_inset Quotes eld
+\end_inset
+
+java
+\begin_inset Quotes erd
+\end_inset
+
+ se encuentran los archivos correspondientes a clases Java que van a ser
+ compilados.
+ (ver 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Carpeta-src/main/java"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/3-backend/carpeta-src-main-java.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Carpeta-src/main/java"
+
+\end_inset
+
+Carpeta src/main/java
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+De acuerdo con la organización de la arquitectura hexagonal, se han distribuido
+ los paquetes como en la imagen:
+\end_layout
+
+\begin_layout Itemize
+Paquete 
+\bar under
+adapters
+\bar default
+: Contiene adaptadores para los servicios externos que se van a conectar
+ a este sistema: api, base de datos, sistema de ficheros, mail y broker
+ de mensajería.
+ Cada uno de estos paquetes implementan uno o más puertos definidos en el
+ modelo.
+ Esto es, una interfaz que sirve como contrato entre capa de interfaz y
+ capa de aplicación.
+ Esta es la única información que necesita, ya que un adaptador no debe
+ conocer el funcionamiento del dominio.
+ Tomando como ejemplo la conexión contra la base de datos, en este paquete
+ se encontraría el adaptador 
+\begin_inset Quotes eld
+\end_inset
+
+UserDAOImpl
+\begin_inset Quotes erd
+\end_inset
+
+, una clase que implementa el puerto 
+\begin_inset Quotes eld
+\end_inset
+
+UserDAO
+\begin_inset Quotes erd
+\end_inset
+
+, en la que se define cómo interactuar con el sistema gestor de base de
+ datos para realizar las acciones requeridas en el puerto.
+ En este caso, las sentencias 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "SQL"
+description "Structured Query Language"
+literal "false"
+
+\end_inset
+
+SQL que se puedan necesitar.
+ Además, también hay clases de apoyo para modelar estas operaciones como
+ sería la clase 
+\begin_inset Quotes eld
+\end_inset
+
+UserEntity
+\begin_inset Quotes erd
+\end_inset
+
+ para la comunicación con base de datos, o los 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "DTO"
+description "Data Transfer Object\\\\"
+literal "false"
+
+\end_inset
+
+DTOs para el API.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/3-backend/package-adapters.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Paquete adapters
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Paquete 
+\bar under
+config
+\bar default
+: Clases de configuración del sistema.
+ Dado que el dominio no conoce qué adaptador se va a emplear ni el adaptador
+ conoce los detalles el dominio, las clases de configuración es el lugar
+ en el que se establece esta relación.
+ Se trata en su mayoría de acciones que se llevan a cabo en la inicialización
+ del servicio y en las que se puede indicar qué implementación de un servicio
+ se va a emplear, o dicho de otra forma, qué adaptador se va a emplear para
+ cada puerto.
+ Continuando con el ejemplo anterior, hay un puerto llamado 
+\begin_inset Quotes eld
+\end_inset
+
+UserDAO
+\begin_inset Quotes erd
+\end_inset
+
+ que requiere acciones como guardar, seleccionar todos, seleccionar por
+ id y más.
+ Se puede hacer varias implementaciones de este puerto dependiendo del sistema
+ que haya por detrás.
+ Puede haber una base de datos, un archivo CSV, un servicio REST...
+ Pero esto no tiene por qué ser conocido por el dominio.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figs/3-backend/package-config.png
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Paquete config
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Paquete 
+\bar under
+domain
+\bar default
+: En él se encuentra el dominio y la lógica de negocio de la aplicación.
+ Lo que sería la capa 
+\begin_inset Quotes eld
+\end_inset
+
+dominio
+\begin_inset Quotes erd
+\end_inset
+
+ y 
+\begin_inset Quotes eld
+\end_inset
+
+aplicación
+\begin_inset Quotes erd
+\end_inset
+
+ del diagrama.
+ Es aquí donde está el control de lo que sucede.
+ De nuevo sobre el ejemplo, aquí se encontraría el puerto 
+\begin_inset Quotes eld
+\end_inset
+
+UserDAO
+\begin_inset Quotes erd
+\end_inset
+
+, así como la definición del objeto de negocio 
+\begin_inset Quotes eld
+\end_inset
+
+User
+\begin_inset Quotes erd
+\end_inset
+
+ y el servicio 
+\begin_inset Quotes eld
+\end_inset
+
+UserService
+\begin_inset Quotes erd
+\end_inset
+
+ donde se define qué implica un registro, una baja, etc.
 \begin_inset Float figure
 wide false
 sideways false
 status open
 
 \begin_layout Plain Layout
-\align center
 \begin_inset Graphics
-	filename figs/logo_uned.svg
-	lyxscale 50
-	width 50col%
+	filename figs/3-backend/package-domain.png
+	width 40text%
 
 \end_inset
 
@@ -191,38 +1172,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Ejemplo-de-figura"
-
-\end_inset
-
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Ejemplo de figura con un pie largo
-\end_layout
-
-\end_inset
-
-Ejemplo de figura con un pie largo para mostrar el uso del ítem del menú
- de Lyx Insertar->Título breve.
- La utilidad del título breve se aprecia en la lista de figuras, es ahí
- donde aparece, si no, aparecería todo el pie en la lista, también es convenient
-e para títulos de capítulos secciones y demás largo que ocupen más de una
- línea en la lista de índice correspondiente.(Para insertar salto de línea
- en pie o en enumeración Ctrl-Enter)
-\begin_inset Newline newline
-\end_inset
-
-La figura o tabla hay que insertarla dentro de un flotante.
-\begin_inset Newline newline
-\end_inset
-
-Siempre hay que Insertar->Etiqueta de la figura (fig:Ejemplo-de-figura),
- tabla etc, para referenciarla desde el texto.
+Paquete domain
 \end_layout
 
 \end_inset
@@ -240,181 +1190,69 @@ Siempre hay que Insertar->Etiqueta de la figura (fig:Ejemplo-de-figura),
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float table
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="3" columns="4">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-aaaaaa
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-aaaaaa
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-aaaaaa
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-aaaaaa
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-aaaaaa
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-aaaaaa
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-aaaaaa
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-aaaaaa
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "tab:Ejemplo-de-tabla"
-
-\end_inset
-
-Ejemplo de tabla
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-<Ejemplo de listado de código, ver listado
+Para ilustrar mejor el ejemplo expuesto, ver los fragmentos de código 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "lis:Codigo-de-edit"
+reference "lis:user"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-, lo mejor para utilizarlo es copiar el recuadro y cambiar el código contenido,
- así conservaremos las opciones que se han establecido, como: mostrar números
- de línea, quebrar líneas largas.
- etc.
- Para ver las opciones y poder modificarlas click derecho sobre el listado
- y elegir Configuración.
- Para cambiar el listado contenido copiar del IDE el trozo de código que
- se desee y pegarlo dentro del listado con Ctrl+May+v, en el menú de Lyx
- Editar->Pegado especial->Texto simple.>
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:user-service"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:user-dao"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:user-dao-impl"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:user-entity"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:bean-definitios"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+en los que se representan las clases e interfaces mencionados anteriormente,
+ prestando especial atención al nombre de la clase y la directiva package
+ que indica su ubicación.
 \end_layout
 
 \begin_layout Standard
@@ -430,11 +1268,11 @@ status open
 \begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
-name "lis:Codigo-de-edit"
+name "lis:user"
 
 \end_inset
 
-Código de edit
+User.java
 \end_layout
 
 \end_inset
@@ -444,7 +1282,7 @@ Código de edit
 
 \begin_layout Plain Layout
 
-    public final boolean edit() {
+package com.javi.uned.pfgbackend.domain.user.model;
 \end_layout
 
 \begin_layout Plain Layout
@@ -453,7 +1291,7 @@ Código de edit
 
 \begin_layout Plain Layout
 
-        ArrayList<String> campos = cargaCampos();
+// Omito imports
 \end_layout
 
 \begin_layout Plain Layout
@@ -462,7 +1300,7 @@ Código de edit
 
 \begin_layout Plain Layout
 
-        Scanner in = new Scanner( System.in );
+public class User {
 \end_layout
 
 \begin_layout Plain Layout
@@ -471,141 +1309,88 @@ Código de edit
 
 \begin_layout Plain Layout
 
-	/* La variable resp sera true si el usuario acepta la edicion
+    private final Long id;     
 \end_layout
 
 \begin_layout Plain Layout
 
-	 */
+	private final String email;     
 \end_layout
 
 \begin_layout Plain Layout
 
+	private final String password;     
 \end_layout
 
 \begin_layout Plain Layout
 
-	boolean resp = false;
+	private final String name;     
 \end_layout
 
 \begin_layout Plain Layout
 
-        int numero_total_opciones = campos.size() + opciones_no_campos;
+	private final String surname;     
 \end_layout
 
 \begin_layout Plain Layout
 
-        System.out.println("
-\backslash
-n" + toString()); // muestra el registro
+	private final Boolean enabled;     
 \end_layout
 
 \begin_layout Plain Layout
 
+	private final Collection<Role> roles;
 \end_layout
 
 \begin_layout Plain Layout
 
-        editLoop: while (true) {
+    
 \end_layout
 
 \begin_layout Plain Layout
 
-            editMensaje();
+	public User(Long id, String email, String password, String name, String
+ surname, Boolean enabled, Collection<Role> roles) {
 \end_layout
 
 \begin_layout Plain Layout
 
-            System.out.println("Seleccione un numero (1-" + numero_total_opciones
- + "):  ");
+        this.id = id;         
 \end_layout
 
 \begin_layout Plain Layout
 
-            int opcion;
+		this.email = email;         
 \end_layout
 
 \begin_layout Plain Layout
 
-            if ( in.hasNextInt() ) {
+		this.password = password;         
 \end_layout
 
 \begin_layout Plain Layout
 
-                opcion = in.nextInt();
+		this.name = name;         
 \end_layout
 
 \begin_layout Plain Layout
 
-                in.nextLine();
+		this.surname = surname;         
 \end_layout
 
 \begin_layout Plain Layout
 
-            } else {
+		this.enabled = enabled;         
 \end_layout
 
 \begin_layout Plain Layout
 
-                System.out.println("
-\backslash
-nOPCION NO VALIDA.
- POR FAVOR, INTRODUZCA UN NUMERO.");
+		this.roles = roles;     
 \end_layout
 
 \begin_layout Plain Layout
 
-                in.nextLine();
-\end_layout
-
-\begin_layout Plain Layout
-
-                continue;
-\end_layout
-
-\begin_layout Plain Layout
-
-            }
-\end_layout
-
-\begin_layout Plain Layout
-
-            campos = procesaOpcion(campos, opcion, in);
-\end_layout
-
-\begin_layout Plain Layout
-
-            if(salir) {
-\end_layout
-
-\begin_layout Plain Layout
-
-                if(aceptar)
-\end_layout
-
-\begin_layout Plain Layout
-
-                    resp = true;
-\end_layout
-
-\begin_layout Plain Layout
-
-                salir = false;
-\end_layout
-
-\begin_layout Plain Layout
-
-                aceptar = false;
-\end_layout
-
-\begin_layout Plain Layout
-
-                break editLoop;
-\end_layout
-
-\begin_layout Plain Layout
-
-            }
+	}
 \end_layout
 
 \begin_layout Plain Layout
@@ -614,12 +1399,170 @@ nOPCION NO VALIDA.
 
 \begin_layout Plain Layout
 
-        }
+    /*  Omito getters */
 \end_layout
 
 \begin_layout Plain Layout
 
-        return resp;
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:user-service"
+
+\end_inset
+
+UserService.java
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+package com.javi.uned.pfgbackend.domain.user;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Omito imports
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@Service 
+\end_layout
+
+\begin_layout Plain Layout
+
+public class UserService implements AuthenticationProvider {
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+	private final Logger logger = LoggerFactory.getLogger(UserService.class);
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+	@Autowired     
+\end_layout
+
+\begin_layout Plain Layout
+
+	private PasswordEncoder passwordEncoder;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	@Autowired     
+\end_layout
+
+\begin_layout Plain Layout
+
+	private UserDAO userDAO;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	@Autowired     
+\end_layout
+
+\begin_layout Plain Layout
+
+	private WebSecurityConfig webSecurityConfig;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    public User registerUser(User user) throws ValidationException, ExistingUser
+Exception {         
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+		checkValid(user);
+\end_layout
+
+\begin_layout Plain Layout
+
+       
+\end_layout
+
+\begin_layout Plain Layout
+
+		user = new User(
+\end_layout
+
+\begin_layout Plain Layout
+
+			user.getId(), user.getEmail(), passwordEncoder.encode(user.getPassword()),
+ user.getName(), user.getSurname(),                 			true, user.getRoles());
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        user = userDAO.save(user);         
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\end_layout
+
+\begin_layout Plain Layout
+
+		return user;
 \end_layout
 
 \begin_layout Plain Layout
@@ -627,16 +1570,107 @@ nOPCION NO VALIDA.
     }
 \end_layout
 
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	/* Más metodos (ej: authenticate, findById, generateToken, etc.) */
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
-\begin_layout Section
-Estructura de la memoria
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:Estructura-de-la-memoria"
+name "lis:user-dao"
+
+\end_inset
+
+UserDAO.java
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+package com.javi.uned.pfgbackend.domain.ports.database;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Omito imports
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+public interface UserDAO {
+\end_layout
+
+\begin_layout Plain Layout
+
+    public User save(User user);
+\end_layout
+
+\begin_layout Plain Layout
+
+    User findById(Long id) throws EntityNotFound;
+\end_layout
+
+\begin_layout Plain Layout
+
+    boolean existsById(Long id);
+\end_layout
+
+\begin_layout Plain Layout
+
+    List<User> findAll();
+\end_layout
+
+\begin_layout Plain Layout
+
+    boolean existsByEmail(String email);
+\end_layout
+
+\begin_layout Plain Layout
+
+    User findByEmail(String email) throws EntityNotFound;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
 
 \end_inset
 
@@ -644,23 +1678,375 @@ name "sec:Estructura-de-la-memoria"
 \end_layout
 
 \begin_layout Standard
-La memoria de esta proyecto se estructura en los siguientes capítulos:
+\begin_inset listings
+lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:user-dao-impl"
+
+\end_inset
+
+UserDAOImpl.java
 \end_layout
 
-\begin_layout Enumerate
-Introducción general y objetivos
+\end_inset
+
+
 \end_layout
 
-\begin_layout Enumerate
-<añadir los demás capítulos>
+\begin_layout Plain Layout
+
+package com.javi.uned.pfgbackend.adapters.database.user; 
 \end_layout
 
-\begin_layout Enumerate
-Conclusiones y trabajos futuros
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Omito imports
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@Component 
+\end_layout
+
+\begin_layout Plain Layout
+
+public class UserDAOImpl implements UserDAO {
+\end_layout
+
+\begin_layout Plain Layout
+
+    @Autowired     
+\end_layout
+
+\begin_layout Plain Layout
+
+	private UserRepository userRepository;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    @Override     
+\end_layout
+
+\begin_layout Plain Layout
+
+	public User save(User user) {
+\end_layout
+
+\begin_layout Plain Layout
+
+        UserEntity userEntity = UserEntityTransformer.toEntity(user);   
+      
+\end_layout
+
+\begin_layout Plain Layout
+
+		userEntity = userRepository.save(userEntity);
+\end_layout
+
+\begin_layout Plain Layout
+
+        return UserEntityTransformer.toDomainObject(userEntity);     
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	/* Omito el resto de métodos */
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-<Comentar los capítulos>
+\begin_inset listings
+lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:user-entity"
+
+\end_inset
+
+UserEntity.java
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+package com.javi.uned.pfgbackend.adapters.database.user; 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Omito imports
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@Entity 
+\end_layout
+
+\begin_layout Plain Layout
+
+@Table(name = "users") 
+\end_layout
+
+\begin_layout Plain Layout
+
+public class UserEntity {
+\end_layout
+
+\begin_layout Plain Layout
+
+    @Id     
+\end_layout
+
+\begin_layout Plain Layout
+
+	@GeneratedValue(strategy = GenerationType.IDENTITY)     
+\end_layout
+
+\begin_layout Plain Layout
+
+	@Column(name = "id")     
+\end_layout
+
+\begin_layout Plain Layout
+
+	private Long id;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	@Column(name = "email", unique = true)     
+\end_layout
+
+\begin_layout Plain Layout
+
+	private String email;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	@Column(name = "password", nullable = false)     
+\end_layout
+
+\begin_layout Plain Layout
+
+	private String password;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	@Column(name = "name")     
+\end_layout
+
+\begin_layout Plain Layout
+
+	private String name;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	@Column(name = "surname")     
+\end_layout
+
+\begin_layout Plain Layout
+
+	private String surname;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	private Boolean enabled;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	@ManyToMany(fetch = FetchType.EAGER)     
+\end_layout
+
+\begin_layout Plain Layout
+
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id",
+ referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id"
+, referencedColumnName = "id"))     
+\end_layout
+
+\begin_layout Plain Layout
+
+	private Collection<RoleEntity> roleEntities;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	/* Omito getters y setters */
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,float=p,numbers=left,basicstyle={\ttfamily},breaklines=true,tabsize=4"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:bean-definitios"
+
+\end_inset
+
+BeanDefinitions.java
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+package com.javi.uned.pfgbackend.config; 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Omito imports
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@Configuration 
+\end_layout
+
+\begin_layout Plain Layout
+
+public class BeanDefinitions {
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    @Bean     
+\end_layout
+
+\begin_layout Plain Layout
+
+	public UserDAO userDAO(UserDAOImpl userDAO) {         
+\end_layout
+
+\begin_layout Plain Layout
+
+		return userDAO;     
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	/* Más definiciones */
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

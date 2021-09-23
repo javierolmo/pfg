@@ -117,7 +117,15 @@ autónomo
  Para realizar esta tarea hace uso de un algoritmo genético implementado
  sobre un dominio y una lógica de negocio desarrollados específicamente
  para este propósito.
- Este modelo se ha construido a partir de la librería 'musicproxy', 
+ Este modelo se ha construido a partir de la librería 
+\begin_inset Quotes eld
+\end_inset
+
+proxymusic
+\begin_inset Quotes erd
+\end_inset
+
+, 
 \begin_inset Newline newline
 \end_inset
 
@@ -298,7 +306,7 @@ Motivación y objetivos
 
 \begin_layout Standard
 En un primer momento, al elegir un proyecto de modalidad específica, mi
- idea era no sólo desarrollar un trabajo para presentar como proyecto fin
+ idea era no solo desarrollar un trabajo para presentar como proyecto fin
  de grado, sino crear la base de un trabajo potencialmente más extenso y
  con margen para incorporar nuevas funcionalidades, que me pudiera servir
  en el futuro para nuevas investigaciones, un posible trabajo de fin de
@@ -320,7 +328,7 @@ Elegir la temática del proyecto fue algo relativamente sencillo.
  Por otra parte, como mencionaba anteriormente, quería un proyecto que me
  resultara interesante y me pudiera servir en el futuro, por lo que decidí
  elegir un tema que ya conociera previamente o al menos tuviera una idea
- general de cuál es el problema y poder plantear diferentes soluciones.
+ general de cómo es el problema y poder plantear diferentes soluciones.
  Por este motivo, el tema elegido fue la música.
  Un área en la que tengo alguna formación, y en la que mucha gente puede
  tener opinión e interés, ya que no es necesario tener conocimientos formales
@@ -341,11 +349,12 @@ l, y parecía una ocasión ideal para profundizar algo más en los contenidos
  probablemente fuera lo que más echaba en falta en este tipo de asignaturas.
  Tras contemplar varias opciones, me decanté por que el problema fuera la
  composición de obras musicales, algo que sin duda parece muy amplio, y
- por lo tanto abre muchas vías de investigación futura.
+ por lo tanto abre muchas posibilidades para continuar desarrollando en
+ el futuro.
  Es por este motivo que a pesar de que la versión actual esté bastante acotada
- en cuanto a posibilidades, mi intención siempre ha sido la de desarrollar
+ en cuanto a funcionalidad, mi intención siempre ha sido la de desarrollar
  sin cerrar ninguna puerta, pensando en que más adelante se puedan implementar
- nuevas funcionalidades o características.
+ nuevas características.
 \begin_inset Newline newline
 \end_inset
 
@@ -551,7 +560,7 @@ Nebular
 
 Dejando a un lado el resultado final de este proyecto, puedo decir que estoy
  muy satisfecho de haber trabajado en él porque me ha dado la oportunidad
- de tratar áreas temas muy diversas y conocer sus principales tecnologías.
+ de tratar áreas muy diversas y conocer sus principales tecnologías.
  Desde el tema principal que era la implantación de un algoritmo genético
  hasta el desarrollo de un servicio distribuido y una interfaz web, pasando
  por temas de infraestructura y redes en los que no tenía apenas conocimientos,

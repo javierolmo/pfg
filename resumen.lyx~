@@ -153,11 +153,11 @@ proxymusic
 \begin_inset Newline newline
 \end_inset
 
-Por otra parte, se ha dedicado gran parte del tiempo de desarrollo a la
+Por otra parte, se ha dedicado gran parte del tiempo del desarrollo a la
  creación de un sistema estructurado como un conjunto de microservicios
  que haga uso del algoritmo de composición y asuma otras responsabilidades
  como la gestión de autenticación, roles, almacenamiento, y administración
- a través de su api REST o de su interfaz web desarrollada en Angular.
+ a través de su API REST o de su interfaz web desarrollada en Angular.
  Este sistema está diseñado para su despliegue tanto en un único servidor
  o en un clúster, permitiendo su escalado y replicación de cada uno de sus
  módulos por separado.
